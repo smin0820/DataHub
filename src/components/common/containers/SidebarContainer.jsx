@@ -4,7 +4,10 @@ import styled from 'styled-components';
 import ApiService from '@components/axios/ApiService';
 
 const SidebarUL = styled.ul`
-  list-style: none;
+    transition: transform 0.3s ease, opacity 0.3s ease;  // 애니메이션 효과 추가
+    transform: ${({ $isVisible }) => $isVisible ? 'translateX(0)' : 'translateX(-100%)'};
+    opacity: ${({ $isVisible }) => $isVisible ? '1' : '0'};
+    list-style: none;
     padding: 0 1rem;
     position: fixed;
     top: 25%;
@@ -41,6 +44,31 @@ const SNavLink = styled(NavLink)`
   }
 `
 
+const ToggleButton = styled.button`
+  position: fixed;
+  top: 50%;
+  left: ${({ $isVisible }) => $isVisible ? '202px' : '0px'};  // isVisible에 따라 위치 조정
+  transform: translateY(-50%);
+  z-index: 10;
+  background-color: #transparent;  // 배경색
+  border: none;  // 테두리 없앰
+  border-radius: 5px;  // 둥근 모서리
+  padding: 10px;  // 패딩
+  cursor: pointer;  // 커서 스타일 변경
+  font-size: 30px;  // 폰트 크기
+  transition: 0.3s;  // 부드러운 애니메이션을 위해
+  font-weight: normal;  // 폰트 굵기
+  &:focus {
+    outline: none;  // 포커스시 테두리 없앰
+  }
+  &:hover {
+    background-color: #e0e0e0;  // 호버 시 배경색 변경
+    color: #4DBDE5;  // 호버 시 글자색 변경
+    font-weight: bold; // 호버 시 폰트 굵기 변경
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);  // 호버 시 그림자 효과 추가
+  }
+`;
+
 
 export default function SidebarContainer() {
   const [systemNames, setSystemNames] = useState([]);
@@ -48,11 +76,18 @@ export default function SidebarContainer() {
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
   const userRole = userInfo?.role;
   const location = useLocation();
+  const [isVisible, setIsVisible] = useState(true);
+
+  const toggleSidebar = () => {
+    setIsVisible(!isVisible);
+  };
+
+  
 
   useEffect(() => {
     if (userRole === "ADMIN") {
       ApiService.fetchSystemNames().then(names => {
-        setSystemNames([{ id: 'admin', name: '공지사항' }, ...names]);
+        setSystemNames([{ id: 'admin', name: '대기중 게시물' }, ...names]);
       });
     }
     // URL 경로 기반으로 선택된 시스템 ID 설정
@@ -76,7 +111,14 @@ export default function SidebarContainer() {
   };
 
   return (
-    <SidebarUL>
+    <>
+    <ToggleButton
+        onClick={toggleSidebar}
+        $isVisible={isVisible}
+      >
+        {isVisible ? '<' : '>'} 
+      </ToggleButton>
+    <SidebarUL $isVisible={isVisible}>
       {systemNames.map((system) => (
         <li key={system.id} onClick={() => handleSystemClick(system.id)}>
           <SNavLink 
@@ -88,5 +130,7 @@ export default function SidebarContainer() {
         </li>
       ))}
     </SidebarUL>
+    </>
+    
   );
 }

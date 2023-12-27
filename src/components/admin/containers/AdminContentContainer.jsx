@@ -31,34 +31,52 @@ const PaginationContainer = styled.div`
 `;
 
 const PaginationComponent = ({ currentPage, totalPages, onPageChange }) => {
-    const pageNumbers = [];
-
+    const [pageNumbers, setPageNumbers] = useState([]);
     const pageRangeDisplayed = 2;
 
-    for (let i = Math.max(1, currentPage - pageRangeDisplayed); i <= Math.min(totalPages, currentPage + pageRangeDisplayed); i++) {
-        pageNumbers.push(i);
-    }
+    useEffect(() => {
+        const newPageNumbers = [];
 
-  // 마지막 페이지와 현재 페이지 그룹 사이의 구분자 추가
-    if (currentPage + pageRangeDisplayed < totalPages) {
-        pageNumbers.push('...'); // 구분자
-        pageNumbers.push(totalPages); // 마지막 페이지
-    }
+        // 첫 페이지와 구분자 추가
+        if (currentPage > pageRangeDisplayed + 1) {
+            newPageNumbers.push(1);
+            if (currentPage > pageRangeDisplayed + 2) {
+                newPageNumbers.push('...');
+            }
+        }
+
+        // 현재 페이지 앞뒤로 2개 페이지 표시
+        const startPage = Math.max(1, currentPage - pageRangeDisplayed);
+        const endPage = Math.min(totalPages, currentPage + pageRangeDisplayed);
+        for (let i = startPage; i <= endPage; i++) {
+            newPageNumbers.push(i);
+        }
+
+        // 마지막 페이지와 구분자 추가
+        if (currentPage < totalPages - pageRangeDisplayed) {
+            if (currentPage < totalPages - pageRangeDisplayed - 1) {
+                newPageNumbers.push('...');
+            }
+            newPageNumbers.push(totalPages);
+        }
+
+        setPageNumbers(newPageNumbers);
+    }, [currentPage, totalPages]);
 
     return (
         <PaginationContainer>
-        {pageNumbers.map((page, index) => (
-            page === '...' ? (
-                    <span key={index}>{page}</span>
+            {pageNumbers.map((page, index) => (
+                page === '...' ? (
+                    <span key={`separator-${index}`}>{page}</span>
                 ) : (
-                <button
-                    className="pageButton"
-                    key={page}
-                    onClick={() => onPageChange(page)}
-                    disabled={currentPage === page}
-                >
-                {page}
-                </button>
+                    <button
+                        className="pageButton"
+                        key={page}
+                        onClick={() => onPageChange(page)}
+                        disabled={currentPage === page}
+                    >
+                        {page}
+                    </button>
                 )
             ))}
         </PaginationContainer>
