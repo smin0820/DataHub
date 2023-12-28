@@ -6,8 +6,6 @@ import Admin from "@components/admin/Admin";
 import System from "@components/system/System";
 import Modify from "@components/modify/Modify";
 import Regist from "@components/regist/Regist";
-import Notice from "@components/notice/notice";
-import QandA from "@components/qna/QandA";
 import { Navigate } from "react-router-dom";
 
 const RootNavigation = () => {
@@ -30,8 +28,6 @@ const RootNavigation = () => {
       <Route path="/system" element={<System></System>}/>
       <Route path="/modify" element={<Modify></Modify>}/>
       <Route path="/regist" element={<Regist></Regist>}/>
-      <Route path="/notice" element={<Notice></Notice>}/>
-      <Route path="/qna" element={<QandA></QandA>}/>
     </Routes>
   );
 };
