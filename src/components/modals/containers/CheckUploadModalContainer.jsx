@@ -6,6 +6,7 @@ import ApiService from '@components/axios/ApiService';
 const ModalOverlay = styled.div`
   &.modal-overlay {
     position: fixed;
+    z-index: 100;
     top: 0;
     left: 0;
     right: 0;
