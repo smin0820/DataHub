@@ -7,6 +7,8 @@ import System from "@components/system/System";
 import Modify from "@components/modify/Modify";
 import Regist from "@components/regist/Regist";
 import { Navigate } from "react-router-dom";
+import Notice from "@components/notice/Notice";
+import Qna from "@components/qna/Qna";
 
 const RootNavigation = () => {
   const { getToken } = useToken();
@@ -28,6 +30,8 @@ const RootNavigation = () => {
       <Route path="/system" element={<System></System>}/>
       <Route path="/modify" element={<Modify></Modify>}/>
       <Route path="/regist" element={<Regist></Regist>}/>
+      <Route path="/notice" element={<Notice></Notice>}/>
+      <Route path="/qna" element={<Qna></Qna>}/>
     </Routes>
   );
 };

@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import logo from "/assets/images/logo.png"
 import { useState } from "react";
 import styled from "styled-components";
@@ -53,6 +53,14 @@ const Navdiv = styled.div`
   max-width: 1000px;
 `;
 
+const SNavLink = styled(NavLink)`
+  text-decoration: none;
+  color: black;
+  &.active {
+    color: #4dbde5;
+  }
+`;
+
 
 const Admin = () => {
     const [view, setView] = useState(false);
@@ -77,6 +85,8 @@ const Admin = () => {
           </a>
 
           <nav>
+            <SNavLink to="/notice">공지사항</SNavLink>
+            <SNavLink to="/qna">Q&A</SNavLink>
             {isAdmin && (
               <button onClick={()=>{navigate('/regist')}}>계정등록</button>
             )}
