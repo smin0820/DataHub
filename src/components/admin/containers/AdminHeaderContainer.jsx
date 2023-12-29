@@ -3,7 +3,6 @@ import logo from "/assets/images/logo.png"
 import { useState } from "react";
 import styled from "styled-components";
 import Dropdown from "@components/common/Dropdown";
-import useDropdown from "@hooks/useDropdown";
 
 
 const Header = styled.div`
@@ -70,8 +69,7 @@ const Admin = () => {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
     const isAdmin = userInfo && userInfo.role === "ADMIN";
     const userName = userInfo ? userInfo.loginId : "User";
-    const { currentOpenDropdown, toggleDropdown, dropdownRefs, closeDropdown } = useDropdown();
-
+  
     const handleLogoClick = () => {
       if (isAdmin) {
         navigate("/admin");
@@ -92,10 +90,16 @@ const Admin = () => {
             {isAdmin && (
               <button onClick={()=>{navigate('/regist')}}>계정등록</button>
             )}
-            <span ref={el => dropdownRefs.current.set('userMenu', el)} onClick={() => toggleDropdown('userMenu')}>
-              {userName}님 {currentOpenDropdown === 'userMenu' ? "∧" : "∨"}
-            </span>
-            {currentOpenDropdown === 'userMenu' && <Dropdown />}
+            
+            <span
+              onClick={() => {
+                setView(!view);
+              }}
+            >
+              {userName}님 {view ? "∧" : "∨"}
+              </span>
+            {view && <Dropdown></Dropdown>}
+            
           </nav>
         </Navdiv>
       </Header>
