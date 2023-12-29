@@ -2,12 +2,10 @@
 // 공지사항 목록의 내용물을 표기하기 위한 컨테이너 컴포넌트
 
 import React from "react";
-import { useState } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
-// import Data from "../../../Data.json";
-import CheckUploadModal from "@components/modals/CheckUploadModal";
 import NoticeDropdown from "@components/notice/containers/NoticeDropdown";
+import useDropdown from "@hooks/useDropdown";
 
 const Boarddiv = styled.div`
     display: flex;
@@ -77,11 +75,10 @@ const Tbodytr = styled.tr`
 
 export default function NoticeContentContainer(props) {
     const { title, data = [] } = props;
-    const [currentOpenDropdown, setCurrentOpenDropdown] = useState(null);
-    const [openModalArticleId, setopenModalArticleId] = useState(null);
+
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
     const isAdmin = userInfo && userInfo.role === "ADMIN";
-    const [view, setView] = useState(false);
+    const { currentOpenDropdown, toggleDropdown, dropdownRefs, closeDropdown } = useDropdown();
 
     const cutFileName = (name, maxLength = 20) => {
         if(name.length > maxLength) {
@@ -90,16 +87,6 @@ export default function NoticeContentContainer(props) {
         return name;
     };
 
-    // 드롭다운 토글 함수
-    const toggleDropdown = (id) => {
-        if (currentOpenDropdown === id) {
-            // 이미 열린 드롭다운을 닫습니다.
-            setCurrentOpenDropdown(null);
-        } else {
-            // 새로운 드롭다운을 엽니다.
-            setCurrentOpenDropdown(id);
-        }
-    };
 
     return (
         <Boarddiv>
@@ -117,7 +104,6 @@ export default function NoticeContentContainer(props) {
             <tbody>
             {data.map((n, i) => (
                 <Tbodytr key={i}>
-                
                 <td>
                     <StyledLink href={n.taskFileUrl} target="_blank" rel="noopener noreferrer">
                     {cutFileName(n.taskFileName)}
@@ -126,7 +112,7 @@ export default function NoticeContentContainer(props) {
                 <td>{n.uploadDate}</td>
                 {/* <td>{n.articleId}</td> */}
                 <td>
-                    <div style={{ position: 'relative' }}>
+                    <div style={{ position: 'relative' }} ref={el => dropdownRefs.current.set(n.articleId, el)}>
                         <span onClick={() => toggleDropdown(n.articleId)}>
                             편집 {currentOpenDropdown === n.articleId ? "∧" : "∨"}
                         </span>
