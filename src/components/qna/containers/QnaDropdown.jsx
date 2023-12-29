@@ -12,9 +12,9 @@ const Dropmenu = styled.div`
     flex-direction: column;
     position: absolute;
     z-index: 20;
-    top: 100%;
+    top: 1.7rem;
     right: 0px;
-    width: 80px;
+    width: 5rem;
     border: 1px solid #E5EAF2;
     border-radius: 10px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);  /* 그림자 효과 추가 */
