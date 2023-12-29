@@ -40,7 +40,7 @@ const SNavLink = styled(NavLink)`
   }
 
   &:hover {
-      text-decoration: underline;  /* 호버 시 밑줄 */
+      text-decoration: none;  /* 호버 시 밑줄 */
   }
 `
 
@@ -50,7 +50,8 @@ const ToggleButton = styled.button`
   left: ${({ $isVisible }) => $isVisible ? '202px' : '0px'};  // isVisible에 따라 위치 조정
   transform: translateY(-50%);
   z-index: 10;
-  background-color: #transparent;  // 배경색
+  background-color: #f8f8f8;  // 배경색
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);  /* 그림자 효과 추가 */
   border: none;  // 테두리 없앰
   border-radius: 5px;  // 둥근 모서리
   padding: 10px;  // 패딩
