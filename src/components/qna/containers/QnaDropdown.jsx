@@ -4,6 +4,8 @@ import styled from 'styled-components';
 import useModal from '@hooks/useModal';
 import NoticeEditModal from '@components/notice/modals/NoticeEditModal';
 import NoticeDeleteModal from '@components/notice/modals/NoticeDeleteModal';
+import QnaEditModal from '../modals/QnaEditModal';
+import QnaDeleteModal from '../modals/QnaDeleteModal';
 
 const Dropmenu = styled.div`
     display: flex;
@@ -45,7 +47,7 @@ const Dropmenu = styled.div`
     }
 `
 
-export default function NoticeDropdown() {
+export default function QnaDropdown() {
     const { isOpen: isEditOpen, openModal: openEditModal, closeModal: closeEditModal } = useModal();
     const { isOpen: isDeleteOpen, openModal: openDeleteModal, closeModal: closeDeleteModal } = useModal();
 
@@ -57,8 +59,8 @@ export default function NoticeDropdown() {
                     <li onClick={openDeleteModal}>삭제</li>
                 </ul>
             </Dropmenu>
-            {isEditOpen && <NoticeEditModal closeModal={closeEditModal} />}
-            {isDeleteOpen && <NoticeDeleteModal closeModal={closeDeleteModal} />} 
+            {isEditOpen && <QnaEditModal closeModal={closeEditModal} />}
+            {isDeleteOpen && <QnaDeleteModal closeModal={closeDeleteModal} />} 
         </>
     );
 }
