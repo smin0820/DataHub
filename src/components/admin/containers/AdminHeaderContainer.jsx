@@ -69,7 +69,7 @@ const Admin = () => {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
     const isAdmin = userInfo && userInfo.role === "ADMIN";
     const userName = userInfo ? userInfo.loginId : "User";
-
+  
     const handleLogoClick = () => {
       if (isAdmin) {
         navigate("/admin");
@@ -97,8 +97,9 @@ const Admin = () => {
               }}
             >
               {userName}님 {view ? "∧" : "∨"}
-            </span>
+              </span>
             {view && <Dropdown></Dropdown>}
+            
           </nav>
         </Navdiv>
       </Header>
