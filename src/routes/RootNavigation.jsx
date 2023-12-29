@@ -9,6 +9,7 @@ import Regist from "@components/regist/Regist";
 import { Navigate } from "react-router-dom";
 import Notice from "@components/notice/Notice";
 import Qna from "@components/qna/Qna";
+import QnaDetail from "@components/qna/QnaDetail";
 
 const RootNavigation = () => {
   const { getToken } = useToken();
@@ -32,6 +33,7 @@ const RootNavigation = () => {
       <Route path="/regist" element={<Regist></Regist>}/>
       <Route path="/notice" element={<Notice></Notice>}/>
       <Route path="/qna" element={<Qna></Qna>}/>
+      <Route path="/qna/:id" element={<QnaDetail></QnaDetail>}></Route>
     </Routes>
   );
 };
