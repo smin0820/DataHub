@@ -2,9 +2,9 @@ import React from "react";
 import PropTypes from 'prop-types';
 import RegistSysModalContainer from './containers/RegistSysModalContainer';
 
-const RegistSysModal = ({ closeModal }) => {
+const RegistSysModal = ({ closeModal, inputValues }) => {
     return(
-        <RegistSysModalContainer closeModal={closeModal} />
+        <RegistSysModalContainer closeModal={closeModal} inputValues={inputValues} />
     );
 };
 
