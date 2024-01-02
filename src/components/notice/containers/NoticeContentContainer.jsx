@@ -84,40 +84,38 @@ export default function NoticeContentContainer(props) {
 
     return (
         <Boarddiv>
-        <table>
-            <caption>{title}</caption>
-            <thead>
-            <tr>
-                <th>제목</th>
-                <th>업로드 일시</th>
-                {/* <th>차수</th>  */}
-                <th></th>
-            </tr>
-            </thead>
+            <table>
+                <caption>{title}</caption>
+                <thead>
+                <tr>
+                    <th>제목</th>
+                    <th>업로드 일시</th>
+                    {/* <th>차수</th>  */}
+                    <th></th>
+                </tr>
+                </thead>
 
-            <tbody>
-            {data.map((n, i) => (
-                <Tbodytr key={i}>
-                <td onClick={() => openViewModal(n.noticeId)}>
-                    {n.noticeTitle}
-                </td>
-                <td>
-                    {n.noticeDate}
-                </td>
-                {/* <td>{n.noticeId}</td> */}
-                <td>
-                    <div style={{ position: 'relative' }} ref={el => dropdownRefs.current.set(n.noticeId, el)}>
+                <tbody>
+                {data.map((n, i) => (
+                    <Tbodytr key={i}>
+                    <td onClick={() => openViewModal(n.noticeId)}>
+                        {n.noticeTitle}
+                    </td>
+                    <td>
+                        {n.noticeDate}
+                    </td>
+                    {/* <td>{n.noticeId}</td> */}
+                    <td style={{ position: 'relative' }} ref={el => dropdownRefs.current.set(n.noticeId, el)}>
                         <span onClick={() => toggleDropdown(n.noticeId)}>
                             편집 {currentOpenDropdown === n.noticeId ? "∧" : "∨"}
                         </span>
                         {currentOpenDropdown === n.noticeId && <NoticeDropdown />}
-                    </div>
-                </td>
-                </Tbodytr>   
-            ))}
+                    </td>
+                    </Tbodytr>   
+                ))}
+                </tbody>
+            </table>
             {isViewOpen && <NoticeViewModal noticeId = {selectedId} closeModal={closeViewModal} />}
-            </tbody>
-        </table>
         </Boarddiv>
     );
 }
