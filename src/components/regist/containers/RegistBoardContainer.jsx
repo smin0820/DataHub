@@ -188,7 +188,7 @@ const RegistBoardContainer = () => {
 
     const handleSignUp = () => {
       //입력 값이 비어있는지 확인
-      if (!inputValues.systemName || !inputValues.departmentName || !inputValues.companyName || !inputValues.department || !inputValues.developerName || !inputValues.contactNum || !inputValues.loginId)  {
+      if (!inputValues.systemName || !inputValues.departmentName || !inputValues.department || !inputValues.developerName || !inputValues.contactNum || !inputValues.loginId)  {
         alert('모든 값을 입력해주세요.');
         return; // 등록을 못하게 만듦
       }
