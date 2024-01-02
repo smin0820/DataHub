@@ -158,6 +158,20 @@ const ApiService = {
                 'Content-Type': 'multipart/form-data'
             }
         });
+    },
+
+    // get notice list
+    fetchNotices: async (page) => {
+        try {
+            const response = await axiosInstance.get('/notices', {
+                params: { page }
+            });
+            console.log('서버 응답:', response.data);
+            return response.data;
+        } catch (error) {
+            console.error('Notices 요청 실패:', error);
+            throw error;
+        }
     }
 
 
