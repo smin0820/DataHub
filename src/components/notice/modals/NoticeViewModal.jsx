@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
-import ApiService from '@components/axios/ApiService';
+import { useNoticeDetail } from '@hooks/useNoticeDetail';
 
 const ModalOverlay = styled.div`
     &.modal-overlay {
@@ -26,7 +26,7 @@ const ModalContainer = styled.div`
         padding: 0px;
         border-radius: 10px;
         width: 600px;
-        height: 200px;
+        height: 600px;
         box-shadow: 0 0 5px rgba(0, 0, 0, 0.25);
         position: relative;
         &::after {
@@ -55,6 +55,7 @@ const ModalContent = styled.p`
     text-align: left;
     margin-bottom: 5px;
     margin-left: 30px;
+    white-space: pre-wrap;
 `;
 
 const ButtonGroup = styled.div`
@@ -75,13 +76,8 @@ const ButtonGroup = styled.div`
             cursor: pointer;
             margin-left: 10px;
             margin-right: 10px;
-            width: 300px;
+            width: 520px;
             height: 35px;   
-            &:first-child {
-                margin-left: 0px;
-                background-color: #7B91A7;
-                color: black;
-            }
             &:last-child {
                 margin-right: 0px;
                 background-color: #003a75;
@@ -114,47 +110,42 @@ const CloseButton = styled.button`
 `;
 
 
-const NoticeDeleteModal = ({ noticeId, closeModal, onRefresh }) => {
 
-    const handleSuccess = () => {
-        closeModal();
-        onRefresh();
-    }
+const NoticeViewModal = ({ noticeId, closeModal }) => {
+    const { title: fetchedTitle, body: fetchedBody, loading, error } = useNoticeDetail(noticeId);
+    const [title, setTitle] = useState(''); // title 상태 초기화
+    const [body, setBody] = useState(''); // body 상태 초기화
 
-    const handleSubmit = async () => {
-        const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-        if (!userInfo || !userInfo.loginId) {
-            console.error("사용자 정보가 없습니다.");
-            return;
+    // 로딩 및 에러 상태에 따라 title과 body 업데이트
+    useEffect(() => {
+        if (loading) {
+            setTitle('Loading...');
+            setBody('');
+        } else if (error) {
+            setTitle('Error');
+            setBody(error.message);
+        } else {
+            setTitle(fetchedTitle);
+            setBody(fetchedBody);
         }
-        
-        try {
-            const response = await ApiService.deleteNotice(noticeId, userInfo.loginId);
-            console.log("공지사항 수정 성공:", response);
-            handleSuccess();
-        } catch (error) {
-            console.error("공지사항 수정 실패:", error);
-        }
-    };
-
+    }, [loading, error, fetchedTitle, fetchedBody]);
 
     return (
         <ModalOverlay className="modal-overlay" onClick={closeModal}>
             <ModalContainer className="modal-container" onClick={(e) => e.stopPropagation()}>
                 <CloseButton className="modal-close-button" onClick={closeModal}>&times;</CloseButton>
-                <ModalTitle>공지사항 삭제</ModalTitle>
-                <ModalContent>선택하신 공지사항을 삭제 하시겠습니까?</ModalContent>
+                <ModalTitle>{title}</ModalTitle> {/* Assuming these are the correct property names */}
+                <ModalContent>{body}</ModalContent>
                 <ButtonGroup className="button-group">
-                    <button className="modal-group-button" onClick={closeModal}>취소하기</button>
-                    <button className="modal-group-button" onClick={handleSubmit}>삭제하기</button>
+                    <button className="modal-group-button" onClick={closeModal}>닫기</button>
                 </ButtonGroup>
             </ModalContainer>
         </ModalOverlay>
     );
 };
 
-NoticeDeleteModal.propTypes = {
+NoticeViewModal.propTypes = {
     closeModal: PropTypes.func.isRequired,
 };
 
-export default NoticeDeleteModal;
+export default NoticeViewModal;

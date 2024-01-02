@@ -158,10 +158,84 @@ const ApiService = {
                 'Content-Type': 'multipart/form-data'
             }
         });
+    },
+
+    // get notice list
+    fetchNotices: async (page) => {
+        try {
+            const response = await axiosInstance.get('/notices', {
+                params: { page }
+            });
+            console.log('서버 응답:', response.data);
+            return response.data;
+        } catch (error) {
+            console.error('Notices 요청 실패:', error);
+            throw error;
+        }
+    },
+
+    // get notice detail
+    fetchNoticeDetail: async (noticeId) => {
+        try {
+            const response = await axiosInstance.get(`/notice`, {
+                params: { noticeId }
+            });
+            console.log('서버 응답:', response.data);
+            return response.data;
+        } catch (error) {
+            console.error('Notice Detail 요청 실패:', error);
+            throw error;
+        }
+    },
+
+    // register notice
+    registerNotice: async (title, body, loginId) => {
+        try {
+            const response = await axiosInstance.post('/notice/post', {
+                noticeTitle: title,
+                noticeContent: body,
+                loginId: loginId
+            });
+            console.log('서버 응답:', response.data);
+            return response.data;
+        } catch (error) {
+            console.error('Notice 등록 실패:', error);
+            throw error;
+        }
+    },
+
+    // edit notice
+    editNotice: async (noticeId, title, body, loginId) => {
+        try {
+            const response = await axiosInstance.put('/notice/update', {
+                noticeId: noticeId,
+                noticeTitle: title,
+                noticeContent: body,
+                loginId: loginId
+            });
+            console.log('서버 응답:', response.data);
+            return response.data;
+        } catch (error) {
+            console.error('Notice 수정 실패:', error);
+            throw error;
+        }
+    },
+
+    deleteNotice: async (noticeId, loginId) => {
+        try {
+            const response = await axiosInstance.delete(`/notice/delete`, {
+                data: {
+                    noticeId: noticeId,
+                    loginId: loginId
+                },
+            });
+            console.log('서버 응답:', response.data);
+            return response.data;
+        } catch (error) {
+            console.error('Notice 삭제 실패:', error);
+            throw error;
+        }
     }
-
-
-
 
 
 };

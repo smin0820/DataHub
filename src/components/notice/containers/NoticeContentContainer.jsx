@@ -6,6 +6,8 @@ import styled from "styled-components";
 import PropTypes from "prop-types";
 import NoticeDropdown from "@components/notice/containers/NoticeDropdown";
 import useDropdown from "@hooks/useDropdown";
+import NoticeViewModal from "@components/notice/modals/NoticeViewModal";
+import useIdModal from "@hooks/useIdModal";
 
 const Boarddiv = styled.div`
     display: flex;
@@ -52,6 +54,13 @@ const Boarddiv = styled.div`
         }
     }
 
+    td:first-child {
+        cursor: pointer;
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+
     td:last-child {
         display: flex;
         justify-content: flex-end;
@@ -59,14 +68,6 @@ const Boarddiv = styled.div`
     }
 `;
 
-const StyledLink = styled.a`
-    color: black;
-    text-decoration: none;
-
-    &:hover {
-        text-decoration: underline;
-    }
-`;
 
 const Tbodytr = styled.tr`
     border-bottom: 2px solid #e5eaf2;
@@ -74,55 +75,51 @@ const Tbodytr = styled.tr`
 `;
 
 export default function NoticeContentContainer(props) {
-    const { title, data = [] } = props;
+    const { title, data = [], onRefresh } = props;
 
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
     const isAdmin = userInfo && userInfo.role === "ADMIN";
     const { currentOpenDropdown, toggleDropdown, dropdownRefs, closeDropdown } = useDropdown();
-
-    const cutFileName = (name, maxLength = 20) => {
-        if(name.length > maxLength) {
-        return `${name.substring(0, maxLength)}...`;
-        }
-        return name;
-    };
-
+    const { isOpen: isViewOpen, selectedId, openModal: openViewModal, closeModal: closeViewModal } = useIdModal();
 
     return (
         <Boarddiv>
-        <table>
-            <caption>{title}</caption>
-            <thead>
-            <tr>
-                <th>제목</th>
-                <th>업로드 일시</th>
-                {/* <th>차수</th>  */}
-                <th></th>
-            </tr>
-            </thead>
+            <table>
+                <caption>{title}</caption>
+                <thead>
+                <tr>
+                    <th>제목</th>
+                    <th>업로드 일시</th>
+                    {/* <th>차수</th>  */}
+                    <th></th>
+                </tr>
+                </thead>
 
-            <tbody>
-            {data.map((n, i) => (
-                <Tbodytr key={i}>
-                <td>
-                    <StyledLink href={n.taskFileUrl} target="_blank" rel="noopener noreferrer">
-                    {cutFileName(n.taskFileName)}
-                    </StyledLink>
-                </td>
-                <td>{n.uploadDate}</td>
-                {/* <td>{n.articleId}</td> */}
-                <td>
-                    <div style={{ position: 'relative' }} ref={el => dropdownRefs.current.set(n.articleId, el)}>
-                        <span onClick={() => toggleDropdown(n.articleId)}>
-                            편집 {currentOpenDropdown === n.articleId ? "∧" : "∨"}
-                        </span>
-                        {currentOpenDropdown === n.articleId && <NoticeDropdown />}
-                    </div>
-                </td>
-                </Tbodytr>
-            ))}
-            </tbody>
-        </table>
+                <tbody>
+                {data.map((n, i) => (
+                    <Tbodytr key={i}>
+                    <td onClick={() => openViewModal(n.noticeId)}>
+                        {n.noticeTitle}
+                    </td>
+                    <td>
+                        {n.noticeDate}
+                    </td>
+                    {/* <td>{n.noticeId}</td> */}
+                    <td style={{ position: 'relative' }} ref={el => dropdownRefs.current.set(n.noticeId, el)}>
+                        {isAdmin && (
+                            <>
+                                <span onClick={() => toggleDropdown(n.noticeId)}>
+                                    편집 {currentOpenDropdown === n.noticeId ? "∧" : "∨"}
+                                </span>
+                                {currentOpenDropdown === n.noticeId && <NoticeDropdown noticeId={n.noticeId} onRefresh={onRefresh} />}
+                            </>
+                        )}
+                    </td>
+                    </Tbodytr>   
+                ))}
+                </tbody>
+            </table>
+            {isViewOpen && <NoticeViewModal noticeId = {selectedId} closeModal={closeViewModal} />}
         </Boarddiv>
     );
 }
