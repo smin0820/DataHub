@@ -106,10 +106,14 @@ export default function NoticeContentContainer(props) {
                     </td>
                     {/* <td>{n.noticeId}</td> */}
                     <td style={{ position: 'relative' }} ref={el => dropdownRefs.current.set(n.noticeId, el)}>
-                        <span onClick={() => toggleDropdown(n.noticeId)}>
-                            편집 {currentOpenDropdown === n.noticeId ? "∧" : "∨"}
-                        </span>
-                        {currentOpenDropdown === n.noticeId && <NoticeDropdown />}
+                        {isAdmin && (
+                            <>
+                                <span onClick={() => toggleDropdown(n.noticeId)}>
+                                    편집 {currentOpenDropdown === n.noticeId ? "∧" : "∨"}
+                                </span>
+                                {currentOpenDropdown === n.noticeId && <NoticeDropdown />}
+                            </>
+                        )}
                     </td>
                     </Tbodytr>   
                 ))}

@@ -28,13 +28,17 @@ const Container = styled.div`
 
 export default function NoticeNewArticle() {
     const { isOpen, openModal, closeModal } = useModal();
+    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    const isAdmin = userInfo && userInfo.role === "ADMIN";
 
     return (
         <Container>
             <div>
-                <button onClick={openModal}>
-                    공지사항 등록
-                </button>
+                {isAdmin && (
+                    <button onClick={openModal}>
+                        공지사항 등록
+                    </button>
+                )}
             </div>
             {isOpen && <NoticeRegisterModal closeModal={closeModal} />}
         </Container>
