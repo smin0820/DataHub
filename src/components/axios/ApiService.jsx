@@ -219,6 +219,19 @@ const ApiService = {
             console.error('Notice 수정 실패:', error);
             throw error;
         }
+    },
+
+    deleteNotice: async (noticeId, userId) => {
+        try {
+            const response = await axiosInstance.delete(`/notice/delete`, {
+                params: { noticeId, userId }
+            });
+            console.log('서버 응답:', response.data);
+            return response.data;
+        } catch (error) {
+            console.error('Notice 삭제 실패:', error);
+            throw error;
+        }
     }
 
 

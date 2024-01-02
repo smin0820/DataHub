@@ -114,17 +114,29 @@ const CloseButton = styled.button`
 `;
 
 
-const NoticeDeleteModal = ({ closeModal }) => {
+const NoticeDeleteModal = ({ closeModal, onRefresh }) => {
 
-
-    const handleSubmit = async () => {
-    if(!Title && !Body) { 
-        console.error("Value is not valid");
-        return;
+    const handleSuccess = () => {
+        closeModal();
+        onRefresh();
     }
-        const formData = new FormData();
-        formData.append('title', Title);
+    
+    const handleSubmit = async () => {
+        const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+        if (!userInfo || !userInfo.userId) {
+            console.error("사용자 정보가 없습니다.");
+            return;
+        }
+        
+        try {
+            const response = await ApiService.deleteNotice(noticeId, userInfo.userId);
+            console.log("공지사항 수정 성공:", response);
+            handleSuccess();
+        } catch (error) {
+            console.error("공지사항 수정 실패:", error);
+        }
     };
+
 
     return (
         <ModalOverlay className="modal-overlay" onClick={closeModal}>

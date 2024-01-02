@@ -66,7 +66,7 @@ export default function NoticeDropdown({ noticeId, onRefresh }) {
                 </ul>
             </Dropmenu>
             {isEditOpen && <NoticeEditModal noticeId={noticeId} onRefresh={onRefresh} closeModal={closeEditModal} />}
-            {isDeleteOpen && <NoticeDeleteModal noticeId={noticeId} closeModal={closeDeleteModal} />} 
+            {isDeleteOpen && <NoticeDeleteModal noticeId={noticeId} onRefresh={onRefresh} closeModal={closeDeleteModal} />} 
         </>
     );
 }
