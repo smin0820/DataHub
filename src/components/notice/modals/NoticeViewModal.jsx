@@ -55,6 +55,7 @@ const ModalContent = styled.p`
     text-align: left;
     margin-bottom: 5px;
     margin-left: 30px;
+    white-space: pre-wrap;
 `;
 
 const ButtonGroup = styled.div`

@@ -191,13 +191,13 @@ const NoticeRegisterModal = ({ closeModal }) => {
     }
 
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-    if (!userInfo || !userInfo.userId) {
+    if (!userInfo || !userInfo.loginId) {
         console.error("사용자 정보가 없습니다.");
         return;
     }
 
     try {
-        const response = await ApiService.registerNotice(Title, Body, userInfo.userId);
+        const response = await ApiService.registerNotice(Title, Body, userInfo.loginId);
         console.log("공지사항 등록 성공:", response);
         // 성공적으로 등록되었을 때의 추가 동작
         handleSuccess();

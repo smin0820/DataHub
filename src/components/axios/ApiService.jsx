@@ -189,12 +189,12 @@ const ApiService = {
     },
 
     // register notice
-    registerNotice: async (title, body, userId) => {
+    registerNotice: async (title, body, loginId) => {
         try {
             const response = await axiosInstance.post('/notice/post', {
                 noticeTitle: title,
                 noticeContent: body,
-                userId: userId
+                loginId: loginId
             });
             console.log('서버 응답:', response.data);
             return response.data;
@@ -205,13 +205,13 @@ const ApiService = {
     },
 
     // edit notice
-    editNotice: async (noticeId, title, body, userId) => {
+    editNotice: async (noticeId, title, body, loginId) => {
         try {
             const response = await axiosInstance.put('/notice/update', {
                 noticeId: noticeId,
                 noticeTitle: title,
                 noticeContent: body,
-                userId: userId
+                loginId: loginId
             });
             console.log('서버 응답:', response.data);
             return response.data;
@@ -221,10 +221,13 @@ const ApiService = {
         }
     },
 
-    deleteNotice: async (noticeId, userId) => {
+    deleteNotice: async (noticeId, loginId) => {
         try {
             const response = await axiosInstance.delete(`/notice/delete`, {
-                params: { noticeId, userId }
+                data: {
+                    noticeId: noticeId,
+                    loginId: loginId
+                },
             });
             console.log('서버 응답:', response.data);
             return response.data;

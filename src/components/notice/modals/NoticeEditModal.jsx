@@ -195,7 +195,7 @@ const NoticeEditModal = ({ closeModal, noticeId, onRefresh }) => {
 
     const handleSubmit = async () => {
         const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-        if (!userInfo || !userInfo.userId) {
+        if (!userInfo || !userInfo.loginId) {
             console.error("사용자 정보가 없습니다.");
             return;
         }
@@ -206,7 +206,7 @@ const NoticeEditModal = ({ closeModal, noticeId, onRefresh }) => {
         }
         
         try {
-            const response = await ApiService.editNotice(noticeId, title, body, userInfo.userId);
+            const response = await ApiService.editNotice(noticeId, title, body, userInfo.loginId);
             console.log("공지사항 수정 성공:", response);
             handleSuccess();
         } catch (error) {

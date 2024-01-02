@@ -114,22 +114,22 @@ const CloseButton = styled.button`
 `;
 
 
-const NoticeDeleteModal = ({ closeModal, onRefresh }) => {
+const NoticeDeleteModal = ({ noticeId, closeModal, onRefresh }) => {
 
     const handleSuccess = () => {
         closeModal();
         onRefresh();
     }
-    
+
     const handleSubmit = async () => {
         const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-        if (!userInfo || !userInfo.userId) {
+        if (!userInfo || !userInfo.loginId) {
             console.error("사용자 정보가 없습니다.");
             return;
         }
         
         try {
-            const response = await ApiService.deleteNotice(noticeId, userInfo.userId);
+            const response = await ApiService.deleteNotice(noticeId, userInfo.loginId);
             console.log("공지사항 수정 성공:", response);
             handleSuccess();
         } catch (error) {
