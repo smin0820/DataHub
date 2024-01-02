@@ -45,9 +45,40 @@ const Container = styled.div`
   }
 `;
 
+const Inputdiv = styled.div`
+  position: relative;
+  margin-top: 1rem;
+  input {
+    width: 61.8rem;
+    height: 10rem;
+    padding: 0;
+    font-size: medium;
+    text-align: left;
+    padding-left: 0.5rem;
+    
+  }
+  button {
+    position: absolute;
+    width: 4rem;
+    height: 2rem;
+    top: 7rem;
+    bottom: 0;
+    right: 0.5rem;
+    padding: 5px 10px;
+    margin: auto 0;
+    border-radius: 10px;
+    color: white;
+    font-size: medium;
+    background-color: #007FFF;
+    border: 1px solid #007FFF;
+    cursor: pointer;
+  }
+`;
 export default function WrapComments() {
   const [commentList, setCommentList] = useState([]);
   const [newComment, setNewComment] = useState('');
+  // 수정중인 댓글의 인덱스
+  const [editIndex, setEditIndex] = useState(null);
 
   const handleCommentChange = (e) => {
     setNewComment(e.target.value);
@@ -55,8 +86,17 @@ export default function WrapComments() {
 
   const handleCommentSubmit = () => {
     if (newComment.trim() !== '') {
-      // 여기에 백엔드 API 호출 + 댓글 저장 기능 추가
-      setCommentList([...commentList, newComment]);
+      if(editIndex !== null) {
+        // 여기에 백엔드 API 호출 + 댓글 저장 기능 추가
+        // 수정 모드인 경우
+        const updatedComments = [...commentList];
+        updatedComments[editIndex] = newComment;
+        setCommentList(updatedComments);
+        setEditIndex(null);
+      } else {
+        // 추가 모드인 경우
+        setCommentList([...commentList, newComment]);
+      }
       setNewComment('');
     }
   };
@@ -65,7 +105,15 @@ export default function WrapComments() {
     const updatedComments = [...commentList];
     updatedComments.splice(index, 1);
     setCommentList(updatedComments);
+    // 삭제 시 수정 중인 상태로 초기화
+    setEditIndex(null);
   }
+
+  const handleCommentEdit = (index) => {
+    setNewComment(commentList[index]);
+    setEditIndex(index);
+  }
+
 
   const handleKeyDown = (e) => {
     if(e.key === 'Enter') {
@@ -85,14 +133,14 @@ export default function WrapComments() {
               </div>
               {comment}
               <div>
-                <span>수정</span>
+                <span onClick={() => handleCommentEdit(index)}>수정</span>
                 <span>/</span>
                 <span onClick={() => handleCommentDelete(index)}>지우기</span>
               </div>
             </li>
           ))}
         </ul>
-        <div>
+        <Inputdiv>
           <input
             type="text"
             placeholder="댓글 남겨주세요..."
@@ -100,8 +148,10 @@ export default function WrapComments() {
             onChange={handleCommentChange}
             onKeyDown={handleKeyDown}
           />
-          <input type="button" value="작성" onClick={handleCommentSubmit} />
-        </div>
+          <button onClick={handleCommentSubmit}>
+            {editIndex !== null ? '수정' : '작성'}
+          </button>
+        </Inputdiv>
       </div>
     </Container>
   );
