@@ -1,5 +1,8 @@
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
+import ApiService from '@components/axios/ApiService';
+import { useNavigate } from 'react-router-dom';
 
 const ModalOverlay = styled.div`
   position: fixed;
@@ -106,7 +109,26 @@ const CloseButton = styled.button`
   }
 `;
 
-const RegistSysModalContainer = ({ closeModal }) => {
+const RegistSysModalContainer = ({ closeModal, inputValues }) => {
+  const navigate = useNavigate();
+  const handleRegistSys = () => {
+    ApiService.registerSystem(inputValues)
+      .then(response => {
+        if (response) {
+          console.log('Register Success:', response);
+          alert("시스템이 등록되었습니다.")
+          closeModal();
+          navigate('/admin');
+        } else {
+          alert("아이디가 중복되어 등록할 수 없습니다.")
+          closeModal();
+        }
+      })
+      .catch(error => {
+        console.error('Register Error:', error);
+      });
+  };
+
   return (
     <ModalOverlay onClick={closeModal}>
       <ModalContainer onClick={(e) => e.stopPropagation()}>
@@ -115,7 +137,7 @@ const RegistSysModalContainer = ({ closeModal }) => {
         <ModalContent>선택하신 시스템을 등록 하시겠습니까?</ModalContent>
         <ButtonGroup>
           <button className="modal-group-button" onClick={closeModal}>취소하기</button>
-          <button className="modal-group-button">등록하기</button>
+          <button className="modal-group-button" onClick={handleRegistSys}>등록하기</button>
         </ButtonGroup>
       </ModalContainer>
     </ModalOverlay>

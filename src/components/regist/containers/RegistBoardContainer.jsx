@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import styled from 'styled-components';
 import modify from "/assets/images/modify.png";
-// import RegistSysModal from '@components/regist/RegistSysModal';
+import RegistSysModal from '@components/regist/RegistSysModal';
 import { useNavigate } from "react-router-dom";
-import ApiService from '@components/axios/ApiService';
+
 
 
 const PageContainer = styled.div`
@@ -165,7 +165,7 @@ const RequiredSpan = styled.span`
 `;
 
 const RegistBoardContainer = () => {
-    // const [isModalOpen, setModalOpen] = useState(false);
+    const [isModalOpen, setModalOpen] = useState(false);
     const [inputValues, setInputValues] = useState({
       systemName: '',
       departmentName: '',
@@ -186,23 +186,14 @@ const RegistBoardContainer = () => {
       }));
     };
 
-    const handleSingUp = () => {
+    const handleSignUp = () => {
       //입력 값이 비어있는지 확인
       if (!inputValues.systemName || !inputValues.departmentName || !inputValues.companyName || !inputValues.department || !inputValues.developerName || !inputValues.contactNum || !inputValues.loginId)  {
         alert('모든 값을 입력해주세요.');
         return; // 등록을 못하게 만듦
       }
-
-      //서버에 POST
-      ApiService.registerSystem(inputValues)
-        .then(response => {
-            console.log('Success:', response);
-            alert('시스템을 등록하였습니다.');
-            navigate('/admin');
-        })
-        .catch(error => {
-            console.error('Error:', error);
-        });
+      
+      setModalOpen(true);
     };
 
   return (
@@ -299,8 +290,8 @@ const RegistBoardContainer = () => {
         </Form>
         <ButtonGroup>
           <button className="group-button"  onClick={()=> {navigate(-1)}}>취소</button>
-          <button className="group-button" onClick={handleSingUp}>등록하기</button>
-        {/* {isModalOpen && <RegistSysModal closeModal={() => setModalOpen(false)} />} */}
+          <button className="group-button" onClick={handleSignUp}>등록하기</button>
+        {isModalOpen && <RegistSysModal closeModal={() => setModalOpen(false)} inputValues={inputValues} />}
         </ButtonGroup>
       </Container>
     </PageContainer>
