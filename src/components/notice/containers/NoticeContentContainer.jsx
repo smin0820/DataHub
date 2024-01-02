@@ -6,6 +6,8 @@ import styled from "styled-components";
 import PropTypes from "prop-types";
 import NoticeDropdown from "@components/notice/containers/NoticeDropdown";
 import useDropdown from "@hooks/useDropdown";
+import NoticeViewModal from "@components/notice/modals/NoticeViewModal";
+import useIdModal from "@hooks/useIdModal";
 
 const Boarddiv = styled.div`
     display: flex;
@@ -52,6 +54,13 @@ const Boarddiv = styled.div`
         }
     }
 
+    td:first-child {
+        cursor: pointer;
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+
     td:last-child {
         display: flex;
         justify-content: flex-end;
@@ -59,14 +68,6 @@ const Boarddiv = styled.div`
     }
 `;
 
-const StyledLink = styled.a`
-    color: black;
-    text-decoration: none;
-
-    &:hover {
-        text-decoration: underline;
-    }
-`;
 
 const Tbodytr = styled.tr`
     border-bottom: 2px solid #e5eaf2;
@@ -79,6 +80,7 @@ export default function NoticeContentContainer(props) {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
     const isAdmin = userInfo && userInfo.role === "ADMIN";
     const { currentOpenDropdown, toggleDropdown, dropdownRefs, closeDropdown } = useDropdown();
+    const { isOpen: isViewOpen, selectedId, openModal: openViewModal, closeModal: closeViewModal } = useIdModal();
 
     return (
         <Boarddiv>
@@ -96,7 +98,7 @@ export default function NoticeContentContainer(props) {
             <tbody>
             {data.map((n, i) => (
                 <Tbodytr key={i}>
-                <td>
+                <td onClick={() => openViewModal(n.noticeId)}>
                     {n.noticeTitle}
                 </td>
                 <td>
@@ -111,8 +113,9 @@ export default function NoticeContentContainer(props) {
                         {currentOpenDropdown === n.noticeId && <NoticeDropdown />}
                     </div>
                 </td>
-                </Tbodytr>
+                </Tbodytr>   
             ))}
+            {isViewOpen && <NoticeViewModal noticeId = {selectedId} closeModal={closeViewModal} />}
             </tbody>
         </table>
         </Boarddiv>
