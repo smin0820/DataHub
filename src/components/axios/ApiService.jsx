@@ -172,9 +172,21 @@ const ApiService = {
             console.error('Notices 요청 실패:', error);
             throw error;
         }
+    },
+
+    // get notice detail
+    fetchNoticeDetail: async (noticeId) => {
+        try {
+            const response = await axiosInstance.get(`/notice`, {
+                params: { noticeId }
+            });
+            console.log('서버 응답:', response.data);
+            return response.data;
+        } catch (error) {
+            console.error('Notice Detail 요청 실패:', error);
+            throw error;
+        }
     }
-
-
 
 
 
