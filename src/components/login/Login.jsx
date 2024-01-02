@@ -13,10 +13,10 @@ const LoginBox = styled.div`
   display: flex;
   justify-content: center;
   width: 100%;
-  max-width: 450px;
+  max-width: 27rem;
   border: 2px solid #7b91a7;
   border-radius: 10px;
-  margin-top: 7%;
+  margin-top: 4rem;
   img {
     width: auto;
     height: 80px;
@@ -51,7 +51,6 @@ const LoginBox = styled.div`
   p {
     color: #7b91a7;
     font-size: small;
-    margin-bottom: 70px;
   }
 `;
 
@@ -80,6 +79,9 @@ export default function Login() {
       } else {
         setError("로그인 실패: 잘못된 사용자 이름 또는 비밀번호");
       }
+      setTimeout(() => {
+        setError("");
+      }, 2000);
     } catch (error) {
       console.error('로그인 실패: ',error);
     }
@@ -104,13 +106,12 @@ export default function Login() {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
             />
-
+            {error && <p>{error}</p>}
             <button type="submit">로그인</button>
           </form>
           <p>© 2023. (주)제이솔루션 all rights reserved.</p>
         </div>
       </LoginBox>
-      {error && <p>{error}</p>}
     </Container>
   );
 }
