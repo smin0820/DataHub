@@ -186,8 +186,23 @@ const ApiService = {
             console.error('Notice Detail 요청 실패:', error);
             throw error;
         }
-    }
+    },
 
+    // register notice
+    registerNotice: async (title, body, userId) => {
+        try {
+            const response = await axiosInstance.post('/notice/post', {
+                noticeTitle: title,
+                noticeContent: body,
+                userId: userId
+            });
+            console.log('서버 응답:', response.data);
+            return response.data;
+        } catch (error) {
+            console.error('Notice 등록 실패:', error);
+            throw error;
+        }
+    }
 
 
 };

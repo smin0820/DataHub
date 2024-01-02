@@ -179,14 +179,33 @@ const NoticeRegisterModal = ({ closeModal }) => {
         setBody(event.target.value);
     };
 
+    const handleSuccess = () => {
+        closeModal();
+        window.location.reload();
+    };
+
     const handleSubmit = async () => {
-    if(!Title && !Body) { 
-        console.error("Value is not valid");
+    if(!Title || !Body) { 
+        console.error("제목과 본문을 모두 입력해야 합니다.");
         return;
     }
-        const formData = new FormData();
-        formData.append('title', Title);
-    };
+
+    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    if (!userInfo || !userInfo.userId) {
+        console.error("사용자 정보가 없습니다.");
+        return;
+    }
+
+    try {
+        const response = await ApiService.registerNotice(Title, Body, userInfo.userId);
+        console.log("공지사항 등록 성공:", response);
+        // 성공적으로 등록되었을 때의 추가 동작
+        handleSuccess();
+    } catch (error) {
+        console.error("공지사항 등록 실패:", error);
+        // 실패했을 때의 동작 처리
+    }
+};
 
     return (
         <ModalOverlay className="modal-overlay" onClick={closeModal}>
