@@ -5,6 +5,44 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
 
+  div {
+    width: 100%;
+    max-width: 1000px;
+
+    ul {
+      padding: 0;
+      margin: 0;
+    }
+
+    li {
+      list-style: none;
+      margin-top: 2rem;
+      padding-bottom: 2rem;
+      border-bottom: 2px solid #e5eaf2;
+
+      span {
+        font-size: small;
+      }
+      div:nth-child(1) {
+        span:nth-child(1) {
+          margin-right: 1rem;
+        }
+      }
+      div:nth-child(2) {
+        span {
+          font-size: xx-small;
+          margin-right: 0.5rem;
+          cursor: pointer;
+          opacity: 45%;
+          &:hover {
+            color: #4dbde5;
+            font-weight: bold;
+            opacity: 100%
+          }
+        }
+      }
+    }
+  }
 `;
 
 export default function WrapComments() {
@@ -34,7 +72,18 @@ export default function WrapComments() {
       <div>
         <ul>
           {commentList.map((comment, index) => (
-            <li key={index}>{comment}</li>
+            <li key={index}>
+              <div>
+                <span>adm**</span>
+                <span>2024.01.02 11:24</span>
+              </div>
+              {comment}
+              <div>
+                <span>수정</span>
+                <span>/</span>
+                <span>지우기</span>
+              </div>
+            </li>
           ))}
         </ul>
         <div>
@@ -45,7 +94,7 @@ export default function WrapComments() {
             onChange={handleCommentChange}
             onKeyDown={handleKeyDown}
           />
-          <button onClick={handleCommentSubmit}>작성</button>
+          <input type="button" value="작성" onClick={handleCommentSubmit} />
         </div>
       </div>
     </Container>
