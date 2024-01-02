@@ -60,18 +60,25 @@ const PaginationComponent = ({ currentPage, totalPages, onPageChange }) => {
 
 export default function NoticeTableContainer() {
     const [currentPage, setCurrentPage] = useState(1);
-    const { notices, totalPages, loading, error } = useNotices(currentPage);
+    const { notices, totalPages, loading, error, refetchNotices } = useNotices(currentPage);
+
 
     const handlePageChange = (newPage) => {
         setCurrentPage(newPage);
     };
+
+    // 목록 새로고침 함수
+    const refreshList = () => {
+        refetchNotices();
+    };
+
 
     if (loading) return <div>Loading...</div>;
     if (error) return <div>Error: {error.message}</div>;
     
     return (
         <div>
-            <NoticeContentContainer title={"[공지사항]"} data={notices} />
+            <NoticeContentContainer title={"[공지사항]"} data={notices} onRefresh={refreshList} />
             <PaginationComponent 
                 currentPage={currentPage} 
                 totalPages={totalPages} 

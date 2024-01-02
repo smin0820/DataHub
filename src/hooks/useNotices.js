@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import ApiService from '@components/axios/ApiService';
 
 export const useNotices = (currentPage) => {
@@ -7,7 +7,8 @@ export const useNotices = (currentPage) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    useEffect(() => {
+    // 데이터를 불러오는 함수
+    const fetchNotices = useCallback(() => {
         setLoading(true);
         ApiService.fetchNotices(currentPage)
             .then(articleData => {
@@ -22,5 +23,11 @@ export const useNotices = (currentPage) => {
             .finally(() => setLoading(false));
     }, [currentPage]);
 
-    return { notices, totalPages, loading, error };
+    // 컴포넌트 마운트시 및 currentPage가 변경될 때마다 fetchNotices 실행
+    useEffect(() => {
+        fetchNotices();
+    }, [fetchNotices]);
+
+    // refetchNotices 함수 반환
+    return { notices, totalPages, loading, error, refetchNotices: fetchNotices };
 };

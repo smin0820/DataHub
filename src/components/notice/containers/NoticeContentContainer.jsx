@@ -75,7 +75,7 @@ const Tbodytr = styled.tr`
 `;
 
 export default function NoticeContentContainer(props) {
-    const { title, data = [] } = props;
+    const { title, data = [], onRefresh } = props;
 
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
     const isAdmin = userInfo && userInfo.role === "ADMIN";
@@ -111,7 +111,7 @@ export default function NoticeContentContainer(props) {
                                 <span onClick={() => toggleDropdown(n.noticeId)}>
                                     편집 {currentOpenDropdown === n.noticeId ? "∧" : "∨"}
                                 </span>
-                                {currentOpenDropdown === n.noticeId && <NoticeDropdown />}
+                                {currentOpenDropdown === n.noticeId && <NoticeDropdown noticeId={n.noticeId} onRefresh={onRefresh} />}
                             </>
                         )}
                     </td>

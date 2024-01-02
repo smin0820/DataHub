@@ -45,20 +45,28 @@ const Dropmenu = styled.div`
     }
 `
 
-export default function NoticeDropdown() {
+export default function NoticeDropdown({ noticeId, onRefresh }) {
     const { isOpen: isEditOpen, openModal: openEditModal, closeModal: closeEditModal } = useModal();
     const { isOpen: isDeleteOpen, openModal: openDeleteModal, closeModal: closeDeleteModal } = useModal();
+
+    const handleEditClick = () => {
+        openEditModal();
+    };
+
+    const handleDeleteClick = () => {
+        openDeleteModal();
+    };
 
     return (
         <>
             <Dropmenu>
                 <ul>
-                    <li onClick={openEditModal}>수정</li>
-                    <li onClick={openDeleteModal}>삭제</li>
+                    <li onClick={handleEditClick}>수정</li>
+                    <li onClick={handleDeleteClick}>삭제</li>
                 </ul>
             </Dropmenu>
-            {isEditOpen && <NoticeEditModal closeModal={closeEditModal} />}
-            {isDeleteOpen && <NoticeDeleteModal closeModal={closeDeleteModal} />} 
+            {isEditOpen && <NoticeEditModal noticeId={noticeId} onRefresh={onRefresh} closeModal={closeEditModal} />}
+            {isDeleteOpen && <NoticeDeleteModal noticeId={noticeId} closeModal={closeDeleteModal} />} 
         </>
     );
 }
