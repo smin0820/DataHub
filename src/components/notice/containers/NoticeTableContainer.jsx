@@ -6,9 +6,7 @@ import React, { useEffect, useState } from "react";
 import styled from "styled-components";
 import NoticeContentContainer from "@components/notice/containers/NoticeContentContainer";
 import { usePagination } from '@hooks/usePagenation';
-import { useArticles } from '@hooks/useArticles';
-import NoticeDropdown from "@components/notice/containers/NoticeDropdown";
-
+import { useNotices } from '@hooks/useNotices';
 
 const PaginationContainer = styled.div`
     display: flex;
@@ -62,7 +60,7 @@ const PaginationComponent = ({ currentPage, totalPages, onPageChange }) => {
 
 export default function NoticeTableContainer() {
     const [currentPage, setCurrentPage] = useState(1);
-    const { articles, totalPages, loading, error } = useArticles(currentPage);
+    const { notices, totalPages, loading, error } = useNotices(currentPage);
 
     const handlePageChange = (newPage) => {
         setCurrentPage(newPage);
@@ -73,7 +71,7 @@ export default function NoticeTableContainer() {
     
     return (
         <div>
-            <NoticeContentContainer title={"[공지사항]"} data={articles} />
+            <NoticeContentContainer title={"[공지사항]"} data={notices} />
             <PaginationComponent 
                 currentPage={currentPage} 
                 totalPages={totalPages} 

@@ -80,14 +80,6 @@ export default function NoticeContentContainer(props) {
     const isAdmin = userInfo && userInfo.role === "ADMIN";
     const { currentOpenDropdown, toggleDropdown, dropdownRefs, closeDropdown } = useDropdown();
 
-    const cutFileName = (name, maxLength = 20) => {
-        if(name.length > maxLength) {
-        return `${name.substring(0, maxLength)}...`;
-        }
-        return name;
-    };
-
-
     return (
         <Boarddiv>
         <table>
@@ -105,18 +97,18 @@ export default function NoticeContentContainer(props) {
             {data.map((n, i) => (
                 <Tbodytr key={i}>
                 <td>
-                    <StyledLink href={n.taskFileUrl} target="_blank" rel="noopener noreferrer">
-                    {cutFileName(n.taskFileName)}
-                    </StyledLink>
+                    {n.noticeTitle}
                 </td>
-                <td>{n.uploadDate}</td>
-                {/* <td>{n.articleId}</td> */}
                 <td>
-                    <div style={{ position: 'relative' }} ref={el => dropdownRefs.current.set(n.articleId, el)}>
-                        <span onClick={() => toggleDropdown(n.articleId)}>
-                            편집 {currentOpenDropdown === n.articleId ? "∧" : "∨"}
+                    {n.noticeDate}
+                </td>
+                {/* <td>{n.noticeId}</td> */}
+                <td>
+                    <div style={{ position: 'relative' }} ref={el => dropdownRefs.current.set(n.noticeId, el)}>
+                        <span onClick={() => toggleDropdown(n.noticeId)}>
+                            편집 {currentOpenDropdown === n.noticeId ? "∧" : "∨"}
                         </span>
-                        {currentOpenDropdown === n.articleId && <NoticeDropdown />}
+                        {currentOpenDropdown === n.noticeId && <NoticeDropdown />}
                     </div>
                 </td>
                 </Tbodytr>
