@@ -61,6 +61,12 @@ export default function WrapComments() {
     }
   };
 
+  const handleCommentDelete = (index) => {
+    const updatedComments = [...commentList];
+    updatedComments.splice(index, 1);
+    setCommentList(updatedComments);
+  }
+
   const handleKeyDown = (e) => {
     if(e.key === 'Enter') {
       handleCommentSubmit();
@@ -81,7 +87,7 @@ export default function WrapComments() {
               <div>
                 <span>수정</span>
                 <span>/</span>
-                <span>지우기</span>
+                <span onClick={() => handleCommentDelete(index)}>지우기</span>
               </div>
             </li>
           ))}
