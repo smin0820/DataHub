@@ -4,8 +4,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import useModal from '@hooks/useModal';
-import NoticeRegisterModal from '@components/notice/modals/NoticeReigsterModal';
-import QnaAddModal from '../modals/QnaAddModal';
+import QnaReigsterModal from '../modals/QnaReigsterModal';
 
 const Container = styled.div`
     display: flex;
@@ -37,7 +36,7 @@ export default function NoticeNewArticle() {
                     글쓰기
                 </button>
             </div>
-            {isOpen && <QnaAddModal closeModal={closeModal} />}
+            {isOpen && <QnaReigsterModal closeModal={closeModal} />}
         </Container>
     )
 };

@@ -167,7 +167,7 @@ const BodyTextArea = styled.textarea`
     }
 `;
 
-const QnaAddModal = ({ closeModal }) => {
+const QnaReigsterModal = ({ closeModal }) => {
     const [Title, setTitle] = useState("");
     const [Body, setBody] = useState("");
 
@@ -197,7 +197,7 @@ const QnaAddModal = ({ closeModal }) => {
     }
 
     try {
-        const response = await ApiService.registerNotice(Title, Body, userInfo.loginId);
+        const response = await ApiService.registerQna(userInfo.loginId, Title, Body);
         console.log("Qna 글쓰기 성공:", response);
         // 성공적으로 등록되었을 때의 추가 동작
         handleSuccess();
@@ -237,8 +237,8 @@ const QnaAddModal = ({ closeModal }) => {
     );
 };
 
-QnaAddModal.propTypes = {
+QnaReigsterModal.propTypes = {
     closeModal: PropTypes.func.isRequired,
 };
 
-export default QnaAddModal;
+export default QnaReigsterModal;

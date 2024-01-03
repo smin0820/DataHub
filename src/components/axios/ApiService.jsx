@@ -174,6 +174,21 @@ const ApiService = {
         }
     },
 
+    // get qna list
+    fetchQna: async (page) => {
+        try {
+            const response = await axiosInstance.get('/qa', {
+                params: { page }
+            });
+            console.log('서버 응답:', response.data);
+            return response.data;
+        } catch (error) {
+            console.log('Qna 목록 요청 실패:', error);
+            throw error;
+        }
+    },
+
+
     // get notice detail
     fetchNoticeDetail: async (noticeId) => {
         try {
@@ -190,15 +205,21 @@ const ApiService = {
 
     // Qna 글쓰기
     registerQna: async (loginId, qaTitle, qaContent) => {
+        const formData = new FormData();
+        formData.append('loginId',loginId);
+        formData.append('qaTitle',qaTitle);
+        formData.append('qaContent',qaContent);
+
         try {
-            const response = await axiosInstance.post('/qna/additon', {
-                loginId: loginId,
-                qaTitle: qaTitle,
-                qaContent: qaContent
+            const response = await axiosInstance.post('/qa/addition', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
             });
             console.log('서버 응답:', response.data);
         } catch(error) {
             console.log('qna 등록 실패:', error);
+            console.log("content",loginId, qaTitle, qaContent);
             throw error;
         }
     },
@@ -236,6 +257,7 @@ const ApiService = {
         }
     },
 
+    // delete notice
     deleteNotice: async (noticeId, loginId) => {
         try {
             const response = await axiosInstance.delete(`/notice/delete`, {
