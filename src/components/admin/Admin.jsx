@@ -1,5 +1,5 @@
 import React from 'react';
-import AdminHeaderContainer from '@components/admin/containers/AdminHeaderContainer'
+import HeaderContainer from '@components/common/containers/HeaderContainer'
 import AdminSearchContainer from '@components/admin/containers/AdminSearchContainer';
 import Sidebar from '@components/common/Sidebar';
 import AdminContentContainer from './containers/AdminContentContainer';
@@ -12,7 +12,7 @@ export default function Admin() {
 
     return (
         <>
-            <AdminHeaderContainer></AdminHeaderContainer>
+            <HeaderContainer></HeaderContainer>
             <Sidebar></Sidebar>
             <MainLogo></MainLogo>
             <AdminSearchContainer></AdminSearchContainer>

@@ -1,9 +1,12 @@
+// SystemContentContainer.jsx
+// 시스템 파일 업로드의 내용을 표시해주는 컴포넌트입니다.
+// {  }TableContiainer.jsx에서 내용을 전달해주면 표시해줍니다.
+
 import React from "react";
-import { useState } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
-// import Data from "../../../Data.json";
-import CheckUploadModal from "@components/modals/CheckUploadModal";
+import CheckUploadModalContainer from "@components/common/modals/CheckUploadModal/CheckUploadModalContainer";
+import useIdModal from "@hooks/useIdModal";
 
 const Boarddiv = styled.div`
   display: flex;
@@ -85,9 +88,9 @@ const Tbodytr = styled.tr`
   align-items: center;
 `;
 
-export default function AdminBorderContainer(props) {
+export default function SystemContentContainer(props) {
   const { title, data = [] } = props;
-  const [openModalArticleId, setopenModalArticleId] = useState(null);
+  const { isOpen, selectedId, openModal, closeModal } = useIdModal(); // useIdModal 훅 사용
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
   const isAdmin = userInfo && userInfo.role === "ADMIN";
 
@@ -142,10 +145,11 @@ export default function AdminBorderContainer(props) {
               {/* <td>{n.articleId}</td> */}
               <td>
                 {isAdmin && (
-                <button onClick={() => setopenModalArticleId(n.articleId)}>검토</button>
+                <button onClick={() => openModal(n.articleId)}>검토</button>
                 )}
-                {openModalArticleId === n.articleId && (
-                  <CheckUploadModal closeModal={() => setopenModalArticleId(null)} articleId={n.articleId} />
+                {isOpen && selectedId === n.articleId && (
+                  console.log("selectedId", selectedId),
+                  <CheckUploadModalContainer closeModal={closeModal} articleId={selectedId} />
                 )}
               </td>
             </Tbodytr>
@@ -168,12 +172,12 @@ function Return() {
   return <div style={{color:'#FF0000'}}>반려</div>;
 }
 
-AdminBorderContainer.propTypes = {
+SystemContentContainer.propTypes = {
   title: PropTypes.string,
   data: PropTypes.arrayOf(PropTypes.object)
 };
 
-AdminBorderContainer.defaultProps = {
+SystemContentContainer.defaultProps = {
   title: "",
   data: []
 };

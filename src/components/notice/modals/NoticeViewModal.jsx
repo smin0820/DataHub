@@ -53,9 +53,12 @@ const ModalTitle = styled.h2`
 const ModalContent = styled.p`
     font-size: 16px;
     text-align: left;
-    margin-bottom: 5px;
-    margin-left: 30px;
     white-space: pre-wrap;
+    margin: 5px 30px; /* 상단, 하단 마진 */
+    padding: 10px; /* 내부 패딩 */
+    white-space: pre-wrap;
+    max-height: 400px; /* 최대 높이 설정 */
+    overflow-y: auto; /* 내용이 넘칠 경우 스크롤바 표시 */
 `;
 
 const ButtonGroup = styled.div`

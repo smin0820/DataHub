@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import AdminSearchContainer from '@components/admin/containers/AdminSearchContainer';
-import FileUploadModal from "@components/modals/FileUploadModal";
+import FileUploadModalContainer from "@components/common/modals/FileUploadModal/FileUploadModalContainer";
 import ApiService from "@components/axios/ApiService";
 import TabMenuContainer from "@components/system/containers/tabmenu/TabMenuContainer";
 
@@ -149,9 +149,9 @@ export default function SystemTabMenuContainer() {
 
         {isModalOpen && (
           <>
-            {tab === 0 && <FileUploadModal closeModal={() => setIsModalOpen(false)} detailCategories={detailCategories[0]} />}
-            {tab === 1 && <FileUploadModal closeModal={() => setIsModalOpen(false)} detailCategories={detailCategories[1]} />}
-            {tab === 2 && <FileUploadModal closeModal={() => setIsModalOpen(false)} detailCategories={detailCategories[2]} />}
+            {tab === 0 && <FileUploadModalContainer closeModal={() => setIsModalOpen(false)} detailCategories={detailCategories[0]} />}
+            {tab === 1 && <FileUploadModalContainer closeModal={() => setIsModalOpen(false)} detailCategories={detailCategories[1]} />}
+            {tab === 2 && <FileUploadModalContainer closeModal={() => setIsModalOpen(false)} detailCategories={detailCategories[2]} />}
           </>
         )}
         {tab === 0 ? (

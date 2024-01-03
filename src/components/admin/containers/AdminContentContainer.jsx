@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import styled from "styled-components";
-import AdminBoardContainer from "@components/admin/containers/AdminBoardContainer";
+import SystemContentContainer from "@components/common/containers/SystemContentContainer";
 import ApiService from '@components/axios/ApiService';
 
 
@@ -104,7 +104,7 @@ export default function AdminContentContainer() {
 
     return (
         <div>
-            <AdminBoardContainer title={"[대기중 게시물]"} data={articles} />
+            <SystemContentContainer title={"[대기중 게시물]"} data={articles} />
             <PaginationComponent 
                 currentPage={currentPage} 
                 totalPages={totalPages} 
