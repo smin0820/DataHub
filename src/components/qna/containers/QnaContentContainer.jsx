@@ -6,7 +6,6 @@ import { useState } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 // import Data from "../../../Data.json";
-import CheckUploadModal from "@components/modals/CheckUploadModal";
 import QnaDropdown from "@components/qna/containers/QnaDropdown";
 import { useNavigate } from "react-router-dom";
 
