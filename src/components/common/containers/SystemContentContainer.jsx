@@ -5,7 +5,7 @@
 import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
-import CheckUploadModal from "@components/common/modals/CheckUploadModal";
+import CheckUploadModalContainer from "@components/common/modals/CheckUploadModal/CheckUploadModalContainer";
 import useIdModal from "@hooks/useIdModal";
 
 const Boarddiv = styled.div`
@@ -149,7 +149,7 @@ export default function SystemContentContainer(props) {
                 )}
                 {isOpen && selectedId === n.articleId && (
                   console.log("selectedId", selectedId),
-                  <CheckUploadModal closeModal={closeModal} articleId={selectedId} />
+                  <CheckUploadModalContainer closeModal={closeModal} articleId={selectedId} />
                 )}
               </td>
             </Tbodytr>
