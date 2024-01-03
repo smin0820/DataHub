@@ -221,6 +221,7 @@ const ApiService = {
         }
     },
 
+    // delete notice
     deleteNotice: async (noticeId, loginId) => {
         try {
             const response = await axiosInstance.delete(`/notice/delete`, {
