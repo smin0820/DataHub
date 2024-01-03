@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import AdminBoardContainer from '@components/admin/containers/AdminBoardContainer';
+import SystemContentCotainer from '@components/common/containers/SystemContentContainer';
 import ApiService from '@components/axios/ApiService';
 import styled from 'styled-components';
 
@@ -102,7 +102,7 @@ function DetailCategoryBoard({ category, index }) {
 
     return (
         <div>
-            <AdminBoardContainer title={`${index}. ${category.detailCategoryName}`} data={articles} />
+            <SystemContentCotainer title={`${index}. ${category.detailCategoryName}`} data={articles} />
             <PaginationComponent
                     currentPage={currentPage}
                     totalPages={totalPages}
