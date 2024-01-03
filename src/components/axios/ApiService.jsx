@@ -188,6 +188,21 @@ const ApiService = {
         }
     },
 
+    // Qna 글쓰기
+    registerQna: async (loginId, qaTitle, qaContent) => {
+        try {
+            const response = await axiosInstance.post('/qna/additon', {
+                loginId: loginId,
+                qaTitle: qaTitle,
+                qaContent: qaContent
+            });
+            console.log('서버 응답:', response.data);
+        } catch(error) {
+            console.log('qna 등록 실패:', error);
+            throw error;
+        }
+    },
+
     // register notice
     registerNotice: async (title, body, loginId) => {
         try {
