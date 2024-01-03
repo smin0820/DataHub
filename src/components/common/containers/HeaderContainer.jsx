@@ -62,7 +62,7 @@ const SNavLink = styled(NavLink)`
 `;
 
 
-const Admin = () => {
+const HeaderContainer = () => {
     const [view, setView] = useState(false);
     const navigate = useNavigate();
     
@@ -106,4 +106,4 @@ const Admin = () => {
     );
   };
   
-  export default Admin;
+  export default HeaderContainer;

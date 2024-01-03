@@ -1,11 +1,11 @@
-import AdminHeaderContainer from '@components/admin/containers/AdminHeaderContainer'
+import HeaderContainer from '@components/common/containers/HeaderContainer'
 import SystemTabMenuContainer from '@components/system/containers/SystemTabMenuContainer';
 import Sidebar from '@components/common/Sidebar';
 
 const System = () => {
     return (
       <>
-        <AdminHeaderContainer></AdminHeaderContainer>
+        <HeaderContainer></HeaderContainer>
         <Sidebar></Sidebar>
         <SystemTabMenuContainer></SystemTabMenuContainer>
       </>
