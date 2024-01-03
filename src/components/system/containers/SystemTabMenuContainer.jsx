@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import styled from "styled-components";
 import AdminSearchContainer from '@components/admin/containers/AdminSearchContainer';
-import FileUploadModal from "@components/modals/FileUploadModal";
+import FileUploadModal from "@components/common/modals/FileUploadModal";
 import ApiService from "@components/axios/ApiService";
 import TabMenuContainer from "@components/system/containers/tabmenu/TabMenuContainer";
 

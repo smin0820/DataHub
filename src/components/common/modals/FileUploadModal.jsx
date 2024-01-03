@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import FileUploadModalContainer from '@components/modals/containers/FileUploadModalContainer';
+import FileUploadModalContainer from '@components/common/modals/containers/FileUploadModalContainer';
 
 
 const FileUploadModal = ({ closeModal, detailCategories }) => {

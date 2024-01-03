@@ -5,7 +5,7 @@
 import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
-import CheckUploadModal from "@components/modals/CheckUploadModal";
+import CheckUploadModal from "@components/common/modals/CheckUploadModal";
 import useIdModal from "@hooks/useIdModal";
 
 const Boarddiv = styled.div`
