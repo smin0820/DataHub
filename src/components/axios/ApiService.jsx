@@ -175,7 +175,7 @@ const ApiService = {
     },
 
     // get qna list
-    fetchQna: async (page) => {
+    fetchQnas: async (page) => {
         try {
             const response = await axiosInstance.get('/qa', {
                 params: { page }

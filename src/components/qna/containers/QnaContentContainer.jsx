@@ -1,12 +1,13 @@
-// NoticeContentContainer.jsx
-// 공지사항 목록의 내용물을 표기하기 위한 컨테이너 컴포넌트
+// QnaContentContainer.jsx
+// Q&A 목록의 내용물을 표기하기 위한 컨테이너 컴포넌트
 
 import React from "react";
-import { useState } from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
-// import Data from "../../../Data.json";
-import QnaDropdown from "@components/qna/containers/QnaDropdown";
+import NoticeDropdown from "@components/notice/containers/NoticeDropdown";
+import useDropdown from "@hooks/useDropdown";
+import NoticeViewModal from "@components/notice/modals/NoticeViewModal";
+import useIdModal from "@hooks/useIdModal";
 import { useNavigate } from "react-router-dom";
 
 const Boarddiv = styled.div`
@@ -35,7 +36,7 @@ const Boarddiv = styled.div`
         font-weight: normal;
     }
     th:first-child {
-        width: 55%;
+        width: 60%;
     }
     th:nth-child(2){
         width: 20%;
@@ -54,6 +55,13 @@ const Boarddiv = styled.div`
         }
     }
 
+    td:first-child {
+        cursor: pointer;
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+
     td:last-child {
         display: flex;
         justify-content: flex-end;
@@ -61,14 +69,6 @@ const Boarddiv = styled.div`
     }
 `;
 
-const StyledLink = styled.a`
-    color: black;
-    text-decoration: none;
-
-    &:hover {
-        text-decoration: underline;
-    }
-`;
 
 const Tbodytr = styled.tr`
     border-bottom: 2px solid #e5eaf2;
@@ -76,71 +76,53 @@ const Tbodytr = styled.tr`
 `;
 
 export default function QnaContentContainer(props) {
+    const { title, data = [], onRefresh } = props;
     const navigate = useNavigate();
-    const { title, data = [] } = props;
-    const [currentOpenDropdown, setCurrentOpenDropdown] = useState(null);
-    const [openModalArticleId, setopenModalArticleId] = useState(null);
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
     const isAdmin = userInfo && userInfo.role === "ADMIN";
-    const [view, setView] = useState(false);
-
-    const cutFileName = (name, maxLength = 20) => {
-        if(name.length > maxLength) {
-        return `${name.substring(0, maxLength)}...`;
-        }
-        return name;
-    };
-
-    // 드롭다운 토글 함수
-    const toggleDropdown = (id) => {
-        if (currentOpenDropdown === id) {
-            // 이미 열린 드롭다운을 닫습니다.
-            setCurrentOpenDropdown(null);
-        } else {
-            // 새로운 드롭다운을 엽니다.
-            setCurrentOpenDropdown(id);
-        }
-    };
+    const { currentOpenDropdown, toggleDropdown, dropdownRefs, closeDropdown } = useDropdown();
+    const { isOpen: isViewOpen, selectedId, openModal: openViewModal, closeModal: closeViewModal } = useIdModal();
 
     return (
         <Boarddiv>
-        <table>
-            <caption>{title}</caption>
-            <thead>
-            <tr>
-                <th>제목</th>
-                <th>작성 시간</th>
-                <th>글쓴이</th>
-                <th></th>
-            </tr>
-            </thead>
+            <table>
+                <caption>{title}</caption>
+                <thead>
+                <tr>
+                    <th>제목</th>
+                    <th>작성 날짜</th>
+                    <th>글쓴이</th>
+                    <th></th>
+                </tr>
+                </thead>
 
-            <tbody>
-            {data.map((n, i) => (
-                <Tbodytr key={i}>
-                
-                <td onClick={()=> {
-                //Q&A 아이디로 수정해야함
-                navigate(`/qna/${n.articleId}`);
-                }}>
-                    <StyledLink href={n.taskFileUrl} target="_blank" rel="noopener noreferrer">
-                    {cutFileName(n.taskFileName)}
-                    </StyledLink>
-                </td>
-                <td>{n.uploadDate}</td>
-                <td>admin님</td>
-                <td>
-                    <div style={{ position: 'relative' }}>
-                        <span onClick={() => toggleDropdown(n.articleId)}>
-                            편집 {currentOpenDropdown === n.articleId ? "∧" : "∨"}
-                        </span>
-                        {currentOpenDropdown === n.articleId && <QnaDropdown />}
-                    </div>
-                </td>
-                </Tbodytr>
-            ))}
-            </tbody>
-        </table>
+                <tbody>
+                {data.map((n, i) => (
+                    <Tbodytr key={i}>
+                    <td onClick={() => {
+                        navigate(`/qna/${n.qaId}`)
+                    }}>
+                        {n.qaTitle}
+                    </td>
+                    <td>
+                        {n.qaDate}
+                    </td>
+                    <td>{n.username}</td>
+                    <td style={{ position: 'relative' }} ref={el => dropdownRefs.current.set(n.qaId, el)}>
+                        {isAdmin && (
+                            <>
+                                <span onClick={() => toggleDropdown(n.qaId)}>
+                                    편집 {currentOpenDropdown === n.qaId ? "∧" : "∨"}
+                                </span>
+                                {currentOpenDropdown === n.qaId && <NoticeDropdown noticeId={n.qaId} onRefresh={onRefresh} />}
+                            </>
+                        )}
+                    </td>
+                    </Tbodytr>   
+                ))}
+                </tbody>
+            </table>
+            {isViewOpen && <NoticeViewModal noticeId = {selectedId} closeModal={closeViewModal} />}
         </Boarddiv>
     );
 }
