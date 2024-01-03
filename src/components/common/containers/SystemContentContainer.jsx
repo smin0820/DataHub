@@ -88,7 +88,7 @@ const Tbodytr = styled.tr`
   align-items: center;
 `;
 
-export default function SystemContentCotainer(props) {
+export default function SystemContentContainer(props) {
   const { title, data = [] } = props;
   const { isOpen, selectedId, openModal, closeModal } = useIdModal(); // useIdModal 훅 사용
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
@@ -172,12 +172,12 @@ function Return() {
   return <div style={{color:'#FF0000'}}>반려</div>;
 }
 
-SystemContentCotainer.propTypes = {
+SystemContentContainer.propTypes = {
   title: PropTypes.string,
   data: PropTypes.arrayOf(PropTypes.object)
 };
 
-SystemContentCotainer.defaultProps = {
+SystemContentContainer.defaultProps = {
   title: "",
   data: []
 };
