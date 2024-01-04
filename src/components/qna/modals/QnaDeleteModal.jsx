@@ -114,16 +114,26 @@ const CloseButton = styled.button`
 `;
 
 
-const QnaDeleteModal = ({ closeModal }) => {
+const QnaDeleteModal = ({ qaId, closeModal, onRefresh }) => {
 
+    const handleSuccess = () => {
+        closeModal();
+        onRefresh();
+    }
 
     const handleSubmit = async () => {
-    if(!Title && !Body) { 
-        console.error("Value is not valid");
-        return;
-    }
-        const formData = new FormData();
-        formData.append('title', Title);
+        const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+        if(!userInfo || !userInfo.loginId) {
+            console.error('사용자 정보가 없습니다.');
+            return;
+        }
+        try {
+            const response = await ApiService.deleteQna(qaId, userInfo.loginId);
+            console.log("Q&A 삭제 성공:", response);
+            handleSuccess();
+        } catch(error) {
+            console.error('Q&A 삭제 실패:', error);
+        }   
     };
 
     return (

@@ -310,7 +310,10 @@ const ApiService = {
     },
 
     // delete Q&A
-    deleteQna: async (formData) => {
+    deleteQna: async (qaId, loginId) => {
+        const formData = new FormData();
+        formData.append('loginId',loginId);
+        formData.append("qaId", qaId);
         try {
             const response = await axiosInstance.delete('/qa/del', formData, {
                 headers: {
@@ -318,7 +321,7 @@ const ApiService = {
                 }
             });
             console.log('Q&A 삭제 성공', response);
-            return response.data;
+            return response;
         } catch (error) {
             console.log('Q&A 삭제 실패', response);
             throw error;
