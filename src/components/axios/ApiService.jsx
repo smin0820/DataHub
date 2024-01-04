@@ -310,23 +310,38 @@ const ApiService = {
     },
 
     // delete Q&A
+    // deleteQna: async (qaId, loginId) => {
+    //     const formData = new FormData();
+    //     formData.append('loginId',loginId);
+    //     formData.append("qaId", qaId);
+    //     try {
+    //         const response = await axiosInstance.delete('/qa/del', formData, {
+    //             headers: {
+    //                 'Content-Type': 'multipart/form-data'
+    //             }
+    //         });
+    //         console.log('Q&A 삭제 성공', response);
+    //         return response;
+    //     } catch (error) {
+    //         console.log('Q&A 삭제 실패', response);
+    //         throw error;
+    //     }
+    // }
     deleteQna: async (qaId, loginId) => {
-        const formData = new FormData();
-        formData.append('loginId',loginId);
-        formData.append("qaId", qaId);
-        try {
-            const response = await axiosInstance.delete('/qa/del', formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                }
-            });
-            console.log('Q&A 삭제 성공', response);
-            return response;
-        } catch (error) {
-            console.log('Q&A 삭제 실패', response);
-            throw error;
-        }
+    try {
+        const response = await axiosInstance.delete(`/qa/del`, {
+            params: {
+                qaId: qaId,
+                loginId: loginId
+            },
+        });
+        console.log('서버 응답:', response.data);
+        return response.data;
+    } catch (error) {
+        console.error('Qna 삭제 실패:', error);
+        throw error;
     }
+}
 };
 
 export default ApiService;

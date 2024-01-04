@@ -174,7 +174,8 @@ const NoticeEditModal = ({ closeModal, noticeId, onRefresh }) => {
     const { title: fetchedTitle, body: fetchedBody, loading, error } = useNoticeDetail(noticeId);
     const [title, setTitle] = useState('');
     const [body, setBody] = useState('');
-
+    const userInfo = useRecoilValue(userState);
+    
     useEffect(() => {
         if (!loading && !error) {
             setTitle(fetchedTitle);
@@ -196,7 +197,7 @@ const NoticeEditModal = ({ closeModal, noticeId, onRefresh }) => {
     };
 
     const handleSubmit = async () => {
-        const userInfo = useRecoilValue(userState);
+
         if (!userInfo || !userInfo.loginId) {
             console.error("사용자 정보가 없습니다.");
             return;

@@ -2,8 +2,9 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import ApiService from '@components/axios/ApiService';
-import { useNoticeDetail } from '@hooks/useNoticeDetail';
 import { useQnaDetail } from '@hooks/useQnaDetail';
+import { useRecoilValue } from 'recoil';
+import { userState } from '@recoil/atoms/userStateAtom';
 
 const ModalOverlay = styled.div`
     &.modal-overlay {
@@ -173,6 +174,7 @@ const QnaEditModal = ({ closeModal, qaId, onRefresh }) => {
     const { content: fetchedContent, title: fetchedTitle, loading, error } = useQnaDetail(qaId);
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
+    const userInfo = useRecoilValue(userState);
 
     useEffect(() => {
         if (!loading && !error) {
@@ -196,7 +198,7 @@ const QnaEditModal = ({ closeModal, qaId, onRefresh }) => {
     };
 
     const handleSubmit = async () => {
-        const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+        
         if (!userInfo || !userInfo.loginId) {
             console.error("사용자 정보가 없습니다.");
             return;
@@ -209,8 +211,13 @@ const QnaEditModal = ({ closeModal, qaId, onRefresh }) => {
         
         try {
             const response = await ApiService.editQna(userInfo.loginId, qaId, title, content);
-            console.log("Q&A 수정 성공:", response);
-            handleSuccess();
+            if (response) {
+                console.log("Q&A 수정 성공:", response);
+                handleSuccess();
+            } else {
+                alert("본인만 수정할 수 있습니다!");
+                closeModal();
+            }
         } catch (error) {
             console.error("Q&A 수정 실패:", error);
         }
