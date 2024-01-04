@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
-import { selectedSystemIdState, sidebarVisibilityState } from '@atoms/systemStateAtom';
-import { userState } from '@atoms/userStateAtom';
+import { selectedSystemIdState, sidebarVisibilityState } from '@recoil/atoms/systemStateAtom';
+import { userState } from '@recoil/atoms/userStateAtom';
 import ApiService from '@components/axios/ApiService';
 import SidebarPresenter from '@components/common/Sidebar/SidebarPresenter';
 
@@ -27,8 +27,7 @@ export default function SidebarContainer() {
     if (currentPath === "/admin") {
       setSelectedSystemId("admin");
     } else if (currentPath === "/system") {
-      const storedSystemId = JSON.parse(localStorage.getItem("selectedSystemId"))?.systemId;
-      setSelectedSystemId(storedSystemId);
+      setSelectedSystemId(selectedSystemId);
     }
   }, [userRole, location.pathname]);
 

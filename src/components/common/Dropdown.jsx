@@ -1,6 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
+import { useLogout } from '@components/login/Logout/useLogout';
 
 const Dropmenu = styled.div`
     display: flex;
@@ -42,9 +43,10 @@ const Dropmenu = styled.div`
 
 export default function Dropdown() {
     const navigate = useNavigate();
+    const logout = useLogout();
 
     const handleLogout = () => {
-        localStorage.clear();
+        logout();
         navigate('/login');
     };
 

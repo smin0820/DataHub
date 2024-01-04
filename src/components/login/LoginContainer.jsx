@@ -1,9 +1,10 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import ApiService from "@components/axios/ApiService";
 import { useRecoilState } from "recoil";
-import { userState } from "@atoms/userStateAtom";
+import { userState } from "@recoil/atoms/userStateAtom";
 import LoginPresenter from "@components/login/LoginPresenter";
+import { selectedSystemIdState } from "@recoil/atoms/systemStateAtom";
 
 export default function LoginContainer() {
   const navigate = useNavigate();
@@ -11,6 +12,7 @@ export default function LoginContainer() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [ selectedSystemId, setSelectedSystemId] = useRecoilState(selectedSystemIdState);
   
   const handleLogin = async (event) => {
     event.preventDefault();
@@ -23,6 +25,7 @@ export default function LoginContainer() {
         if (userRole === "ADMIN") {
           navigate("/admin");
         } else if (userRole === "USER") {
+          setSelectedSystemId(response.user.systemIds[0]);
           navigate("/system");
         } else {
           setError('알 수 없는 사용자 역할');
@@ -37,6 +40,18 @@ export default function LoginContainer() {
       console.error('로그인 실패: ',error);
     }
   };
+
+    useEffect(() => {
+    if (userInfo && userInfo.role !== 'LOADING') {
+      if (userInfo.role === 'ADMIN') {
+        navigate('/admin');
+      } else if (userInfo.role === 'USER') {
+
+        navigate('/system');
+      }
+    }
+  }, [userInfo, navigate]);
+
 
   return (
     <LoginPresenter

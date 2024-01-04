@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useRecoilValue } from "recoil";
-import { userState } from "@atoms/userStateAtom";
+import { userState } from "@recoil/atoms/userStateAtom";
 import { useNavigate } from "react-router-dom";
 import HeaderPresenter from "@components/common/Header/HeaderPresenter";
 

@@ -5,6 +5,9 @@ import AdminSearchContainer from '@components/admin/AdminSearch/AdminSearchConta
 import FileUploadModalContainer from "@components/common/modals/FileUploadModal/FileUploadModalContainer";
 import ApiService from "@components/axios/ApiService";
 import TabMenuContainer from "@components/system/containers/tabmenu/TabMenuContainer";
+import { useRecoilValue } from "recoil";
+import { userState } from "@recoil/atoms/userStateAtom";
+import { selectedSystemIdState } from "@recoil/atoms/systemStateAtom";
 
 const Container = styled.div`
   display: flex;
@@ -55,47 +58,67 @@ export default function SystemTabMenuContainer() {
 
     const [baseCategoryIds, setBaseCategoryIds] = useState([]);
     const [detailCategories, setDetailCategories] = useState([]);
-
+    const userInfo = useRecoilValue(userState);
+    const selectedSystemId = useRecoilValue(selectedSystemIdState);
+    // useEffect(() => {
+    //     const savedTab = localStorage.getItem('currentTab');
+    //       if (savedTab !== null) {
+    //           setTab(Number(savedTab));
+    //       }
+    //       console.log("userInfo", userInfo);
+    //       console.log("selectedSystemId", selectedSystemId);
+    //     // localStorage에서 userInfo 가져오기
+    //     let currentSystemId = userInfo?.systemIds?.[0]; // 기본 시스템 ID 설정
+    //     // ADMIN 사용자인 경우, 선택한 시스템 ID로 변경
+    //     if (userInfo?.role === "ADMIN") {
+    //         if (selectedSystemId) {
+    //             currentSystemId = selectedSystemId;
+    //         }
+    //     }
+    //     // currentSystemId를 사용하여 시스템 이름 및 기타 정보 가져오기
+    //     if (currentSystemId) {
+    //         setSystemId(currentSystemId);
+    //         ApiService.fetchBaseCategory(currentSystemId)
+    //             .then(data => {
+    //                 if (data?.systemName) {
+    //                     setSystemName(data.systemName);
+    //                 }
+    //                 if (data?.baseCategories) {
+    //                     setBaseCategoryIds(data.baseCategories.map(category => category.baseCategoryId));
+    //                     // detailCategories 정보 가져오기
+    //                     Promise.all(data.baseCategories.map(category => 
+    //                         ApiService.fetchDetailCategories(category.baseCategoryId)
+    //                     )).then(allDetailData => {
+    //                         setDetailCategories(allDetailData.map(data => data.detailCategories));
+    //                     });
+    //                 }
+    //             })
+    //             .catch(error => {
+    //                 console.error('Base category 요청 오류:', error);
+    //             });
+    //     }
+    // }, []);
     useEffect(() => {
-        const savedTab = localStorage.getItem('currentTab');
-          if (savedTab !== null) {
-              setTab(Number(savedTab));
-          }
-        // localStorage에서 userInfo 가져오기
-        const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-        let currentSystemId = userInfo?.systemIds?.[0]; // 기본 시스템 ID 설정
-
-        // ADMIN 사용자인 경우, 선택한 시스템 ID로 변경
-        if (userInfo?.role === "ADMIN") {
-            const selectedSystem = JSON.parse(localStorage.getItem("selectedSystemId"));
-            if (selectedSystem?.systemId) {
-                currentSystemId = selectedSystem.systemId;
-            }
+  if (selectedSystemId) {
+    ApiService.fetchBaseCategory(selectedSystemId)
+      .then(data => {
+        if (data?.systemName) {
+          setSystemName(data.systemName);
         }
-
-        // currentSystemId를 사용하여 시스템 이름 및 기타 정보 가져오기
-        if (currentSystemId) {
-            setSystemId(currentSystemId);
-            ApiService.fetchBaseCategory(currentSystemId)
-                .then(data => {
-                    if (data?.systemName) {
-                        setSystemName(data.systemName);
-                    }
-                    if (data?.baseCategories) {
-                        setBaseCategoryIds(data.baseCategories.map(category => category.baseCategoryId));
-                        // detailCategories 정보 가져오기
-                        Promise.all(data.baseCategories.map(category => 
-                            ApiService.fetchDetailCategories(category.baseCategoryId)
-                        )).then(allDetailData => {
-                            setDetailCategories(allDetailData.map(data => data.detailCategories));
-                        });
-                    }
-                })
-                .catch(error => {
-                    console.error('Base category 요청 오류:', error);
-                });
+        if (data?.baseCategories) {
+          setBaseCategoryIds(data.baseCategories.map(category => category.baseCategoryId));
+          Promise.all(data.baseCategories.map(category => 
+            ApiService.fetchDetailCategories(category.baseCategoryId)
+          )).then(allDetailData => {
+            setDetailCategories(allDetailData.map(data => data.detailCategories));
+          });
         }
-    }, []);
+      })
+      .catch(error => {
+        console.error('Base category 요청 오류:', error);
+      });
+  }
+}, [selectedSystemId]);
     
     useEffect(() => {
         if (systemId !== null) {

@@ -11,7 +11,7 @@ export default defineConfig({
       { find: "@routes", replacement: "/src/routes" },
       { find: "@store", replacement: "/src/store" },
       { find: "@styles", replacement: "/src/styles" },
-      { find: "@atoms", replacement: "/src/atoms" },
+      { find: "@recoil", replacement: "/src/recoil" },
     ],
   },
   server: {

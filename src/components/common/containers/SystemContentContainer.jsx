@@ -7,6 +7,8 @@ import styled from "styled-components";
 import PropTypes from "prop-types";
 import CheckUploadModalContainer from "@components/common/modals/CheckUploadModal/CheckUploadModalContainer";
 import useIdModal from "@hooks/useIdModal";
+import { useRecoilValue } from "recoil";
+import { userState } from "@recoil/atoms/userStateAtom";
 
 const Boarddiv = styled.div`
   display: flex;
@@ -91,8 +93,9 @@ const Tbodytr = styled.tr`
 export default function SystemContentContainer(props) {
   const { title, data = [] } = props;
   const { isOpen, selectedId, openModal, closeModal } = useIdModal(); // useIdModal 훅 사용
-  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+  const userInfo = useRecoilValue(userState);
   const isAdmin = userInfo && userInfo.role === "ADMIN";
+
 
   const cutFileName = (name, maxLength = 20) => {
     if(name.length > maxLength) {

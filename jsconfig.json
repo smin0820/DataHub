@@ -7,7 +7,7 @@
       "@routes/*": ["routes/*"],
       "@store/*": ["store/*"],
       "@styles/*": ["styles/*"],
-      "@atoms/*": ["atoms/*"]
+      "@recoil/*": ["recoil/*"],
     }
   }
 }
