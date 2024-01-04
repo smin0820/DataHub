@@ -11,8 +11,8 @@ const Dropmenu = styled.div`
     flex-direction: column;
     position: absolute;
     z-index: 20;
-    top: 1.7rem;
-    right: 0px;
+    top: 2.45rem;
+    right: 0.3rem;
     width: 5rem;
     border: 1px solid #E5EAF2;
     border-radius: 10px;
@@ -29,7 +29,7 @@ const Dropmenu = styled.div`
     }
     li {
         cursor: pointer;
-        padding: 4px 12px;
+        padding: 0.3rem 1.3rem;
         border-bottom: 1px solid #E5EAF2; /* 항목 사이에 구분선을 추가 */
         &:hover {
             background-color: #e0e0e0;  // 호버 시 배경색 변경
