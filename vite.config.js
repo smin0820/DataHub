@@ -11,6 +11,16 @@ export default defineConfig({
       { find: "@routes", replacement: "/src/routes" },
       { find: "@store", replacement: "/src/store" },
       { find: "@styles", replacement: "/src/styles" },
+      { find: "@atoms", replacement: "/src/atoms" },
     ],
+  },
+  server: {
+    proxy: {
+      "/api": {
+        target: "http://43.203.63.39:8080",
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, ""),
+      },
+    },
   },
 });
