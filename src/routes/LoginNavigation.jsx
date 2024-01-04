@@ -1,8 +1,8 @@
-import Login from "@components/login/Login";
+import LoginContainer from "@components/login/LoginContainer";
 
 const LoginNavigation = () => {
   return <>
-    <Login></Login>
+    <LoginContainer></LoginContainer>
   </>;
 };
 
