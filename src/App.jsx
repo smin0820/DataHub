@@ -3,13 +3,16 @@ import { ThemeProvider } from "styled-components";
 import { GlobalStyle } from "@styles/global";
 import { theme } from "@styles/theme";
 import RootNavigation from "@routes/RootNavigation";
+import { RecoilRoot } from "recoil";
 
 function App() {
   return (
     <BrowserRouter>
       <ThemeProvider theme={theme}>
         <GlobalStyle />
-        <RootNavigation />
+        <RecoilRoot>
+          <RootNavigation />
+        </RecoilRoot>
       </ThemeProvider>
     </BrowserRouter>
   );

@@ -5,6 +5,8 @@ import modify from "/assets/images/modify.png";
 import ModifySysModal from '@components/modify/ModifySysModal';
 import { useNavigate } from 'react-router-dom';
 import ApiService from '@components/axios/ApiService';
+import { useRecoilValue } from 'recoil';
+import { userState } from '@recoil/atoms/userStateAtom';
 
 
 
@@ -168,7 +170,7 @@ const RequiredSpan = styled.span`
 
 const ModifyBoardContainer = () => {
 
-    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    const userInfo = useRecoilValue(userState);
     const [isModalOpen, setModalOpen] = useState(false);
     const navigate = useNavigate();
     const [systemName, setSystemName] = useState("");

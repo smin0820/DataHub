@@ -5,6 +5,8 @@ import React from 'react';
 import styled from 'styled-components';
 import useModal from '@hooks/useModal';
 import NoticeRegisterModal from '@components/notice/modals/NoticeReigsterModal';
+import { useRecoilValue } from 'recoil';
+import { userState } from '@recoil/atoms/userStateAtom';
 
 const Container = styled.div`
     display: flex;
@@ -28,7 +30,7 @@ const Container = styled.div`
 
 export default function NoticeNewArticle() {
     const { isOpen, openModal, closeModal } = useModal();
-    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    const userInfo = useRecoilValue(userState);
     const isAdmin = userInfo && userInfo.role === "ADMIN";
 
     return (

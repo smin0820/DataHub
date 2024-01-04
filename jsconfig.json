@@ -6,7 +6,8 @@
       "@hooks/*": ["hooks/*"],
       "@routes/*": ["routes/*"],
       "@store/*": ["store/*"],
-      "@styles/*": ["styles/*"]
+      "@styles/*": ["styles/*"],
+      "@recoil/*": ["recoil/*"],
     }
   }
 }

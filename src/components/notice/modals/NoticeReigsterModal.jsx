@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import ApiService from '@components/axios/ApiService';
+import { useRecoilValue } from 'recoil';
+import { userState } from '@recoil/atoms/userStateAtom';
 
 const ModalOverlay = styled.div`
     &.modal-overlay {
@@ -190,7 +192,7 @@ const NoticeRegisterModal = ({ closeModal }) => {
         return;
     }
 
-    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    const userInfo = useRecoilValue(userState);
     if (!userInfo || !userInfo.loginId) {
         console.error("사용자 정보가 없습니다.");
         return;

@@ -1,5 +1,5 @@
 import React from 'react';
-import HeaderContainer from '@components/common/containers/HeaderContainer'
+import HeaderContainer from '@components/common/Header/HeaderContainer'
 import Sidebar from '@components/common/Sidebar';
 import MainLogo from '@components/common/MainLogo';
 import QnaTableContainer from './containers/QnaTableContainer';

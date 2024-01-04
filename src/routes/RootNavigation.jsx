@@ -1,4 +1,4 @@
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, Navigate } from "react-router-dom";
 import MainNavigation from "./MainNavigation";
 import LoginNavigation from "./LoginNavigation";
 import { useToken } from "@hooks/useToken";
@@ -6,34 +6,39 @@ import Admin from "@components/admin/Admin";
 import System from "@components/system/System";
 import Modify from "@components/modify/Modify";
 import Regist from "@components/regist/Regist";
-import { Navigate } from "react-router-dom";
 import Notice from "@components/notice/Notice";
 import Qna from "@components/qna/Qna";
 import QnaDetail from "@components/qna/QnaDetail";
+import useIsLoggedIn from "@hooks/useIsLoggedIn";
 
 const RootNavigation = () => {
   const { getToken } = useToken();
-  const isLoggedIn = () => {
-    const userInfo = localStorage.getItem("userInfo");
-    return userInfo && JSON.parse(userInfo);
-  }
+  const isLoggedIn = useIsLoggedIn();
+
+  const getRedirectPath = () => {
+    if (isLoggedIn.role === "ADMIN") {
+      return "/admin";
+    } else if (isLoggedIn.role === "USER") {
+      return "/system";
+    } else {
+      return "/login";
+    }
+  };
 
   return (
     <Routes>
-      {/* <Route
-        path="*"
-        element={getToken("access") ? <MainNavigation /> : <LoginNavigation />}
+      <Route
+        path="/"
+        element={isLoggedIn ? <Navigate to={getRedirectPath()} /> : <LoginNavigation />}
       />
-      <Route path="/" element={<MainNavigation></MainNavigation>}/> */}
-      <Route path="/" element={isLoggedIn() ? <MainNavigation /> : <Navigate to="/login" />} />
-      <Route path="/login" element={<LoginNavigation></LoginNavigation>}/>
-      <Route path="/admin" element={<Admin></Admin>}/>
-      <Route path="/system" element={<System></System>}/>
-      <Route path="/modify" element={<Modify></Modify>}/>
-      <Route path="/regist" element={<Regist></Regist>}/>
-      <Route path="/notice" element={<Notice></Notice>}/>
-      <Route path="/qna" element={<Qna></Qna>}/>
-      <Route path="/qna/:id" element={<QnaDetail></QnaDetail>}></Route>
+      <Route path="/login" element={<LoginNavigation />} />
+      <Route path="/admin" element={<Admin />} />
+      <Route path="/system" element={<System />} />
+      <Route path="/modify" element={<Modify />}/>
+      <Route path="/regist" element={<Regist />}/>
+      <Route path="/notice" element={<Notice />}/>
+      <Route path="/qna" element={<Qna />}/>
+      <Route path="/qna/:id" element={<QnaDetail />}/>
     </Routes>
   );
 };

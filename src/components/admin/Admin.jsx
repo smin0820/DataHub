@@ -1,12 +1,9 @@
 import React from 'react';
-import HeaderContainer from '@components/common/containers/HeaderContainer'
-import AdminSearchContainer from '@components/admin/containers/AdminSearchContainer';
+import HeaderContainer from '@components/common/Header/HeaderContainer'
+import AdminSearchContainer from '@components/admin/AdminSearch/AdminSearchContainer';
 import Sidebar from '@components/common/Sidebar';
-import AdminContentContainer from './containers/AdminContentContainer';
+import AdminTablecontainer from '@components/admin/AdminTable/AdminTableContainer';
 import MainLogo from '@components/common/MainLogo';
-
-
-
 
 export default function Admin() {
 
@@ -16,7 +13,7 @@ export default function Admin() {
             <Sidebar></Sidebar>
             <MainLogo></MainLogo>
             <AdminSearchContainer></AdminSearchContainer>
-            <AdminContentContainer></AdminContentContainer>
+            <AdminTablecontainer></AdminTablecontainer>
         </>
     );
 }

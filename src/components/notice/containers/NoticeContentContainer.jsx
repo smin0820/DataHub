@@ -8,6 +8,8 @@ import NoticeDropdown from "@components/notice/containers/NoticeDropdown";
 import useDropdown from "@hooks/useDropdown";
 import NoticeViewModal from "@components/notice/modals/NoticeViewModal";
 import useIdModal from "@hooks/useIdModal";
+import { useRecoilValue } from "recoil";
+import { userState } from "@recoil/atoms/userStateAtom";
 
 const Boarddiv = styled.div`
     display: flex;
@@ -74,7 +76,7 @@ const Tbodytr = styled.tr`
 export default function NoticeContentContainer(props) {
     const { title, data = [], onRefresh } = props;
 
-    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    const userInfo = useRecoilValue(userState);
     const isAdmin = userInfo && userInfo.role === "ADMIN";
     const { currentOpenDropdown, toggleDropdown, dropdownRefs, closeDropdown } = useDropdown();
     const { isOpen: isViewOpen, selectedId, openModal: openViewModal, closeModal: closeViewModal } = useIdModal();

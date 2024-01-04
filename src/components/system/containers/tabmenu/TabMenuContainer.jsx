@@ -2,86 +2,9 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import SystemContentContainer from '@components/common/containers/SystemContentContainer';
 import ApiService from '@components/axios/ApiService';
-import styled from 'styled-components';
+import PaginationComponent from '@components/common/PaginationComponent';
 
-const PaginationContainer = styled.div`
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
 
-    button {
-        &.pageButton {
-            background: none;
-            border: none;
-            color: black;
-            cursor: pointer;
-            padding: 5px 10px;
-            margin: 0 5px;
-            text-decoration: none;
-
-            &:hover {
-            text-decoration: underline;
-            }
-
-            &:disabled {
-            color: grey;
-            }
-        }
-    }
-`;
-
-const PaginationComponent = ({ currentPage, totalPages, onPageChange }) => {
-    const [pageNumbers, setPageNumbers] = useState([]);
-    const pageRangeDisplayed = 2;
-
-    useEffect(() => {
-        const newPageNumbers = [];
-
-        // 첫 페이지와 구분자 추가
-        if (currentPage > pageRangeDisplayed + 1) {
-            newPageNumbers.push(1);
-            if (currentPage > pageRangeDisplayed + 2) {
-                newPageNumbers.push('...');
-            }
-        }
-
-        // 현재 페이지 앞뒤로 2개 페이지 표시
-        const startPage = Math.max(1, currentPage - pageRangeDisplayed);
-        const endPage = Math.min(totalPages, currentPage + pageRangeDisplayed);
-        for (let i = startPage; i <= endPage; i++) {
-            newPageNumbers.push(i);
-        }
-
-        // 마지막 페이지와 구분자 추가
-        if (currentPage < totalPages - pageRangeDisplayed) {
-            if (currentPage < totalPages - pageRangeDisplayed - 1) {
-                newPageNumbers.push('...');
-            }
-            newPageNumbers.push(totalPages);
-        }
-
-        setPageNumbers(newPageNumbers);
-    }, [currentPage, totalPages]);
-
-    return (
-        <PaginationContainer>
-            {pageNumbers.map((page, index) => (
-                page === '...' ? (
-                    <span key={`separator-${index}`}>{page}</span>
-                ) : (
-                    <button
-                        className="pageButton"
-                        key={page}
-                        onClick={() => onPageChange(page)}
-                        disabled={currentPage === page}
-                    >
-                        {page}
-                    </button>
-                )
-            ))}
-        </PaginationContainer>
-    );
-};
 function DetailCategoryBoard({ category, index }) {
     const [articles, setArticles] = React.useState([]);
     const [currentPage, setCurrentPage] = React.useState(1);
