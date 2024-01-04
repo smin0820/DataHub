@@ -1,18 +1,14 @@
-import React, { useState,useEffect } from 'react';
-import styled from 'styled-components';
-import SidebarContainer from '@components/common/containers/SidebarContainer';
+import React, { useEffect } from 'react';
+import { useRecoilValue } from 'recoil';
+import { userState } from '@atoms/userStateAtom';
+import { selectedSystemIdState } from '@atoms/systemStateAtom';
+import SidebarContainer from '@components/common/Sidebar/SidebarContainer';
 
 export default function Sidebar() {
-  const [userRole, setUserRole] = useState(null);
-  const [selectedSystemId, setSelectedSystemId] = useState(null);
+  const userInfo = useRecoilValue(userState);
+  const selectedSystemId = useRecoilValue(selectedSystemIdState);
 
-  useEffect(() => {
-    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-    setUserRole(userInfo?.role);
-
-    const storedSystemId = JSON.parse(localStorage.getItem("selectedSystemId"))?.systemId;
-    setSelectedSystemId(storedSystemId);
-  }, []);
+  console.log("userinfo", userInfo.role);
 
   useEffect(() => {
     // 선택된 시스템이 변경될 때 탭 상태 초기화
@@ -21,7 +17,7 @@ export default function Sidebar() {
 
   return (
     <>
-      {userRole === 'ADMIN' && <SidebarContainer />}
+      {userInfo.role === 'ADMIN' && <SidebarContainer />}
     </>
   );
 }
