@@ -3,7 +3,6 @@ import styled from "styled-components";
 import Dropdown from "@components/common/Dropdown";
 import { NavLink } from "react-router-dom";
 
-
 const Header = styled.div`
     display: flex;
     justify-content: center;
