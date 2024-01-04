@@ -1,5 +1,5 @@
 import React from 'react';
-import HeaderContainer from '@components/common/containers/HeaderContainer'
+import HeaderContainer from '@components/common/Header/HeaderContainer'
 import QnaDetailtitle from './containers/QnaDetailtitle';
 import WrapComments from './containers/WrapComments';
 
