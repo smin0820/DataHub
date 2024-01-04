@@ -44,7 +44,8 @@ const Boarddiv = styled.div`
     td {
         width:auto;
         padding: 7px 5px;
-                span {
+        cursor: pointer;
+            span {
             padding: 0;
             margin: 0;
             cursor: pointer;
@@ -52,13 +53,6 @@ const Boarddiv = styled.div`
             padding: 5px 8px;
             background-color:#F1F1F1;
             font-size: medium;
-        }
-    }
-
-    td:first-child {
-        cursor: pointer;
-        &:hover {
-            text-decoration: underline;
         }
     }
 
@@ -73,6 +67,9 @@ const Boarddiv = styled.div`
 const Tbodytr = styled.tr`
     border-bottom: 2px solid #e5eaf2;
     align-items: center;
+    &:hover {
+        background-color: #f3f6f9;
+    }
 `;
 
 export default function QnaContentContainer(props) {
@@ -98,17 +95,17 @@ export default function QnaContentContainer(props) {
 
                 <tbody>
                 {data.map((n, i) => (
-                    <Tbodytr key={i}>
-                    <td onClick={() => {
+                    <Tbodytr key={i}  onClick={() => {
                         navigate(`/qna/${n.qaId}`)
                     }}>
+                    <td>
                         {n.qaTitle}
                     </td>
                     <td>
                         {n.qaDate}
                     </td>
                     <td>{n.username}</td>
-                    <td style={{ position: 'relative' }} ref={el => dropdownRefs.current.set(n.qaId, el)}>
+                    <td style={{ position: 'relative' }} ref={el => dropdownRefs.current.set(n.qaId, el)} onClick={(event) => event.stopPropagation()}>
                         {isAdmin && (
                             <>
                                 <span onClick={() => toggleDropdown(n.qaId)}>
