@@ -9,6 +9,8 @@ import NoticeViewModal from "@components/notice/modals/NoticeViewModal";
 import useIdModal from "@hooks/useIdModal";
 import { useNavigate } from "react-router-dom";
 import QnaDropdown from "./QnaDropdown";
+import { useRecoilValue } from "recoil";
+import { userState } from "@recoil/atoms/userStateAtom";
 
 const Boarddiv = styled.div`
     display: flex;
@@ -75,7 +77,7 @@ const Tbodytr = styled.tr`
 export default function QnaContentContainer(props) {
     const { title, data = [], onRefresh } = props;
     const navigate = useNavigate();
-    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    const userInfo = useRecoilValue(userState);
     const isAdmin = userInfo && userInfo.role === "ADMIN";
     const { currentOpenDropdown, toggleDropdown, dropdownRefs, closeDropdown } = useDropdown();
     const { isOpen: isViewOpen, selectedId, openModal: openViewModal, closeModal: closeViewModal } = useIdModal();
@@ -106,7 +108,7 @@ export default function QnaContentContainer(props) {
                     </td>
                     <td>{n.username}</td>
                     <td style={{ position: 'relative' }} ref={el => dropdownRefs.current.set(n.qaId, el)} onClick={(event) => event.stopPropagation()}>
-                        {isAdmin && (
+                        {(
                             <>
                                 <span onClick={() => toggleDropdown(n.qaId)}>
                                     편집 {currentOpenDropdown === n.qaId ? "∧" : "∨"}

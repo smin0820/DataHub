@@ -172,6 +172,7 @@ const BodyTextArea = styled.textarea`
 const NoticeRegisterModal = ({ closeModal }) => {
     const [Title, setTitle] = useState("");
     const [Body, setBody] = useState("");
+    const userInfo = useRecoilValue(userState);
 
     const handleTitleChange = (event) => {
         setTitle(event.target.value);
@@ -192,7 +193,7 @@ const NoticeRegisterModal = ({ closeModal }) => {
         return;
     }
 
-    const userInfo = useRecoilValue(userState);
+
     if (!userInfo || !userInfo.loginId) {
         console.error("사용자 정보가 없습니다.");
         return;

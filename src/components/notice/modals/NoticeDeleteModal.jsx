@@ -117,14 +117,15 @@ const CloseButton = styled.button`
 
 
 const NoticeDeleteModal = ({ noticeId, closeModal, onRefresh }) => {
-
+    const userInfo = useRecoilValue(userState);
+    
     const handleSuccess = () => {
         closeModal();
         onRefresh();
     }
 
     const handleSubmit = async () => {
-        const userInfo = useRecoilValue(userState);
+
         if (!userInfo || !userInfo.loginId) {
             console.error("사용자 정보가 없습니다.");
             return;
