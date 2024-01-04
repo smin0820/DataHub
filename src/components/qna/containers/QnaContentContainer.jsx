@@ -4,11 +4,11 @@
 import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
-import NoticeDropdown from "@components/notice/containers/NoticeDropdown";
 import useDropdown from "@hooks/useDropdown";
 import NoticeViewModal from "@components/notice/modals/NoticeViewModal";
 import useIdModal from "@hooks/useIdModal";
 import { useNavigate } from "react-router-dom";
+import QnaDropdown from "./QnaDropdown";
 
 const Boarddiv = styled.div`
     display: flex;
@@ -114,7 +114,7 @@ export default function QnaContentContainer(props) {
                                 <span onClick={() => toggleDropdown(n.qaId)}>
                                     편집 {currentOpenDropdown === n.qaId ? "∧" : "∨"}
                                 </span>
-                                {currentOpenDropdown === n.qaId && <NoticeDropdown noticeId={n.qaId} onRefresh={onRefresh} />}
+                                {currentOpenDropdown === n.qaId && <QnaDropdown qaId={n.qaId} onRefresh={onRefresh} />}
                             </>
                         )}
                     </td>
@@ -122,6 +122,7 @@ export default function QnaContentContainer(props) {
                 ))}
                 </tbody>
             </table>
+            {/* 수정 필요 */}
             {isViewOpen && <NoticeViewModal noticeId = {selectedId} closeModal={closeViewModal} />}
         </Boarddiv>
     );
