@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import PropTypes from 'prop-types';
 import ApiService from '@components/axios/ApiService';
+import { useNoticeDetail } from '@hooks/useNoticeDetail';
+import { useQnaDetail } from '@hooks/useQnaDetail';
 
 const ModalOverlay = styled.div`
     &.modal-overlay {
@@ -167,26 +169,57 @@ const BodyTextArea = styled.textarea`
     }
 `;
 
-const QnaEditModal = ({ closeModal }) => {
-    const [Title, setTitle] = useState("");
-    const [Body, setBody] = useState("");
+const QnaEditModal = ({ closeModal, qaId, onRefresh }) => {
+    const { content: fetchedContent, title: fetchedTitle, loading, error } = useQnaDetail(qaId);
+    const [title, setTitle] = useState('');
+    const [content, setContent] = useState('');
 
+    useEffect(() => {
+        if (!loading && !error) {
+            setContent(fetchedContent);
+            setTitle(fetchedTitle);
+        }
+    }, [loading, error, fetchedContent, fetchedTitle]);
+
+    
     const handleTitleChange = (event) => {
         setTitle(event.target.value);
     };
 
     const handleBodyChange = (event) => {
-        setBody(event.target.value);
+        setContent(event.target.value);
+    };
+
+    const handleSuccess = () => {
+        closeModal();
+        onRefresh();
     };
 
     const handleSubmit = async () => {
-    if(!Title && !Body) { 
-        console.error("Value is not valid");
-        return;
-    }
-        const formData = new FormData();
-        formData.append('title', Title);
+        const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+        if (!userInfo || !userInfo.loginId) {
+            console.error("사용자 정보가 없습니다.");
+            return;
+        }
+
+        if (!title || !content) { 
+            console.error("제목과 본문을 모두 입력해야 합니다.");
+            return;
+        }
+        
+        try {
+            const response = await ApiService.editQna(userInfo.loginId, qaId, title, content);
+            console.log("Q&A 수정 성공:", response);
+            handleSuccess();
+        } catch (error) {
+            console.error("Q&A 수정 실패:", error);
+        }
     };
+
+    if (loading) return <div>Loading...</div>;
+    if (error) return <div>Error: {error.message}</div>;
+
+
 
     return (
         <ModalOverlay className="modal-overlay" onClick={closeModal}>
@@ -196,16 +229,18 @@ const QnaEditModal = ({ closeModal }) => {
                 <ModalContent>제목</ModalContent>
                 <TextAreaContainer>
                     <TitleTextArea 
-                        placeholder="제목을 입력하세요." 
-                        value={Title}
+                        placeholder="제목을 입력하세요."
+                        value={title}
+                        // onChange={(e) => setTitle(e.target.value)}
                         onChange={handleTitleChange}
                     />
                 </TextAreaContainer>
                 <ModalContent>본문</ModalContent>
                 <TextAreaContainer>
                     <BodyTextArea 
-                        placeholder="본문을 입력하세요." 
-                        value={Body}
+                        placeholder="본문을 입력하세요."
+                        value={content}
+                        // onChange={(e) => setBody(e.target.value)}
                         onChange={handleBodyChange}
                     />
                 </TextAreaContainer>

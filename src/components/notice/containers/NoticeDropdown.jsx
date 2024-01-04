@@ -10,8 +10,8 @@ const Dropmenu = styled.div`
     flex-direction: column;
     position: absolute;
     z-index: 20;
-    top: 1.7rem;
-    right: 0px;
+    top: 2.45rem;
+    right: 0.3rem;
     width: 5rem;
     border: 1px solid #E5EAF2;
     border-radius: 10px;

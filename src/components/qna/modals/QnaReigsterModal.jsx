@@ -167,7 +167,7 @@ const BodyTextArea = styled.textarea`
     }
 `;
 
-const QnaAddModal = ({ closeModal }) => {
+const QnaReigsterModal = ({ closeModal }) => {
     const [Title, setTitle] = useState("");
     const [Body, setBody] = useState("");
 
@@ -179,20 +179,39 @@ const QnaAddModal = ({ closeModal }) => {
         setBody(event.target.value);
     };
 
+    const handleSuccess = () => {
+        closeModal();
+        window.location.reload();
+    };
+
     const handleSubmit = async () => {
-    if(!Title && !Body) { 
-        console.error("Value is not valid");
+    if(!Title || !Body) { 
+        console.error("제목과 본문을 모두 입력해야 합니다.");
         return;
     }
-        const formData = new FormData();
-        formData.append('title', Title);
-    };
+
+    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    if (!userInfo || !userInfo.loginId) {
+        console.error("사용자 정보가 없습니다.");
+        return;
+    }
+
+    try {
+        const response = await ApiService.registerQna(userInfo.loginId, Title, Body);
+        console.log("Qna 글쓰기 성공:", response);
+        // 성공적으로 등록되었을 때의 추가 동작
+        handleSuccess();
+    } catch (error) {
+        console.error("Qna 글쓰기 실패:", error);
+        // 실패했을 때의 동작 처리
+    }
+};
 
     return (
         <ModalOverlay className="modal-overlay" onClick={closeModal}>
             <ModalContainer className="modal-container" onClick={(e) => e.stopPropagation()}>
                 <CloseButton className="modal-close-button" onClick={closeModal}>&times;</CloseButton>
-                <ModalTitle>새로운 Q&A 작성</ModalTitle>
+                <ModalTitle>새로운 Qna 작성</ModalTitle>
                 <ModalContent>제목</ModalContent>
                 <TextAreaContainer>
                     <TitleTextArea 
@@ -218,8 +237,8 @@ const QnaAddModal = ({ closeModal }) => {
     );
 };
 
-QnaAddModal.propTypes = {
+QnaReigsterModal.propTypes = {
     closeModal: PropTypes.func.isRequired,
 };
 
-export default QnaAddModal;
+export default QnaReigsterModal;

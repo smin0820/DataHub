@@ -2,18 +2,17 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import useModal from '@hooks/useModal';
-import NoticeEditModal from '@components/notice/modals/NoticeEditModal';
-import NoticeDeleteModal from '@components/notice/modals/NoticeDeleteModal';
-import QnaEditModal from '../modals/QnaEditModal';
+
 import QnaDeleteModal from '../modals/QnaDeleteModal';
+import QnaEditModal from '../modals/QnaEditModal';
 
 const Dropmenu = styled.div`
     display: flex;
     flex-direction: column;
     position: absolute;
     z-index: 20;
-    top: 1.7rem;
-    right: 0px;
+    top: 2.45rem;
+    right: 0.3rem;
     width: 5rem;
     border: 1px solid #E5EAF2;
     border-radius: 10px;
@@ -30,7 +29,7 @@ const Dropmenu = styled.div`
     }
     li {
         cursor: pointer;
-        padding: 4px 12px;
+        padding: 0.3rem 1.3rem;
         border-bottom: 1px solid #E5EAF2; /* 항목 사이에 구분선을 추가 */
         &:hover {
             background-color: #e0e0e0;  // 호버 시 배경색 변경
@@ -47,20 +46,28 @@ const Dropmenu = styled.div`
     }
 `
 
-export default function QnaDropdown() {
+export default function QnaDropdown({ qaId, onRefresh }) {
     const { isOpen: isEditOpen, openModal: openEditModal, closeModal: closeEditModal } = useModal();
     const { isOpen: isDeleteOpen, openModal: openDeleteModal, closeModal: closeDeleteModal } = useModal();
+
+    const handleEditClick = () => {
+        openEditModal();
+    };
+
+    const handleDeleteClick = () => {
+        openDeleteModal();
+    };
 
     return (
         <>
             <Dropmenu>
                 <ul>
-                    <li onClick={openEditModal}>수정</li>
-                    <li onClick={openDeleteModal}>삭제</li>
+                    <li onClick={handleEditClick}>수정</li>
+                    <li onClick={handleDeleteClick}>삭제</li>
                 </ul>
             </Dropmenu>
-            {isEditOpen && <QnaEditModal closeModal={closeEditModal} />}
-            {isDeleteOpen && <QnaDeleteModal closeModal={closeDeleteModal} />} 
+            {isEditOpen && <QnaEditModal qaId={qaId} onRefresh={onRefresh} closeModal={closeEditModal} />}
+            {isDeleteOpen && <QnaDeleteModal qaId={qaId} onRefresh={onRefresh} closeModal={closeDeleteModal} />} 
         </>
     );
 }

@@ -188,6 +188,20 @@ const ApiService = {
         }
     },
 
+    // get qna detail and reply
+    fetchQnaDetail: async (qaId) => {
+        try {
+            const response = await axiosInstance.get(`/reply`, {
+                params: { qaId }
+            });
+            console.log('서버 응답:', response.data);
+            return response.data;
+        } catch (error) {
+            console.error('Q&A Detail 요청 실패:', error);
+            throw error;
+        }
+    },
+
     // register notice
     registerNotice: async (title, body, loginId) => {
         try {
@@ -236,9 +250,83 @@ const ApiService = {
             console.error('Notice 삭제 실패:', error);
             throw error;
         }
+    },
+
+    // get Q&A list
+    fetchQnas: async (page) => {
+        try {
+            const response = await axiosInstance.get('/qa', {
+                params: { page }
+            });
+            console.log('서버 응답:', response.data);
+            return response.data;
+        } catch (error) {
+            console.log('Qna 목록 요청 실패:', error);
+            throw error;
+        }
+    },
+
+    // Q&A 글쓰기
+    registerQna: async (loginId, qaTitle, qaContent) => {
+        const formData = new FormData();
+        formData.append('loginId',loginId);
+        formData.append('qaTitle',qaTitle);
+        formData.append('qaContent',qaContent);
+
+        try {
+            const response = await axiosInstance.post('/qa/addition', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            });
+            console.log('서버 응답:', response.data);
+        } catch(error) {
+            console.log('qna 등록 실패:', error);
+            console.log("content",loginId, qaTitle, qaContent);
+            throw error;
+        }
+    },
+
+    // edit Q&A
+    editQna: async (loginId, qaId, updateTitle, updateContent) => {
+        const formData = new FormData();
+        formData.append('loginId',loginId);
+        formData.append('qaId',qaId);
+        formData.append('updateTitle', updateTitle);
+        formData.append('updateContent',updateContent);
+
+        try {
+            const response = await axiosInstance.put('/qa/modi', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            });
+            console.log('Q&A 수정 성공', response);
+            return response.data;
+        } catch (error) {
+            console.log('Q&A 수정 실패', error);
+            throw error;
+        }
+    },
+
+    // delete Q&A
+    deleteQna: async (qaId, loginId) => {
+        const formData = new FormData();
+        formData.append('loginId',loginId);
+        formData.append("qaId", qaId);
+        try {
+            const response = await axiosInstance.delete('/qa/del', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            });
+            console.log('Q&A 삭제 성공', response);
+            return response;
+        } catch (error) {
+            console.log('Q&A 삭제 실패', response);
+            throw error;
+        }
     }
-
-
 };
 
 export default ApiService;
