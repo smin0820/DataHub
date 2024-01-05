@@ -287,7 +287,7 @@ const ApiService = {
         }
     },
 
-    // edit Q&A
+    // Q&A 수정
     editQna: async (loginId, qaId, updateTitle, updateContent) => {
         const formData = new FormData();
         formData.append('loginId',loginId);
@@ -309,24 +309,7 @@ const ApiService = {
         }
     },
 
-    // delete Q&A
-    // deleteQna: async (qaId, loginId) => {
-    //     const formData = new FormData();
-    //     formData.append('loginId',loginId);
-    //     formData.append("qaId", qaId);
-    //     try {
-    //         const response = await axiosInstance.delete('/qa/del', formData, {
-    //             headers: {
-    //                 'Content-Type': 'multipart/form-data'
-    //             }
-    //         });
-    //         console.log('Q&A 삭제 성공', response);
-    //         return response;
-    //     } catch (error) {
-    //         console.log('Q&A 삭제 실패', response);
-    //         throw error;
-    //     }
-    // }
+    // Q&A 삭제
     deleteQna: async (qaId, loginId) => {
     try {
         const response = await axiosInstance.delete(`/qa/del`, {
