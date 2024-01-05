@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import ModifySysModalPresenter from "@components/modify/modals/ModifySysModalPresenter"; 
 import { useRecoilValue } from 'recoil';
 import { userState } from '@recoil/atoms/userStateAtom';
+import ModalComponent from '@components/common/ModalComponent';
 
 const ModifySysModalContainer = ({ closeModal, userData}) => {
   const navigate = useNavigate();
@@ -25,10 +26,13 @@ const ModifySysModalContainer = ({ closeModal, userData}) => {
     }
   }
   return (
-    <ModifySysModalPresenter
-      closeModal={closeModal}
-      handleUpdate={handleUpdate}
-    />
+    <ModalComponent>
+      <ModifySysModalPresenter
+        closeModal={closeModal}
+        handleUpdate={handleUpdate}
+      />
+    </ModalComponent>
+
   );
 };
 

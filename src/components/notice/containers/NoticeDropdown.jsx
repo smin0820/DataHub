@@ -2,8 +2,8 @@ import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import useModal from '@hooks/useModal';
-import NoticeEditModal from '@components/notice/modals/NoticeEditModal';
-import NoticeDeleteModal from '@components/notice/modals/NoticeDeleteModal';
+import NoticeEditModalContainer from '@components/notice/modals/NoticeEditModal/NoticeEditModalContainer';
+import NoticeDeleteModalContainer from '@components/notice/modals/NoticeDeleteModal/NoticeDeleteModalContainer';
 
 const Dropmenu = styled.div`
     display: flex;
@@ -65,8 +65,8 @@ export default function NoticeDropdown({ noticeId, onRefresh }) {
                     <li onClick={handleDeleteClick}>삭제</li>
                 </ul>
             </Dropmenu>
-            {isEditOpen && <NoticeEditModal noticeId={noticeId} onRefresh={onRefresh} closeModal={closeEditModal} />}
-            {isDeleteOpen && <NoticeDeleteModal noticeId={noticeId} onRefresh={onRefresh} closeModal={closeDeleteModal} />} 
+            {isEditOpen && <NoticeEditModalContainer noticeId={noticeId} onRefresh={onRefresh} closeModal={closeEditModal} />}
+            {isDeleteOpen && <NoticeDeleteModalContainer noticeId={noticeId} onRefresh={onRefresh} closeModal={closeDeleteModal} />} 
         </>
     );
 }

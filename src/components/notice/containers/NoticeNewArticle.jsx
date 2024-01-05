@@ -4,7 +4,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import useModal from '@hooks/useModal';
-import NoticeRegisterModal from '@components/notice/modals/NoticeReigsterModal';
+import NoticeRegisterModalContainer from '@components/notice/modals/NoticeRegisterModal/NoticeReigsterModalContainer';
 import { useRecoilValue } from 'recoil';
 import { userState } from '@recoil/atoms/userStateAtom';
 
@@ -42,7 +42,7 @@ export default function NoticeNewArticle() {
                     </button>
                 )}
             </div>
-            {isOpen && <NoticeRegisterModal closeModal={closeModal} />}
+            {isOpen && <NoticeRegisterModalContainer closeModal={closeModal} />}
         </Container>
     )
 };

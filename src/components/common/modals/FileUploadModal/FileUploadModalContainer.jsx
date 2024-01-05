@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import ApiService from '@components/axios/ApiService';  
-import FileUploadModalPresenter from './FileUploadModalPresenter'; // 경로에 맞게 조정 필요
+import FileUploadModalPresenter from './FileUploadModalPresenter';
+import ModalComponent from '@components/common/ModalComponent';
 
 const FileUploadModalContainer = ({ closeModal, detailCategories }) => {
   const [selectedCategoryId, setSelectedCategoryId] = useState(null);
@@ -29,14 +30,16 @@ const FileUploadModalContainer = ({ closeModal, detailCategories }) => {
   };
 
   return (
-    <FileUploadModalPresenter
-      closeModal={closeModal}
-      detailCategories={detailCategories}
-      selectedCategoryId={selectedCategoryId}
-      handleFileChange={handleFileChange}
-      handleRadioChange={handleRadioChange}
-      handleSubmit={handleSubmit}
-    />
+    <ModalComponent>
+      <FileUploadModalPresenter
+        closeModal={closeModal}
+        detailCategories={detailCategories}
+        selectedCategoryId={selectedCategoryId}
+        handleFileChange={handleFileChange}
+        handleRadioChange={handleRadioChange}
+        handleSubmit={handleSubmit}
+      />
+    </ModalComponent>
   );
 };
 
