@@ -5,7 +5,7 @@ import Sidebar from '@components/common/Sidebar';
 import AdminTablecontainer from '@components/admin/AdminTable/AdminTableContainer';
 import MainLogo from '@components/common/MainLogo';
 
-export default function Admin() {
+export default function AdminPage() {
 
     return (
         <>
