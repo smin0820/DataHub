@@ -188,20 +188,6 @@ const ApiService = {
         }
     },
 
-    // get qna detail and reply
-    fetchQnaDetail: async (qaId) => {
-        try {
-            const response = await axiosInstance.get(`/reply`, {
-                params: { qaId }
-            });
-            console.log('서버 응답:', response.data);
-            return response.data;
-        } catch (error) {
-            console.error('Q&A Detail 요청 실패:', error);
-            throw error;
-        }
-    },
-
     // register notice
     registerNotice: async (title, body, loginId) => {
         try {
@@ -266,6 +252,39 @@ const ApiService = {
         }
     },
 
+    // get qna detail and reply
+    fetchQnaDetail: async (qaId) => {
+        try {
+            const response = await axiosInstance.get(`/reply`, {
+                params: { qaId }
+            });
+            console.log('서버 응답:', response.data);
+            return response.data;
+        } catch (error) {
+            console.error('Q&A Detail 요청 실패:', error);
+            throw error;
+        }
+    },
+
+    //댓글 추가
+    registerComment: async (loginId, qaId, replyContent) => {
+        const formData = new FormData();
+        formData.append('loginId',loginId);
+        formData.append('qaId',qaId);
+        formData.append('replyContent',replyContent);
+        try {
+            const response = await axiosInstance.post('/reply/addition', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            });
+            console.log('서버 응답:', response.data);
+        } catch(error) {
+            console.log('댓글 추가 실패:', error);
+            throw error;
+        }
+    },
+
     // Q&A 글쓰기
     registerQna: async (loginId, qaTitle, qaContent) => {
         const formData = new FormData();
@@ -282,7 +301,6 @@ const ApiService = {
             console.log('서버 응답:', response.data);
         } catch(error) {
             console.log('qna 등록 실패:', error);
-            console.log("content",loginId, qaTitle, qaContent);
             throw error;
         }
     },
@@ -324,7 +342,7 @@ const ApiService = {
         console.error('Qna 삭제 실패:', error);
         throw error;
     }
-}
+    }
 };
 
 export default ApiService;

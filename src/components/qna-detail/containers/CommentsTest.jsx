@@ -1,4 +1,9 @@
-import React, { useState } from 'react';
+import ApiService from '@components/axios/ApiService';
+import { useQnaDetail } from '@hooks/useQnaDetail';
+import { userState } from '@recoil/atoms/userStateAtom';
+import React, { useEffect, useState } from 'react';
+import { useLocation, useParams } from 'react-router-dom';
+import { useRecoilValue } from 'recoil';
 import styled from 'styled-components';
 
 const Container = styled.div`
@@ -74,48 +79,50 @@ const Inputdiv = styled.div`
     cursor: pointer;
   }
 `;
-export default function Comments() {
-  const [commentList, setCommentList] = useState([]);
-  const [newComment, setNewComment] = useState('');
-  // 수정중인 댓글의 인덱스
-  const [editIndex, setEditIndex] = useState(null);
 
-  const handleCommentChange = (e) => {
+export default function CommentsTest() {
+    const userInfo = useRecoilValue(userState);
+    const [newComment, setNewComment] = useState('');
+    const params = useParams().id;
+
+    const location = useLocation();
+    const commentInfo = {...location.state};
+    const { replys: fetchedReplys, loading, error } = useQnaDetail(commentInfo.selectedqaId);
+    const [commentList, setCommentList] = useState([]);
+    useEffect(() => {
+        if (loading) {
+            setCommentList(['Loding...']);
+        } else if (error) {
+            setCommentList(['Error']);
+        } else {
+            setCommentList(fetchedReplys);
+        }
+    }, [loading, error, fetchedReplys]);
+
+    const handleCommentChange = (e) => {
     setNewComment(e.target.value);
   };
 
-  const handleCommentSubmit = () => {
-    if (newComment.trim() !== '') {
-      if(editIndex !== null) {
-        // 여기에 백엔드 API 호출 + 댓글 저장 기능 추가
-        // 수정 모드인 경우
-        const updatedComments = [...commentList];
-        updatedComments[editIndex] = newComment;
-        setCommentList(updatedComments);
-        setEditIndex(null);
-      } else {
-        // 추가 모드인 경우
-        setCommentList([...commentList, newComment]);
+    const handleCommentSubmit = async () => {
+      try {
+        await ApiService.registerComment(
+          userInfo.loginId,
+          params,
+          newComment
+        );
+        console.log("댓글 작성 성공~!");
+      } catch (error) {
+        console.log("댓글 작성 실패", error);
       }
       setNewComment('');
-    }
-  };
+    };
 
-  const handleCommentDelete = (index) => {
-    const updatedComments = [...commentList];
-    updatedComments.splice(index, 1);
-    setCommentList(updatedComments);
-    // 삭제 시 수정 중인 상태로 초기화
-    setEditIndex(null);
-  }
+    const handleCommentDelete = () => {};
 
-  const handleCommentEdit = (index) => {
-    setNewComment(commentList[index]);
-    setEditIndex(index);
-  }
+    const handleCommentEdit = () => {};
 
 
-  const handleKeyDown = (e) => {
+    const handleKeyDown = (e) => {
     if(e.key === 'Enter') {
       handleCommentSubmit();
     }
@@ -125,17 +132,17 @@ export default function Comments() {
     <Container>
       <div>
         <ul>
-          {commentList.map((comment, index) => (
+          {commentList.map((e, index) => (
             <li key={index}>
               <div>
-                <span>adm**</span>
-                <span>2024.01.02 11:24</span>
+                <span>{e.username}</span>
+                <span>{e.replyDate}</span>
               </div>
-              {comment}
+              {e.replyContent}
               <div>
-                <span onClick={() => handleCommentEdit(index)}>수정</span>
+                <span onClick={() => handleCommentEdit()}>수정</span>
                 <span>/</span>
-                <span onClick={() => handleCommentDelete(index)}>지우기</span>
+                <span onClick={() => handleCommentDelete()}>지우기</span>
               </div>
             </li>
           ))}
@@ -149,7 +156,7 @@ export default function Comments() {
             onKeyDown={handleKeyDown}
           />
           <button onClick={handleCommentSubmit}>
-            {editIndex !== null ? '수정' : '작성'}
+            작성
           </button>
         </Inputdiv>
       </div>

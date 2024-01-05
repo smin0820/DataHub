@@ -99,9 +99,6 @@ export default function QnaContentContainer(props) {
                         navigate(`/qna/${n.qaId}`, {
                             state: {
                                 selectedqaId: n.qaId,
-                                qaTitle: n.qaTitle,
-                                qaDate: n.qaDate,
-                                username: n.username
                             }
                         });
 

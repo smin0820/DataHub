@@ -7,6 +7,9 @@ export const useQnaDetail = (qaId) => {
     const [qa, setQa] = useState(null);
     // content
     const [content, setContent] = useState(null);
+    // replys: { replyId, replyDate, replyContent, username }
+    const [replys, setReplys] = useState(null);
+    
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
@@ -16,6 +19,7 @@ export const useQnaDetail = (qaId) => {
             .then(articleData => {
                 setContent(articleData.content);
                 setQa(articleData.qa);
+                setReplys(articleData.replys);
                 setError(null);
             })
             .catch(err => {
@@ -25,5 +29,5 @@ export const useQnaDetail = (qaId) => {
             .finally(() => setLoading(false));
     }, [qaId]);
 
-    return { content, loading, error, qa };
+    return { content, loading, error, qa, replys };
 };
