@@ -12,15 +12,16 @@ export default defineConfig({
       { find: "@store", replacement: "/src/store" },
       { find: "@styles", replacement: "/src/styles" },
       { find: "@recoil", replacement: "/src/recoil" },
+      { find: "@assets", replacement: "/src/assets" },
     ],
   },
-  server: {
-    proxy: {
-      "/api": {
-        target: "http://43.203.63.39:8080",
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, ""),
-      },
-    },
-  },
+  // server: {
+  //   proxy: {
+  //     "/": {
+  //       //target: "http://43.203.63.39:8080",
+  //       target: "http://localhost:8080",
+  //       //changeOrigin: true,
+  //     },
+  //   },
+  // },
 });

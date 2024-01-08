@@ -1,7 +1,7 @@
 // HeaderPresenter.jsx
 // 헤더(상단 메뉴바) 프레젠터
 
-import logo from "/assets/images/logo.png"
+import logo from "@assets/images/logo.png";
 import UserDropdown from "@components/common/Header/UserDropdown";
 import { Header, Navdiv, SNavLink } from "@styles/HeaderStyles";
 
