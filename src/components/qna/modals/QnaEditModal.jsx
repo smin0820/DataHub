@@ -171,17 +171,18 @@ const BodyTextArea = styled.textarea`
 `;
 
 const QnaEditModal = ({ closeModal, qaId, onRefresh }) => {
-    const { content: fetchedContent, title: fetchedTitle, loading, error } = useQnaDetail(qaId);
+    const { qa: fetchedQa, content: fetchedContent, loading, error } = useQnaDetail(qaId);
+    
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
     const userInfo = useRecoilValue(userState);
 
     useEffect(() => {
         if (!loading && !error) {
+            setTitle(fetchedQa.qaTitle);
             setContent(fetchedContent);
-            setTitle(fetchedTitle);
         }
-    }, [loading, error, fetchedContent, fetchedTitle]);
+    }, [loading, error, fetchedQa, fetchedContent]);
 
     
     const handleTitleChange = (event) => {

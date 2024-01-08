@@ -74,7 +74,7 @@ const Inputdiv = styled.div`
     cursor: pointer;
   }
 `;
-export default function WrapComments() {
+export default function Comments() {
   const [commentList, setCommentList] = useState([]);
   const [newComment, setNewComment] = useState('');
   // 수정중인 댓글의 인덱스

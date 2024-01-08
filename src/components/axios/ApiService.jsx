@@ -178,19 +178,6 @@ const ApiService = {
         }
     },
 
-    // get qna detail and reply
-    fetchQnaDetail: async (qaId) => {
-        try {
-            const response = await axiosInstance.get(`/reply`, {
-                params: { qaId }
-            });
-            return response.data;
-        } catch (error) {
-            console.error('Q&A Detail 요청 실패:', error);
-            throw error;
-        }
-    },
-
     // register notice
     registerNotice: async (title, body, loginId) => {
         try {
@@ -251,6 +238,77 @@ const ApiService = {
         }
     },
 
+    // get qna detail and reply
+    fetchQnaDetail: async (qaId) => {
+        try {
+            const response = await axiosInstance.get(`/reply`, {
+                params: { qaId }
+            });
+            console.log('서버 응답:', response.data);
+            return response.data;
+        } catch (error) {
+            console.error('Q&A Detail 요청 실패:', error);
+            throw error;
+        }
+    },
+
+    //댓글 추가
+    registerComment: async (loginId, qaId, replyContent) => {
+        const formData = new FormData();
+        formData.append('loginId',loginId);
+        formData.append('qaId',qaId);
+        formData.append('replyContent',replyContent);
+        try {
+            const response = await axiosInstance.post('/reply/addition', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            });
+            console.log('서버 응답:', response.data);
+        } catch(error) {
+            console.log('댓글 추가 실패:', error);
+            throw error;
+        }
+    },
+
+    // 댓글 삭제
+    deleteReply: async (loginId, replyId) => {
+        try {
+            const response = await axiosInstance.delete(`/reply/del`, {
+                params: {
+                    loginId: loginId,
+                    replyId: replyId
+                },
+            });
+            console.log('서버 응답:', response.data);
+            return response.data;
+        } catch (error) {
+            console.error('댓글 삭제 실패:', error);
+            throw error;
+        }
+    },
+
+    // 댓글 수정
+    editReply: async (loginId, replyId, updateContent) => {
+        const formData = new FormData();
+        formData.append('loginId',loginId);
+        formData.append('replyId',replyId);
+        formData.append('updateContent',updateContent);
+
+        try {
+            const response = await axiosInstance.put('/reply/modi', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            });
+            console.log('댓글 수정 성공', response);
+            return response.data;
+        } catch (error) {
+            console.log('댓글 수정 실패', error);
+            throw error;
+        }
+    },
+
     // Q&A 글쓰기
     registerQna: async (loginId, qaTitle, qaContent) => {
         const formData = new FormData();
@@ -270,7 +328,7 @@ const ApiService = {
         }
     },
 
-    // edit Q&A
+    // Q&A 수정
     editQna: async (loginId, qaId, updateTitle, updateContent) => {
         const formData = new FormData();
         formData.append('loginId',loginId);
@@ -291,7 +349,7 @@ const ApiService = {
         }
     },
 
-    // delete Q&A
+    // Q&A 삭제
     deleteQna: async (qaId, loginId) => {
     try {
         const response = await axiosInstance.delete(`/qa/del`, {
@@ -305,7 +363,7 @@ const ApiService = {
         console.error('Qna 삭제 실패:', error);
         throw error;
     }
-}
+    }
 };
 
 export default ApiService;

@@ -1,7 +1,6 @@
 // QnaContentContainer.jsx
 // Q&A 목록의 내용물을 표기하기 위한 컨테이너 컴포넌트
 
-import React from "react";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import useDropdown from "@hooks/useDropdown";
@@ -81,7 +80,6 @@ export default function QnaContentContainer(props) {
     const isAdmin = userInfo && userInfo.role === "ADMIN";
     const { currentOpenDropdown, toggleDropdown, dropdownRefs, closeDropdown } = useDropdown();
     const { isOpen: isViewOpen, selectedId, openModal: openViewModal, closeModal: closeViewModal } = useIdModal();
-
     return (
         <Boarddiv>
             <table>
@@ -98,7 +96,12 @@ export default function QnaContentContainer(props) {
                 <tbody>
                 {data.map((n, i) => (
                     <Tbodytr key={i}  onClick={() => {
-                        navigate(`/qna/${n.qaId}`)
+                        navigate(`/qna/${n.qaId}`, {
+                            state: {
+                                selectedqaId: n.qaId,
+                            }
+                        });
+
                     }}>
                     <td>
                         {n.qaTitle}

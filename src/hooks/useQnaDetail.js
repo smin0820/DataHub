@@ -3,8 +3,13 @@ import ApiService from '@components/axios/ApiService';
 
 // Q&A 상세 정보를 가져오는 훅
 export const useQnaDetail = (qaId) => {
+    // qa: { qaId, qaTitle, qaDate, username }
+    const [qa, setQa] = useState(null);
+    // content
     const [content, setContent] = useState(null);
-    const [title, setTitle] = useState(null);
+    // replys: { replyId, replyDate, replyContent, username }
+    const [replys, setReplys] = useState(null);
+    
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
@@ -13,7 +18,8 @@ export const useQnaDetail = (qaId) => {
         ApiService.fetchQnaDetail(qaId)
             .then(articleData => {
                 setContent(articleData.content);
-                setTitle(articleData.qa.qaTitle);
+                setQa(articleData.qa);
+                setReplys(articleData.replys);
                 setError(null);
             })
             .catch(err => {
@@ -23,5 +29,5 @@ export const useQnaDetail = (qaId) => {
             .finally(() => setLoading(false));
     }, [qaId]);
 
-    return { content, title, loading, error };
+    return { content, loading, error, qa, replys };
 };
