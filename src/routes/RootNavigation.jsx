@@ -8,7 +8,7 @@ import Modify from "@components/modify/Modify";
 import Regist from "@components/regist/Regist";
 import Notice from "@components/notice/Notice";
 import Qna from "@components/qna/Qna";
-import QnaDetail from "@components/qna/QnaDetail";
+import QnaDetail from "@components/qna-detail/QnaDetail";
 import useIsLoggedIn from "@hooks/useIsLoggedIn";
 
 const RootNavigation = () => {
