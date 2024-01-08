@@ -1,4 +1,4 @@
-import { ModalOverlay, ModalContainer, ModalTitle, ModalContent, ButtonGroup, CloseButton, RadioGroup, RadioButton, TextArea, FileUpload, TextAreaContainer} from "@styles/ModalStyles";
+import { ModalOverlay, ModalContainer, ModalTitle, ModalContent, ButtonGroup, CloseButton, RadioGroup, RadioButton, FileUpload } from "@styles/ModalStyles";
 
 const FileUploadModalPresenter = ({ closeModal, detailCategories, handleFileChange, handleRadioChange, handleSubmit }) => {
     return (

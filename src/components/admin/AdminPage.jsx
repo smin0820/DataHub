@@ -1,3 +1,6 @@
+// AdminPage.jsx
+// 대기중 게시물 페이지를 보여주는 컴포넌트입니다.
+
 import React from 'react';
 import HeaderContainer from '@components/common/Header/HeaderContainer'
 import AdminSearchContainer from '@components/admin/AdminSearch/AdminSearchContainer';

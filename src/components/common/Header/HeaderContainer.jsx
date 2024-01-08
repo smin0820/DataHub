@@ -1,11 +1,11 @@
+// HeaderContainer.jsx
+// 헤더(상단 메뉴바) 컨테이너
+
 import React, { useState } from "react";
 import { useRecoilValue } from "recoil";
 import { userState } from "@recoil/atoms/userStateAtom";
 import { useNavigate } from "react-router-dom";
 import HeaderPresenter from "@components/common/Header/HeaderPresenter";
-
-
-
 
 const HeaderContainer = () => {
   const [view, setView] = useState(false);
