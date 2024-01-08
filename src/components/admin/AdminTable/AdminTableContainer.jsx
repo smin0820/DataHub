@@ -1,3 +1,6 @@
+// AdminTableContainer.jsx
+// '대기중 게시물'페이지를 보여주는 테이블 컨테이너입니다.
+
 import React, { useEffect, useState } from "react";
 import ApiService from '@components/axios/ApiService';
 import AdminTablePresenter from './AdminTablePresenter';

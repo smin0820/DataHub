@@ -1,3 +1,6 @@
+// SidebarContainer.jsx
+// 사이드바 컨테이너
+
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
@@ -5,8 +8,6 @@ import { selectedSystemIdState, sidebarVisibilityState } from '@recoil/atoms/sys
 import { userState } from '@recoil/atoms/userStateAtom';
 import ApiService from '@components/axios/ApiService';
 import SidebarPresenter from '@components/common/Sidebar/SidebarPresenter';
-
-
 
 export default function SidebarContainer() {
   const [systemNames, setSystemNames] = useState([]);
@@ -28,16 +29,18 @@ export default function SidebarContainer() {
       setSelectedSystemId("admin");
     } else if (currentPath === "/system") {
       setSelectedSystemId(selectedSystemId);
+    } else {
+      setSelectedSystemId(0);
     }
   }, [userRole, location.pathname]);
 
-    return (
-    <SidebarPresenter
-      systemNames={systemNames}
-      selectedSystemId={selectedSystemId}
-      isVisible={isVisible}
-      onToggleSidebar={setIsVisible}
-      onSelectSystem={setSelectedSystemId}
-    />
-  );
+      return (
+        <SidebarPresenter
+          systemNames={systemNames}
+          selectedSystemId={selectedSystemId}
+          isVisible={isVisible}
+          onToggleSidebar={setIsVisible}
+          onSelectSystem={setSelectedSystemId}
+        />
+    );
 }

@@ -1,17 +1,13 @@
-import React, { useEffect } from 'react';
+// Sidebar.jsx
+// 관리자일 경우에 사이드바 컨테이너를 불러옵니다.
+
+import React from 'react';
 import { useRecoilValue } from 'recoil';
 import { userState } from '@recoil/atoms/userStateAtom';
-import { selectedSystemIdState } from '@recoil/atoms/systemStateAtom';
 import SidebarContainer from '@components/common/Sidebar/SidebarContainer';
 
 export default function Sidebar() {
   const userInfo = useRecoilValue(userState);
-  const selectedSystemId = useRecoilValue(selectedSystemIdState);
-
-  useEffect(() => {
-    // 선택된 시스템이 변경될 때 탭 상태 초기화
-    localStorage.removeItem('currentTab');
-  }, [selectedSystemId]);
 
   return (
     <>

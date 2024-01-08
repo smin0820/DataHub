@@ -4,7 +4,7 @@
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import useDropdown from "@hooks/useDropdown";
-import NoticeViewModal from "@components/notice/modals/NoticeViewModal";
+import NoticeViewModal from "@components/notice/modals/NoticeViewModal/NoticeViewModalContainer";
 import useIdModal from "@hooks/useIdModal";
 import { useNavigate } from "react-router-dom";
 import QnaDropdown from "./QnaDropdown";

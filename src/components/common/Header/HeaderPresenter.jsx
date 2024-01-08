@@ -1,63 +1,9 @@
-import logo from "/assets/images/logo.png"
-import styled from "styled-components";
-import Dropdown from "@components/common/Dropdown";
-import { NavLink } from "react-router-dom";
+// HeaderPresenter.jsx
+// 헤더(상단 메뉴바) 프레젠터
 
-const Header = styled.div`
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    height: 70px;
-    border-bottom: 1px solid #E5EAF2;
-    img {
-        height: auto;
-        width: 200px;
-        cursor: pointer;
-    }
-
-    nav {
-        display: flex;
-        gap: 50px;
-        align-items: center;
-        position: relative;
-        span {
-        padding: 0;
-        margin: 0;
-        cursor: pointer;
-        border: 1px solid #F1F1F1;
-        border-radius: 10px;
-        padding: 5px 8px;
-        background-color:#F1F1F1;
-        font-size: medium;
-        }
-
-        button {
-        padding: 5px 10px;
-        color: white;
-        background-color: #007FFF;
-        border: 1px solid #007FFF;
-        border-radius: 10px;
-        font-size: medium;
-        cursor: pointer;
-        }
-    }
-`;
-
-const Navdiv = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-    max-width: 1000px;
-`;
-
-const SNavLink = styled(NavLink)`
-    text-decoration: none;
-    color: black;
-    &.active {
-        color: #4dbde5;
-    }
-`;
+import logo from "@assets/images/logo.png";
+import UserDropdown from "@components/common/Header/UserDropdown";
+import { Header, Navdiv, SNavLink } from "@styles/HeaderStyles";
 
 const HeaderPresenter = ({ view, isAdmin, userName, onLogoClick, onToggleView, onNavigate }) => {
     return (
@@ -75,7 +21,7 @@ const HeaderPresenter = ({ view, isAdmin, userName, onLogoClick, onToggleView, o
                     <span onClick={onToggleView}>
                         {userName}님 {view ? "∧" : "∨"}
                     </span>
-                    {view && <Dropdown />}
+                    {view && <UserDropdown />}
                 </nav>
             </Navdiv>
         </Header>

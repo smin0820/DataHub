@@ -6,7 +6,7 @@ import styled from "styled-components";
 import PropTypes from "prop-types";
 import NoticeDropdown from "@components/notice/containers/NoticeDropdown";
 import useDropdown from "@hooks/useDropdown";
-import NoticeViewModal from "@components/notice/modals/NoticeViewModal";
+import NoticeViewModalContainer from "@components/notice/modals/NoticeViewModal/NoticeViewModalContainer";
 import useIdModal from "@hooks/useIdModal";
 import { useRecoilValue } from "recoil";
 import { userState } from "@recoil/atoms/userStateAtom";
@@ -118,7 +118,7 @@ export default function NoticeContentContainer(props) {
                 ))}
                 </tbody>
             </table>
-            {isViewOpen && <NoticeViewModal noticeId = {selectedId} closeModal={closeViewModal} />}
+            {isViewOpen && <NoticeViewModalContainer noticeId = {selectedId} closeModal={closeViewModal} />}
         </Boarddiv>
     );
 }

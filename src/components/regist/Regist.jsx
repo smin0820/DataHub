@@ -1,5 +1,5 @@
 import React from "react";
-import RegistBoarderContainer from './containers/RegistBoardContainer'
+import RegistBoarderContainer from './RegistBoard/RegistBoardContainer'
 
 const Regist = () =>{
     return(

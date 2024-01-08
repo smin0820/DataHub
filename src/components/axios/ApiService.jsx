@@ -9,7 +9,6 @@ const ApiService = {
                 loginId,
                 password
             });
-            console.log('로그인 응답:', response.data);
             return response.data;
         } catch (error) {
             console.error('로그인 실패:', error);
@@ -25,7 +24,6 @@ const ApiService = {
                     'Content-Type': 'application/json',
                 }
             });
-            console.log('Success:', response.data);
             return response.data;
         } catch (error) {
             console.error('Error', error);
@@ -37,7 +35,6 @@ const ApiService = {
     ModifyService: async (userData) => {
         try {
             const response = await axiosInstance.put('/users', userData);
-            console.log('Success in modifyUser:', response);
             return response.data;
         } catch (error) {
             console.error('Error during the update request:', error);
@@ -51,7 +48,6 @@ const ApiService = {
             const response = await axiosInstance.get('/wait-article', {
                 params: { page }
             });
-            console.log('Success fetching articles:', response);
             return response.data;
         } catch (error) {
             console.error('Error fetching articles:', error);
@@ -95,7 +91,6 @@ const ApiService = {
                 'Content-Type': 'multipart/form-data'
                 }
             });
-            console.log('Success in reviewArticle:', response);
         return response.data; // 요청이 성공하면 응답 데이터를 반환
         } catch (error) {
             console.error('Error in reviewArticle:', error);
@@ -111,7 +106,6 @@ const ApiService = {
                     systemId
                 }
             });
-            console.log('서버 응답:', response.data);
             return response.data;
         } catch (error) {
             console.error('Base category 요청 실패:', error);
@@ -125,7 +119,6 @@ const ApiService = {
             const response = await axiosInstance.get('/detail-category', {
                 params: { baseCategoryId }
             });
-            console.log('서버 응답:', response.data);
             return response.data;
         } catch (error) {
             console.error('Detail category 요청 실패:', error);
@@ -139,7 +132,6 @@ const ApiService = {
             const response = await axiosInstance.get('/articles', {
                 params: { detailCategoryId, page }
             });
-            console.log('서버 응답:', response.data);
             return response.data;
         } catch (error) {
             console.error('Articles 요청 실패:', error);
@@ -166,7 +158,6 @@ const ApiService = {
             const response = await axiosInstance.get('/notices', {
                 params: { page }
             });
-            console.log('서버 응답:', response.data);
             return response.data;
         } catch (error) {
             console.error('Notices 요청 실패:', error);
@@ -180,7 +171,6 @@ const ApiService = {
             const response = await axiosInstance.get(`/notice`, {
                 params: { noticeId }
             });
-            console.log('서버 응답:', response.data);
             return response.data;
         } catch (error) {
             console.error('Notice Detail 요청 실패:', error);
@@ -196,7 +186,6 @@ const ApiService = {
                 noticeContent: body,
                 loginId: loginId
             });
-            console.log('서버 응답:', response.data);
             return response.data;
         } catch (error) {
             console.error('Notice 등록 실패:', error);
@@ -213,7 +202,6 @@ const ApiService = {
                 noticeContent: body,
                 loginId: loginId
             });
-            console.log('서버 응답:', response.data);
             return response.data;
         } catch (error) {
             console.error('Notice 수정 실패:', error);
@@ -230,7 +218,6 @@ const ApiService = {
                     loginId: loginId
                 },
             });
-            console.log('서버 응답:', response.data);
             return response.data;
         } catch (error) {
             console.error('Notice 삭제 실패:', error);
@@ -244,10 +231,9 @@ const ApiService = {
             const response = await axiosInstance.get('/qa', {
                 params: { page }
             });
-            console.log('서버 응답:', response.data);
             return response.data;
         } catch (error) {
-            console.log('Qna 목록 요청 실패:', error);
+            console.error('Qna 목록 요청 실패:', error);
             throw error;
         }
     },
@@ -336,9 +322,8 @@ const ApiService = {
                     'Content-Type': 'multipart/form-data'
                 }
             });
-            console.log('서버 응답:', response.data);
         } catch(error) {
-            console.log('qna 등록 실패:', error);
+            console.error('qna 등록 실패:', error);
             throw error;
         }
     },
@@ -357,10 +342,9 @@ const ApiService = {
                     'Content-Type': 'multipart/form-data'
                 }
             });
-            console.log('Q&A 수정 성공', response);
             return response.data;
         } catch (error) {
-            console.log('Q&A 수정 실패', error);
+            console.error('Q&A 수정 실패', error);
             throw error;
         }
     },
@@ -374,7 +358,6 @@ const ApiService = {
                 loginId: loginId
             },
         });
-        console.log('서버 응답:', response.data);
         return response.data;
     } catch (error) {
         console.error('Qna 삭제 실패:', error);

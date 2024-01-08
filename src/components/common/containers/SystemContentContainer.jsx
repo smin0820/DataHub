@@ -3,92 +3,12 @@
 // {  }TableContiainer.jsx에서 내용을 전달해주면 표시해줍니다.
 
 import React from "react";
-import styled from "styled-components";
 import PropTypes from "prop-types";
 import CheckUploadModalContainer from "@components/common/modals/CheckUploadModal/CheckUploadModalContainer";
 import useIdModal from "@hooks/useIdModal";
 import { useRecoilValue } from "recoil";
 import { userState } from "@recoil/atoms/userStateAtom";
-
-const Boarddiv = styled.div`
-  display: flex;
-  justify-content: center;
-  margin-bottom: 30px;
-  table {
-    width: 100%;
-    max-width: 1000px;
-    border-collapse: collapse;
-    border-spacing: 0;
-
-    caption {
-      text-align: left;
-      margin-bottom: 30px;
-      font-weight: bolder;
-    }
-  }
-  thead {
-    background-color: #f3f6f9;
-  }
-  th {
-    width: auto;
-    text-align: left;
-    padding: 7px 5px;
-    font-weight: normal;
-  }
-  th:first-child {
-    width: 22%;
-  }
-  th:nth-child(2){
-    width:20%;
-  }
-  th:nth-child(3) {
-    width: 8%;
-  }
-  th:nth-child(4) {
-    width: 20%;
-  }
-  th:nth-child(5) {
-    width: 22%;
-  }
-  td {
-    width:auto;
-    padding: 7px 5px;
-  }
-  td:nth-child(3) {
-    /* color: ${(props) => (props.approval ? "반려" : "#FF0000")};
-    color: ${(props) => (props.approval ? "대기" : "#E8840F")}; */
-  }
-
-  td:last-child {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-  }
-  button {
-    padding: 2px 5px;
-    color: white;
-    background-color: #007fff;
-    border: 1px solid #007fff;
-    border-radius: 10px;
-    font-size: medium;
-    cursor: pointer;
-    text-align: center;
-  }
-`;
-
-const StyledLink = styled.a`
-    color: black;
-    text-decoration: none;
-
-    &:hover {
-      text-decoration: underline;
-    }
-`;
-
-const Tbodytr = styled.tr`
-  border-bottom: 2px solid #e5eaf2;
-  align-items: center;
-`;
+import { Boarddiv, Tbodytr, StyledLink, StatusDiv } from "@styles/BoardStyles";
 
 export default function SystemContentContainer(props) {
   const { title, data = [] } = props;
@@ -96,7 +16,7 @@ export default function SystemContentContainer(props) {
   const userInfo = useRecoilValue(userState);
   const isAdmin = userInfo && userInfo.role === "ADMIN";
 
-
+  // 파일 이름이 너무 길면 ...으로 표시해주는 함수
   const cutFileName = (name, maxLength = 20) => {
     if(name.length > maxLength) {
       return `${name.substring(0, maxLength)}...`;
@@ -105,7 +25,7 @@ export default function SystemContentContainer(props) {
   };
 
   return (
-    <Boarddiv>
+    <Boarddiv className="article">
       <table>
         <caption>{title}</caption>
         <thead>
@@ -119,11 +39,9 @@ export default function SystemContentContainer(props) {
             <th></th>
           </tr>
         </thead>
-
         <tbody>
           {data.map((n, i) => (
             <Tbodytr key={i}>
-              
               <td>
                 <StyledLink href={n.taskFileUrl} target="_blank" rel="noopener noreferrer">
                   {cutFileName(n.taskFileName)}
@@ -131,13 +49,9 @@ export default function SystemContentContainer(props) {
               </td>
               <td>{n.uploadDate}</td>
               <td>
-                {n.approval === "승인" ? (
-                  <Approval></Approval>
-                ) : n.approval === "대기" ? (
-                  <Wait></Wait>
-                ) : (
-                  <Return></Return>
-                )}
+                <StatusDiv color={getStatusColor(n.approval)}>
+                  {getStatusText(n.approval)}
+                </StatusDiv>
               </td>
               <td>{n.declineDetail}</td>
               <td>
@@ -151,7 +65,6 @@ export default function SystemContentContainer(props) {
                 <button onClick={() => openModal(n.articleId)}>검토</button>
                 )}
                 {isOpen && selectedId === n.articleId && (
-                  console.log("selectedId", selectedId),
                   <CheckUploadModalContainer closeModal={closeModal} articleId={selectedId} />
                 )}
               </td>
@@ -163,16 +76,26 @@ export default function SystemContentContainer(props) {
   );
 }
 
-function Approval() {
-  return <div style={{color:'#62C12A'}}>승인</div>;
+function getStatusColor(status) {
+  switch(status) {
+    case '승인':
+      return '#62C12A';
+    case '반려':
+      return '#FF0000';
+    default:
+      return '#E8840F';// 기본 색상(대기)
+  }
 }
 
-function Wait() {
-  return <div style={{color:'#E8840F'}}>대기</div>;
-}
-
-function Return() {
-  return <div style={{color:'#FF0000'}}>반려</div>;
+function getStatusText(status) {
+  switch(status) {
+    case '승인':
+      return '승인';
+    case '반려':
+      return '반려';
+    default:
+      return '대기'; // 기본 텍스트
+  }
 }
 
 SystemContentContainer.propTypes = {

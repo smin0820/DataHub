@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import ApiService from '@components/axios/ApiService';
-import CheckUploadModalPresenter from './CheckUploadModalPresenter';
+import CheckUploadModalPresenter from '@components/common/modals/CheckUploadModal/CheckUploadModalPresenter';
+import ModalComponent from '@components/common/ModalComponent';
 
 const CheckUploadModalContainer = ({ closeModal, articleId }) => {
   const [approval, setApproval] = useState('');
@@ -42,15 +43,18 @@ const CheckUploadModalContainer = ({ closeModal, articleId }) => {
   };
 
   return (
-    <CheckUploadModalPresenter
-      closeModal={closeModal}
-      approval={approval}
-      declineDetail={declineDetail}
-      handleRadioChange={handleRadioChange}
-      handleDetailChange={handleDetailChange}
-      handleFileChange={handleFileChange}
-      handleSubmit={handleSubmit}
-    />
+    <ModalComponent>
+      <CheckUploadModalPresenter
+        closeModal={closeModal}
+        approval={approval}
+        declineDetail={declineDetail}
+        handleRadioChange={handleRadioChange}
+        handleDetailChange={handleDetailChange}
+        handleFileChange={handleFileChange}
+        handleSubmit={handleSubmit}
+      />
+    </ModalComponent>
+
   );
 };
 

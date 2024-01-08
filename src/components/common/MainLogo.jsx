@@ -1,12 +1,12 @@
 import React from "react";
 import styled from "styled-components";
-import logo from "/assets/images/logo.png";
+import logo from "@assets/images/logo.png";
 
 const LogoContainer = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 60px; // Adjust as needed
+    margin-top: 60px;
     margin-bottom: 60px;
 `;
 
