@@ -93,6 +93,9 @@ export default function CommentsTest() {
   } = useQnaDetail(commentInfo.selectedqaId);
   const [commentList, setCommentList] = useState([]);
 
+  // 수정중인 댓글의 인덱스
+  const [editIndex, setEditIndex] = useState(null);
+
   useEffect(() => {
     if (loading) {
       setCommentList(["Loding..."]);
@@ -100,6 +103,7 @@ export default function CommentsTest() {
       setCommentList(["Error"]);
     } else {
       setCommentList(fetchedReplys);
+      console.log(fetchedReplys);
     }
   }, [loading, error, fetchedReplys]);
 
@@ -109,32 +113,46 @@ export default function CommentsTest() {
 
   const handleCommentSubmit = async () => {
     try {
-      await ApiService.registerComment(userInfo.loginId, params, newComment);
-      console.log("댓글 작성 성공~!");
+      if(newComment.trim() !== '') {
+        if(editIndex !== null) {
+          const updatedComments = [...commentList];
+          updatedComments[editIndex] = newComment;
+          setCommentList(updatedComments);
+          await ApiService.editReply(userInfo.loginId, fetchedReplys[editIndex].replyId, newComment);
+          console.log('댓글 수정 성공');
+          setEditIndex(null);
+        } else {
+          setCommentList([...commentList, newComment]);
+          await ApiService.registerComment(userInfo.loginId, params, newComment);
+          console.log('댓글 작성 성공');
+        }
+      }
     } catch (error) {
-      console.log("댓글 작성 실패", error);
+      console.log("댓글 작성 or 수정 실패", error);
     }
-    setNewComment("");
     window.location.reload();
   };
 
   const handleCommentDelete = async (index) => {
-	if(!userInfo || !userInfo.loginId) {
-		console.error('사용자 정보가 없습니다.');
-		return;
-	}
-	try {
-		const response = await ApiService.deleteReply(userInfo.loginId, fetchedReplys[index].replyId);
-		if (response) {
-			console.log("댓글 삭제 성공:", response);
-		}
-	} catch(error) {
-		console.error('댓글 삭제 실패:', error);
-	}
-  window.location.reload();
+    if(!userInfo || !userInfo.loginId) {
+      console.error('사용자 정보가 없습니다.');
+      return;
+    }
+    try {
+      const response = await ApiService.deleteReply(userInfo.loginId, fetchedReplys[index].replyId);
+      if (response) {
+        console.log("댓글 삭제 성공:", response);
+      }
+    } catch(error) {
+      console.error('댓글 삭제 실패:', error);
+    }
+    window.location.reload();
   };
 
-  const handleCommentEdit = () => {};
+  const handleCommentEdit = async (index) => {
+    setNewComment(fetchedReplys[index].replyContent);
+    setEditIndex(index);
+  };
 
   const handleKeyDown = (e) => {
     if (e.key === "Enter") {
@@ -154,7 +172,7 @@ export default function CommentsTest() {
               </div>
               {e.replyContent}
               <div>
-                <span onClick={() => handleCommentEdit()}>수정</span>
+                <span onClick={() => handleCommentEdit(index)}>수정</span>
                 <span>/</span>
                 <span onClick={() => handleCommentDelete(index)}>지우기</span>
               </div>
@@ -169,7 +187,9 @@ export default function CommentsTest() {
             onChange={handleCommentChange}
             onKeyDown={handleKeyDown}
           />
-          <button onClick={handleCommentSubmit}>작성</button>
+          <button onClick={handleCommentSubmit}>
+            {editIndex !== null ? '수정' : '작성'}
+          </button>
         </Inputdiv>
       </div>
     </Container>

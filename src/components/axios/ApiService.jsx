@@ -302,6 +302,27 @@ const ApiService = {
         }
     },
 
+    // 댓글 수정
+    editReply: async (loginId, replyId, updateContent) => {
+        const formData = new FormData();
+        formData.append('loginId',loginId);
+        formData.append('replyId',replyId);
+        formData.append('updateContent',updateContent);
+
+        try {
+            const response = await axiosInstance.put('/reply/modi', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            });
+            console.log('댓글 수정 성공', response);
+            return response.data;
+        } catch (error) {
+            console.log('댓글 수정 실패', error);
+            throw error;
+        }
+    },
+
     // Q&A 글쓰기
     registerQna: async (loginId, qaTitle, qaContent) => {
         const formData = new FormData();
