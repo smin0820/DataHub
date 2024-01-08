@@ -100,7 +100,6 @@ export default function CommentsTest() {
       setCommentList(["Error"]);
     } else {
       setCommentList(fetchedReplys);
-      console.log(fetchedReplys);
     }
   }, [loading, error, fetchedReplys]);
 
@@ -119,8 +118,20 @@ export default function CommentsTest() {
     window.location.reload();
   };
 
-  const handleCommentDelete = async () => {
-	
+  const handleCommentDelete = async (index) => {
+	if(!userInfo || !userInfo.loginId) {
+		console.error('사용자 정보가 없습니다.');
+		return;
+	}
+	try {
+		const response = await ApiService.deleteReply(userInfo.loginId, fetchedReplys[index].replyId);
+		if (response) {
+			console.log("댓글 삭제 성공:", response);
+		}
+	} catch(error) {
+		console.error('댓글 삭제 실패:', error);
+	}
+  window.location.reload();
   };
 
   const handleCommentEdit = () => {};
@@ -145,7 +156,7 @@ export default function CommentsTest() {
               <div>
                 <span onClick={() => handleCommentEdit()}>수정</span>
                 <span>/</span>
-                <span onClick={() => handleCommentDelete()}>지우기</span>
+                <span onClick={() => handleCommentDelete(index)}>지우기</span>
               </div>
             </li>
           ))}

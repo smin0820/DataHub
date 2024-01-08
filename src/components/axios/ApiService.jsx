@@ -285,6 +285,23 @@ const ApiService = {
         }
     },
 
+    // 댓글 삭제
+    deleteReply: async (loginId, replyId) => {
+        try {
+            const response = await axiosInstance.delete(`/reply/del`, {
+                params: {
+                    loginId: loginId,
+                    replyId: replyId
+                },
+            });
+            console.log('서버 응답:', response.data);
+            return response.data;
+        } catch (error) {
+            console.error('댓글 삭제 실패:', error);
+            throw error;
+        }
+    },
+
     // Q&A 글쓰기
     registerQna: async (loginId, qaTitle, qaContent) => {
         const formData = new FormData();
