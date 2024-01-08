@@ -1,10 +1,10 @@
-import ApiService from '@components/axios/ApiService';
-import { useQnaDetail } from '@hooks/useQnaDetail';
-import { userState } from '@recoil/atoms/userStateAtom';
-import React, { useEffect, useState } from 'react';
-import { useLocation, useParams } from 'react-router-dom';
-import { useRecoilValue } from 'recoil';
-import styled from 'styled-components';
+import ApiService from "@components/axios/ApiService";
+import { useQnaDetail } from "@hooks/useQnaDetail";
+import { userState } from "@recoil/atoms/userStateAtom";
+import React, { useEffect, useState } from "react";
+import { useLocation, useParams } from "react-router-dom";
+import { useRecoilValue } from "recoil";
+import styled from "styled-components";
 
 const Container = styled.div`
   display: flex;
@@ -42,7 +42,7 @@ const Container = styled.div`
           &:hover {
             color: #4dbde5;
             font-weight: bold;
-            opacity: 100%
+            opacity: 100%;
           }
         }
       }
@@ -60,7 +60,6 @@ const Inputdiv = styled.div`
     font-size: medium;
     text-align: left;
     padding-left: 0.5rem;
-    
   }
   button {
     position: absolute;
@@ -74,59 +73,63 @@ const Inputdiv = styled.div`
     border-radius: 10px;
     color: white;
     font-size: medium;
-    background-color: #007FFF;
-    border: 1px solid #007FFF;
+    background-color: #007fff;
+    border: 1px solid #007fff;
     cursor: pointer;
   }
 `;
 
 export default function CommentsTest() {
-    const userInfo = useRecoilValue(userState);
-    const [newComment, setNewComment] = useState('');
-    const params = useParams().id;
+  const userInfo = useRecoilValue(userState);
+  const [newComment, setNewComment] = useState("");
+  const params = useParams().id;
 
-    const location = useLocation();
-    const commentInfo = {...location.state};
-    const { replys: fetchedReplys, loading, error } = useQnaDetail(commentInfo.selectedqaId);
-    const [commentList, setCommentList] = useState([]);
-    useEffect(() => {
-        if (loading) {
-            setCommentList(['Loding...']);
-        } else if (error) {
-            setCommentList(['Error']);
-        } else {
-            setCommentList(fetchedReplys);
-        }
-    }, [loading, error, fetchedReplys]);
+  const location = useLocation();
+  const commentInfo = { ...location.state };
+  const {
+    replys: fetchedReplys,
+    loading,
+    error,
+  } = useQnaDetail(commentInfo.selectedqaId);
+  const [commentList, setCommentList] = useState([]);
 
-    const handleCommentChange = (e) => {
+  useEffect(() => {
+    if (loading) {
+      setCommentList(["Loding..."]);
+    } else if (error) {
+      setCommentList(["Error"]);
+    } else {
+      setCommentList(fetchedReplys);
+      console.log(fetchedReplys);
+    }
+  }, [loading, error, fetchedReplys]);
+
+  const handleCommentChange = (e) => {
     setNewComment(e.target.value);
   };
 
-    const handleCommentSubmit = async () => {
-      try {
-        await ApiService.registerComment(
-          userInfo.loginId,
-          params,
-          newComment
-        );
-        console.log("댓글 작성 성공~!");
-      } catch (error) {
-        console.log("댓글 작성 실패", error);
-      }
-      setNewComment('');
-    };
+  const handleCommentSubmit = async () => {
+    try {
+      await ApiService.registerComment(userInfo.loginId, params, newComment);
+      console.log("댓글 작성 성공~!");
+    } catch (error) {
+      console.log("댓글 작성 실패", error);
+    }
+    setNewComment("");
+    window.location.reload();
+  };
 
-    const handleCommentDelete = () => {};
+  const handleCommentDelete = async () => {
+	
+  };
 
-    const handleCommentEdit = () => {};
+  const handleCommentEdit = () => {};
 
-
-    const handleKeyDown = (e) => {
-    if(e.key === 'Enter') {
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
       handleCommentSubmit();
     }
-  }
+  };
 
   return (
     <Container>
@@ -155,9 +158,7 @@ export default function CommentsTest() {
             onChange={handleCommentChange}
             onKeyDown={handleKeyDown}
           />
-          <button onClick={handleCommentSubmit}>
-            작성
-          </button>
+          <button onClick={handleCommentSubmit}>작성</button>
         </Inputdiv>
       </div>
     </Container>
