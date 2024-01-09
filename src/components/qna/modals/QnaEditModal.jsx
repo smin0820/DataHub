@@ -5,6 +5,7 @@ import ApiService from '@components/axios/ApiService';
 import { useQnaDetail } from '@hooks/useQnaDetail';
 import { useRecoilValue } from 'recoil';
 import { userState } from '@recoil/atoms/userStateAtom';
+import ModalComponent from '@components/common/ModalComponent';
 
 const ModalOverlay = styled.div`
     &.modal-overlay {
@@ -230,34 +231,37 @@ const QnaEditModal = ({ closeModal, qaId, onRefresh }) => {
 
 
     return (
-        <ModalOverlay className="modal-overlay" onClick={closeModal}>
-            <ModalContainer className="modal-container" onClick={(e) => e.stopPropagation()}>
-                <CloseButton className="modal-close-button" onClick={closeModal}>&times;</CloseButton>
-                <ModalTitle>Q&A 수정</ModalTitle>
-                <ModalContent>제목</ModalContent>
-                <TextAreaContainer>
-                    <TitleTextArea 
-                        placeholder="제목을 입력하세요."
-                        value={title}
-                        // onChange={(e) => setTitle(e.target.value)}
-                        onChange={handleTitleChange}
-                    />
-                </TextAreaContainer>
-                <ModalContent>본문</ModalContent>
-                <TextAreaContainer>
-                    <BodyTextArea 
-                        placeholder="본문을 입력하세요."
-                        value={content}
-                        // onChange={(e) => setBody(e.target.value)}
-                        onChange={handleBodyChange}
-                    />
-                </TextAreaContainer>
-                <ButtonGroup className="button-group">
-                    <button className="modal-group-button" onClick={closeModal}>취소하기</button>
-                    <button className="modal-group-button" onClick={handleSubmit}>수정하기</button>
-                </ButtonGroup>
-            </ModalContainer>
-        </ModalOverlay>
+        <ModalComponent>
+            <ModalOverlay className="modal-overlay" onClick={closeModal}>
+                <ModalContainer className="modal-container" onClick={(e) => e.stopPropagation()}>
+                    <CloseButton className="modal-close-button" onClick={closeModal}>&times;</CloseButton>
+                    <ModalTitle>Q&A 수정</ModalTitle>
+                    <ModalContent>제목</ModalContent>
+                    <TextAreaContainer>
+                        <TitleTextArea 
+                            placeholder="제목을 입력하세요."
+                            value={title}
+                            // onChange={(e) => setTitle(e.target.value)}
+                            onChange={handleTitleChange}
+                        />
+                    </TextAreaContainer>
+                    <ModalContent>본문</ModalContent>
+                    <TextAreaContainer>
+                        <BodyTextArea 
+                            placeholder="본문을 입력하세요."
+                            value={content}
+                            // onChange={(e) => setBody(e.target.value)}
+                            onChange={handleBodyChange}
+                        />
+                    </TextAreaContainer>
+                    <ButtonGroup className="button-group">
+                        <button className="modal-group-button" onClick={closeModal}>취소하기</button>
+                        <button className="modal-group-button" onClick={handleSubmit}>수정하기</button>
+                    </ButtonGroup>
+                </ModalContainer>
+            </ModalOverlay>
+        </ModalComponent>
+
     );
 };
 

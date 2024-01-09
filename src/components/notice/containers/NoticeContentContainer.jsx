@@ -75,10 +75,9 @@ const Tbodytr = styled.tr`
 
 export default function NoticeContentContainer(props) {
     const { title, data = [], onRefresh } = props;
-
     const userInfo = useRecoilValue(userState);
     const isAdmin = userInfo && userInfo.role === "ADMIN";
-    const { currentOpenDropdown, toggleDropdown, dropdownRefs, closeDropdown } = useDropdown();
+    const { currentOpenDropdown, toggleDropdown, dropdownRefs } = useDropdown();
     const { isOpen: isViewOpen, selectedId, openModal: openViewModal, closeModal: closeViewModal } = useIdModal();
 
     return (
