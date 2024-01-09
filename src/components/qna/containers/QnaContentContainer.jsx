@@ -78,7 +78,7 @@ export default function QnaContentContainer(props) {
     const navigate = useNavigate();
     const userInfo = useRecoilValue(userState);
     const isAdmin = userInfo && userInfo.role === "ADMIN";
-    const { currentOpenDropdown, toggleDropdown, dropdownRefs, closeDropdown } = useDropdown();
+    const { currentOpenDropdown, toggleDropdown, dropdownRefs  } = useDropdown();
     const { isOpen: isViewOpen, selectedId, openModal: openViewModal, closeModal: closeViewModal } = useIdModal();
     return (
         <Boarddiv>

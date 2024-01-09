@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import ApiService from '@components/axios/ApiService';
 import { useRecoilValue } from 'recoil';
 import { userState } from '@recoil/atoms/userStateAtom';
+import ModalComponent from '@components/common/ModalComponent';
 
 const ModalOverlay = styled.div`
     &.modal-overlay {
@@ -144,17 +145,20 @@ const QnaDeleteModal = ({ qaId, closeModal, onRefresh }) => {
     };
 
     return (
-        <ModalOverlay className="modal-overlay" onClick={closeModal}>
-            <ModalContainer className="modal-container" onClick={(e) => e.stopPropagation()}>
-                <CloseButton className="modal-close-button" onClick={closeModal}>&times;</CloseButton>
-                <ModalTitle>Q&A 삭제</ModalTitle>
-                <ModalContent>선택하신 Q&A을 삭제 하시겠습니까?</ModalContent>
-                <ButtonGroup className="button-group">
-                    <button className="modal-group-button" onClick={closeModal}>취소하기</button>
-                    <button className="modal-group-button" onClick={handleSubmit}>삭제하기</button>
-                </ButtonGroup>
-            </ModalContainer>
-        </ModalOverlay>
+        <ModalComponent>
+            <ModalOverlay className="modal-overlay" onClick={closeModal}>
+                <ModalContainer className="modal-container" onClick={(e) => e.stopPropagation()}>
+                    <CloseButton className="modal-close-button" onClick={closeModal}>&times;</CloseButton>
+                    <ModalTitle>Q&A 삭제</ModalTitle>
+                    <ModalContent>선택하신 Q&A을 삭제 하시겠습니까?</ModalContent>
+                    <ButtonGroup className="button-group">
+                        <button className="modal-group-button" onClick={closeModal}>취소하기</button>
+                        <button className="modal-group-button" onClick={handleSubmit}>삭제하기</button>
+                    </ButtonGroup>
+                </ModalContainer>
+            </ModalOverlay>
+        </ModalComponent>
+
     );
 };
 

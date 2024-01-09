@@ -1,5 +1,4 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import useModal from '@hooks/useModal';
 import NoticeEditModalContainer from '@components/notice/modals/NoticeEditModal/NoticeEditModalContainer';

@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 import ApiService from '@components/axios/ApiService';
 import { useRecoilValue } from 'recoil';
 import { userState } from '@recoil/atoms/userStateAtom';
+import ModalComponent from '@components/common/ModalComponent';
 
 const ModalOverlay = styled.div`
     &.modal-overlay {
@@ -210,32 +211,35 @@ const QnaReigsterModal = ({ closeModal }) => {
 };
 
     return (
-        <ModalOverlay className="modal-overlay" onClick={closeModal}>
-            <ModalContainer className="modal-container" onClick={(e) => e.stopPropagation()}>
-                <CloseButton className="modal-close-button" onClick={closeModal}>&times;</CloseButton>
-                <ModalTitle>새로운 Qna 작성</ModalTitle>
-                <ModalContent>제목</ModalContent>
-                <TextAreaContainer>
-                    <TitleTextArea 
-                        placeholder="제목을 입력하세요." 
-                        value={Title}
-                        onChange={handleTitleChange}
-                    />
-                </TextAreaContainer>
-                <ModalContent>본문</ModalContent>
-                <TextAreaContainer>
-                    <BodyTextArea 
-                        placeholder="본문을 입력하세요." 
-                        value={Body}
-                        onChange={handleBodyChange}
-                    />
-                </TextAreaContainer>
-                <ButtonGroup className="button-group">
-                    <button className="modal-group-button" onClick={closeModal}>취소하기</button>
-                    <button className="modal-group-button" onClick={handleSubmit}>등록하기</button>
-                </ButtonGroup>
-            </ModalContainer>
-        </ModalOverlay>
+        <ModalComponent>
+            <ModalOverlay className="modal-overlay" onClick={closeModal}>
+                <ModalContainer className="modal-container" onClick={(e) => e.stopPropagation()}>
+                    <CloseButton className="modal-close-button" onClick={closeModal}>&times;</CloseButton>
+                    <ModalTitle>새로운 Qna 작성</ModalTitle>
+                    <ModalContent>제목</ModalContent>
+                    <TextAreaContainer>
+                        <TitleTextArea 
+                            placeholder="제목을 입력하세요." 
+                            value={Title}
+                            onChange={handleTitleChange}
+                        />
+                    </TextAreaContainer>
+                    <ModalContent>본문</ModalContent>
+                    <TextAreaContainer>
+                        <BodyTextArea 
+                            placeholder="본문을 입력하세요." 
+                            value={Body}
+                            onChange={handleBodyChange}
+                        />
+                    </TextAreaContainer>
+                    <ButtonGroup className="button-group">
+                        <button className="modal-group-button" onClick={closeModal}>취소하기</button>
+                        <button className="modal-group-button" onClick={handleSubmit}>등록하기</button>
+                    </ButtonGroup>
+                </ModalContainer>
+            </ModalOverlay>
+        </ModalComponent>
+        
     );
 };
 
