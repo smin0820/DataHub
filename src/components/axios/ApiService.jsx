@@ -1,4 +1,4 @@
-import axiosInstance from "@components/axios/AxiosInstance";
+import { axiosInstance } from "@components/axios/AxiosInstance";
 
 const ApiService = {
 
@@ -57,29 +57,12 @@ const ApiService = {
 
     // admin system nav
     fetchSystemNames: async () => {
-        let systemId = 1;
-        let systemNames = [];
-        let hasMore = true;
-    
-        while (hasMore) {
-            try {
-                const response = await axiosInstance.get('/base-category', {
-                    params: {
-                        systemId: systemId
-                    }
-                });
-                if (response.data && response.data.systemName) {
-                    systemNames.push({ id: systemId, name: response.data.systemName });
-                    systemId++;
-                } else {
-                    hasMore = false;
-                }
-            } catch (error) {
-                console.error('Error fetching system names:', error);
-                hasMore = false;
-            }
-        }
-        return systemNames;
+        try {
+            const response = await axiosInstance.get('/system');
+            return response;
+        } catch(error) {
+            console.error('Error fetching system names:', error);
+        }       
     },
 
     // admin review
