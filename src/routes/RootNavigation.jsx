@@ -12,6 +12,7 @@ import QnaDetail from "@components/qna-detail/QnaDetail";
 import useIsLoggedIn from "@hooks/useIsLoggedIn";
 import ProtectedRoute from "./ProtectedRoute";
 import NotFoundPage from "@components/common/NotFoundPage";
+import ManagePage from "@components/manage/ManagePage";
 
 const RootNavigation = () => {
   const { getToken } = useToken();
@@ -51,6 +52,9 @@ const RootNavigation = () => {
       }/>
       <Route path="/qna" element={
         <ProtectedRoute element={<Qna />}/>
+      }/>
+      <Route path="/manage" element={
+        <ProtectedRoute element={<ManagePage />}/>
       }/>
       <Route path="/qna/:id" element={
         <ProtectedRoute element={<QnaDetail />}/>
