@@ -25,7 +25,7 @@ export default function SidebarContainer() {
   useEffect(() => {
     if (userRole === "ADMIN") {
       ApiService.fetchSystemNames().then(response => {
-        const names = response.data.map(system => ({
+        const names = response.data.systems.map(system => ({
           id: system.systemId,
           name: system.systemName
         }));
