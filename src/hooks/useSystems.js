@@ -9,9 +9,9 @@ export const useSystems = () => {
     // 데이터를 불러오는 함수
     const fetchSystem = useCallback(() => {
         setLoading(true);
-        ApiService.fetchSystem()
+        ApiService.fetchSystemNames()
             .then(articleData => {
-                setSystemList(articleData.systems);
+                setSystemList(articleData.data.systems);
                 setError(null);
             })
             .catch(err => {
