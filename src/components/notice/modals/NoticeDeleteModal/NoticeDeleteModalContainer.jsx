@@ -1,3 +1,6 @@
+// NoticeDeleteModalContainer.jsx
+// 공지사항 삭제를 위한 모달 컨테이너 컴포넌트
+
 import React from 'react';
 import PropTypes from 'prop-types';
 import ApiService from '@components/axios/ApiService';

@@ -1,3 +1,6 @@
+// NoticeViewModalPresenter.jsx
+// 공지사항 상세보기를 위한 모달 프레젠터 컴포넌트
+
 import { ModalOverlay, ModalContainer, ModalTitle, ModalContent, ButtonGroup, CloseButton } from "@styles/ModalStyles";
 
 const NoticeViewModalPresenter = ({ closeModal, title, body }) => {

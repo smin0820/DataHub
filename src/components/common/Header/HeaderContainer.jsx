@@ -14,6 +14,7 @@ const HeaderContainer = () => {
   const isAdmin = userInfo && userInfo.role === "ADMIN";
   const userName = userInfo ? userInfo.loginId : "User";
   
+  // 유저에 따라서 관리자 페이지로 이동할지, 일반 사용자 페이지로 이동할지 결정
   const handleLogoClick = () => {
     if (isAdmin) {
       navigate("/admin");

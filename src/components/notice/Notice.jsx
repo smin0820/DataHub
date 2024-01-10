@@ -1,3 +1,6 @@
+// Notice.jsx
+// Notice 페이지 전체를 렌더링하는 컴포넌트입니다.
+
 import React from 'react';
 import HeaderContainer from '@components/common/Header/HeaderContainer'
 import Sidebar from '@components/common/Sidebar';

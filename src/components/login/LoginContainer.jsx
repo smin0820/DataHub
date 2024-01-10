@@ -1,3 +1,6 @@
+// LoginContainer.jsx
+// 로그인(/login) 컨테이너 컴포넌트입니다.
+
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import ApiService from "@components/axios/ApiService";

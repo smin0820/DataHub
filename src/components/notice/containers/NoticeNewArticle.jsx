@@ -7,26 +7,7 @@ import useModal from '@hooks/useModal';
 import NoticeRegisterModalContainer from '@components/notice/modals/NoticeRegisterModal/NoticeReigsterModalContainer';
 import { useRecoilValue } from 'recoil';
 import { userState } from '@recoil/atoms/userStateAtom';
-
-const Container = styled.div`
-    display: flex;
-    justify-content: center;
-    div {
-        width: 100%;
-        max-width: 1000px;
-    
-        button {
-            padding: 5px 10px;
-            color: white;
-            background-color: #007FFF;
-            border: 1px solid #007FFF;
-            border-radius: 10px;
-            font-size: medium;
-            cursor: pointer;
-            float: right;
-        }
-    }
-`;
+import { Container, Buttondiv } from '@styles/CommonStyles';
 
 export default function NoticeNewArticle() {
     const { isOpen, openModal, closeModal } = useModal();
@@ -35,13 +16,13 @@ export default function NoticeNewArticle() {
 
     return (
         <Container>
-            <div>
+            <Buttondiv>
                 {isAdmin && (
                     <button onClick={openModal}>
                         공지사항 등록
                     </button>
                 )}
-            </div>
+            </Buttondiv>
             {isOpen && <NoticeRegisterModalContainer closeModal={closeModal} />}
         </Container>
     )

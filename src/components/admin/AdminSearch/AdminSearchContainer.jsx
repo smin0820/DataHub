@@ -1,3 +1,6 @@
+// AdminSearchContainer.jsx
+// 관리자의 검색기능을 위한 컨테이너 컴포넌트(미완성) 입니다.
+
 import React from 'react';
 import styled from 'styled-components';
 

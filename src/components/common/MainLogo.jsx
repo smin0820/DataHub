@@ -1,3 +1,6 @@
+// MainLogo.jsx
+// 메인 로고를 표시하는 컴포넌트입니다.
+
 import React from "react";
 import styled from "styled-components";
 import logo from "@assets/images/logo.png";

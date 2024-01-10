@@ -1,3 +1,6 @@
+// NoticeEditModalContainer.jsx
+// 공지사항 수정을 위한 모달 컨테이너 컴포넌트
+
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import ApiService from '@components/axios/ApiService';

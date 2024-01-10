@@ -1,5 +1,8 @@
+// ManageTableContainer.jsx
+// '시스템 관리'페이지의 내용을 전달하는 컨테이너입니다.
+
 import React from 'react';
-import ManageContentContainer from './ManageContentContainer';
+import ManageContentContainer from '@components/manage/ManageTable/ManageContentContainer';
 import { useSystems } from '@hooks/useSystems';
 
 export default function ManageTableContainer() {

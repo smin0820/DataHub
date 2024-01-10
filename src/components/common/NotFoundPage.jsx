@@ -1,3 +1,6 @@
+// NotFoundPage.jsx
+// 404 Not Found 페이지 컴포넌트입니다.
+
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
