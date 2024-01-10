@@ -118,7 +118,7 @@ const RegistSysModalContainer = ({ closeModal, inputValues }) => {
           console.log('Register Success:', response);
           alert("시스템이 등록되었습니다.")
           closeModal();
-          navigate('/admin');
+          navigate('/manage');
         } else {
           alert("아이디가 중복되어 등록할 수 없습니다.")
           closeModal();
