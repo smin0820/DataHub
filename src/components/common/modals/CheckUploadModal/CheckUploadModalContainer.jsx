@@ -1,3 +1,6 @@
+// CheckUploadModalContainer.jsx
+// 검토결과를 입력하는 모달 컨테이너입니다.
+
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import ApiService from '@components/axios/ApiService';

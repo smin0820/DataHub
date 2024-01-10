@@ -1,3 +1,6 @@
+// LoginPresenter.jsx
+// 로그인 페이지를 렌더링하는 컴포넌트입니다.
+
 import styled from "styled-components";
 import logo from "@assets/images/logo.png";
 

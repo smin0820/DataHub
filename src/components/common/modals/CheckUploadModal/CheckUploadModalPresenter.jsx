@@ -1,3 +1,6 @@
+// CheckUploadModalPresenter.jsx
+// 검토결과를 입력하는 모달 프레젠터입니다.
+
 import React from 'react';
 import { ModalOverlay, ModalContainer, ModalTitle, ModalContent, ButtonGroup, CloseButton, RadioGroup, RadioButton, TextArea, FileUpload, TextAreaContainer} from "@styles/ModalStyles";
 

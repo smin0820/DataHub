@@ -10,16 +10,11 @@ export default function UserDropdown() {
     const navigate = useNavigate();
     const logout = useLogout();
 
-    const handleLogout = () => {
-        logout();
-        navigate('/login');
-    };
-
     return (
         <Dropmenu>
             <ul>
                 <li onClick={()=>{navigate('/modify')}}>정보수정</li>
-                <li onClick={handleLogout}>로그아웃</li>
+                <li onClick={logout}>로그아웃</li>
             </ul>
         </Dropmenu>
     );

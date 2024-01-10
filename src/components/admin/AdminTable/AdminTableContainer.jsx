@@ -3,7 +3,7 @@
 
 import React, { useEffect, useState } from "react";
 import ApiService from '@components/axios/ApiService';
-import AdminTablePresenter from './AdminTablePresenter';
+import AdminTablePresenter from '@components/admin/AdminTable/AdminTablePresenter';
 
 export default function AdminTableContainer() {
     const [articles, setArticles] = useState([]);

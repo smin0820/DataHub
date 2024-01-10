@@ -1,3 +1,6 @@
+// NoticeRegisterModalPresenter.jsx
+// 공지사항 등록을 위한 모달 프레젠터 컴포넌트
+
 import { ModalOverlay, ModalContainer, ModalTitle, ModalContent, ButtonGroup, CloseButton, TextAreaContainer, TextArea } from "@styles/ModalStyles";
 
 const NoticeRegisterModalPresenter = ({ closeModal, Title, handleTitleChange, Body, handleBodyChange, handleSubmit }) => {

@@ -127,7 +127,6 @@ useEffect(() => {
           systemNames={systemNames}
           selectedSystemId={selectedSystemId}
           isVisible={isVisible}
-          onToggleSidebar={setIsVisible}
           onSelectSystem={setSelectedSystemId}
           buttonTop={buttonTop}
           handleDragStart={handleDragStart}

@@ -1,6 +1,9 @@
+// PaginationComponent.jsx
+// 페이지네이션을 구현하는 컴포넌트입니다.
+
 import React from "react";
 import styled from "styled-components";
-import { usePagination } from "@hooks/usePagenation"; // Adjust the import path as needed
+import { usePagination } from "@hooks/usePagenation";
 
 const PaginationContainer = styled.div`
     display: flex;

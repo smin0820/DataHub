@@ -1,3 +1,6 @@
+// useLogout.jsx
+// 로그아웃을 처리하는 커스텀 훅입니다.
+
 import { useNavigate } from 'react-router-dom';
 import { useResetRecoilState } from 'recoil';
 import { userState } from '@recoil/atoms/userStateAtom'; 

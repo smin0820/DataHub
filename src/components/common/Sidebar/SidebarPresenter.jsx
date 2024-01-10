@@ -6,7 +6,7 @@ import { SidebarUL, SNavLink, ToggleButton } from '@styles/SidebarStyles';
 import ReactDOM from 'react-dom';
 
 const SidebarPresenter = ({ 
-        systemNames, selectedSystemId, isVisible, onToggleSidebar, onSelectSystem, buttonTop, handleDragStart, handleToggleClick 
+        systemNames, selectedSystemId, isVisible, onSelectSystem, buttonTop, handleDragStart, handleToggleClick 
     }) => {
     const sidebarContent = (
         <>

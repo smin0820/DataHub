@@ -1,3 +1,6 @@
+// ApiService.jsx
+// 서버 API와 통신하는 함수들을 모아둔 파일입니다.
+
 import { axiosInstance } from "@components/axios/AxiosInstance";
 
 const ApiService = {
