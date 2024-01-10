@@ -65,8 +65,7 @@ const Tbodytr = styled.tr`
 `;
 
 export default function ManageContentContainer(props) {
-    const {title} = props;
-    const data = ['지하수 시스템', '지도 시스템'];
+    const {title, data, onRefresh} = props;
     return (
         <Container>
             <table>
@@ -79,10 +78,12 @@ export default function ManageContentContainer(props) {
                 </thead>
 
                 <tbody>
-                    <Tbodytr>
-                        <td>{data[0]}</td>
-                        <td><button>삭제</button></td>
-                    </Tbodytr>
+                    {data.map((n, i) => (
+                        <Tbodytr key={i}>
+                            <td>{n.systemName}</td>
+                            <td><button>삭제</button></td>
+                        </Tbodytr>
+                    ))}
                 </tbody>
             </table>
         </Container>

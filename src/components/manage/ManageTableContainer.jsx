@@ -1,24 +1,19 @@
-import React, { useState } from 'react';
+import React from 'react';
 import ManageContentContainer from './ManageContentContainer';
+import { useSystems } from '@hooks/useSystems';
 
 export default function ManageTableContainer() {
-    const [currentPage, setCurrentPage] = useState(1);
+    const { systemList, loading, error, refetchSystem } = useSystems();
+    if (loading) return <div>Loading...</div>;
+    if (error) return <div>Error: {error.message}</div>;
+    
+    const refreshList = () => {
+        refetchSystem();
+    }
 
-    const handlePageChange = (newPage) => {
-        setCurrentPage(newPage);
-    };
-
-
-    // if (loading) return <div>Loading...</div>;
-    // if (error) return <div>Error: {error.message}</div>;
     return (
         <div>
-            <ManageContentContainer title={'[시스템 목록]'} />
-            {/* <PaginationComponent 
-                currentPage={currentPage} 
-                totalPages={totalPages} 
-                onPageChange={handlePageChange}  
-            /> */}
+            <ManageContentContainer title={'[시스템 목록]'} data={systemList} onRefresh={refreshList} />
         </div>
     );
 }

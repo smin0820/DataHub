@@ -363,6 +363,22 @@ const ApiService = {
         console.error('Qna 삭제 실패:', error);
         throw error;
     }
+    },
+
+    // 시스템 목록 불러오기
+    fetchSystem: async (systemId, systemName) => {
+        try {
+            const response = await axiosInstance.get('/system', {
+                params: {
+                    systemId: systemId,
+                    systemName: systemName
+                },
+            });
+            return response.data;
+        } catch (error) {
+            console.error('시스템 목록 불러오기 실패', error);
+            throw error;
+        }
     }
 };
 
