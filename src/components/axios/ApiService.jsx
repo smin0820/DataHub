@@ -1,4 +1,4 @@
-import axiosInstance from "@components/axios/AxiosInstance";
+import { axiosInstance } from "@components/axios/AxiosInstance";
 
 const ApiService = {
     // login
@@ -56,29 +56,12 @@ const ApiService = {
 
     // admin system nav
     fetchSystemNames: async () => {
-        let systemId = 1;
-        let systemNames = [];
-        let hasMore = true;
-    
-        while (hasMore) {
-            try {
-                const response = await axiosInstance.get('/base-category', {
-                    params: {
-                        systemId: systemId
-                    }
-                });
-                if (response.data && response.data.systemName) {
-                    systemNames.push({ id: systemId, name: response.data.systemName });
-                    systemId++;
-                } else {
-                    hasMore = false;
-                }
-            } catch (error) {
-                console.error('Error fetching system names:', error);
-                hasMore = false;
-            }
-        }
-        return systemNames;
+        try {
+            const response = await axiosInstance.get('/system');
+            return response;
+        } catch(error) {
+            console.error('Error fetching system names:', error);
+        }       
     },
 
     // admin review
@@ -364,18 +347,17 @@ const ApiService = {
     }
     },
 
-    // 시스템 목록 불러오기
-    fetchSystem: async (systemId, systemName) => {
+    // 시스템명 중복확인(user)
+    userCheckSystemName: async (loginId, systemName) => {
         try {
-            const response = await axiosInstance.get('/system', {
-                params: {
-                    systemId: systemId,
-                    systemName: systemName
-                },
+            const response = await axiosInstance.post('/users/check-systemname', {
+                loginId,
+                systemName
             });
             return response.data;
         } catch (error) {
-            console.error('시스템 목록 불러오기 실패', error);
+            console.log(systemName)
+            console.error('시스템명 중복확인 요청 실패:', error);
             throw error;
         }
     },
@@ -418,6 +400,33 @@ const ApiService = {
             return response.data;
         } catch (error) {
             console.error('시스템 삭제 실패:', error);
+        }
+    },
+
+    // 아이디 중복확인(admin)
+    adminCheckLoginId: async (loginId) => {
+        try {
+            const response = await axiosInstance.get('/join/check-loginid', {
+                params: { loginId }
+            });
+            return response.data;
+        } catch (error) {
+            console.log(loginId)
+            console.error('아이디 중복확인 요청 실패:', error);
+            throw error;
+        }
+    },
+
+    // 시스템명 중복확인(admin)
+    adminCheckSystemName: async (systemName) => {
+        try {
+            const response = await axiosInstance.get('/join/check-systemname', {
+                params: { systemName }
+            });
+            return response.data;
+        } catch (error) {
+            console.log(systemName)
+            console.error('시스템명 중복확인 요청 실패:', error);
             throw error;
         }
     }

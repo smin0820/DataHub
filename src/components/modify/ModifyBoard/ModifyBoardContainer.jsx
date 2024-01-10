@@ -21,6 +21,7 @@ const ModifyBoardContainer = () => {
     const [passwordCheck, setPasswordCheck] = useState("");
     const [loginId] = useState(userInfo.loginId || "");
     let currentSystemId = userInfo?.systemIds?.[0];
+    const [systemNameCheck, setSystemNameCheck] = useState(true);
     
     useEffect(() => {
       // admin 계정이면 시스템명을 가져오지 않음
@@ -48,6 +49,11 @@ const ModifyBoardContainer = () => {
         }
       }
 
+      if ( systemNameCheck === false ) {
+        alert("시스템명 중복확인을 해주세요.");
+        return false;
+      }
+
       if(password !== passwordCheck) {
         alert("비밀번호가 일치하지 않습니다.");
         return false;
@@ -69,11 +75,46 @@ const ModifyBoardContainer = () => {
       setter(e.target.value);
     };
 
+    // 시스템명 변경확인
+    const handleSystemNameChange = (e) => {
+        const newSystemName = e.target.value;
+        setSystemName(newSystemName);
+
+        // Set systemNameCheck to false if the new input is different from the current system name
+        if (newSystemName !== userInfo.systemName) {
+            setSystemNameCheck(false);
+        } else {
+            setSystemNameCheck(true);
+        }
+    };
+
+    // 시스템명 중복확인
+    const checkSystemName = async () => {
+      if (systemName === "") {
+        alert("시스템명을 입력해주세요.");
+        return;
+      }
+      console.log("시스템명 중복확인:", userInfo.loginId, systemName)
+        try {
+            const response = await ApiService.userCheckSystemName(userInfo.loginId, systemName);
+            console.log("시스템명 중복확인 성공:", response);
+            setSystemNameCheck(response);
+            if(response) {
+                alert("사용 가능한 시스템명입니다.");
+            } else {
+                alert("이미 존재하는 시스템명입니다.");
+            }
+        } catch (error) {
+            console.error("시스템명 중복확인 실패:", error);
+            setSystemNameCheck(false);
+        }
+    };
+
   return (
       <ModifyBoardPresenter
         {...{ userInfo, systemName, departmentName, department, companyName, developerName, contactNum, loginId, password, passwordCheck,
     setSystemName, setDepartmentName, setDepartment, setCompanyName, setDeveloperName, setContactNum, setPassword, setPasswordCheck, 
-    setModalOpen, isModalOpen, handleInputChange, handleUpdateClick, navigate }}
+    setModalOpen, isModalOpen, handleInputChange, handleUpdateClick, navigate, systemNameCheck, handleSystemNameChange, checkSystemName }}
       />
     );
 };

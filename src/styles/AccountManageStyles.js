@@ -50,7 +50,6 @@ export const Form = styled.form` // 입력 칸을 정렬하는 폼 스타일
     label {
         display: flex;
         justify-content: space-between;
-        align-items: baseline;
     }
     input {
         padding: 10px;
@@ -68,9 +67,22 @@ export const FormRow = styled.div` // 입력 칸을 정렬하는 폼 (행) 스�
     }
 `;
 
+export const FormContent = styled.div` // 입력 칸을 정렬하는 폼 (열) 스타일
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 0px;
+    min-height: 75px;
+    span {
+        font-size: 16px;
+    }
+`;
+
 export const InputContainer = styled.label` // 입력 칸 스타일
     display: flex;
     flex-direction: column;
+    margin-top: 20px;
     max-width: 1200px;
     background-color: #ffffffa0;
     border: none;
@@ -79,19 +91,12 @@ export const InputContainer = styled.label` // 입력 칸 스타일
     box-sizing: border-box;
     position: relative;
     align-items: stretch;
-    min-height: 75px;
-    & + & {
-
-    }
-    span {
-        font-size: 16px;
-    }
     input {
         border: 1px solid #DAE0E7;
         border-radius: 5px;
         outline: none;
         font-size: 16px;
-        width: 90%;
+        width: 95%;
         &::placeholder {
             color: #DAE0E7;
         }
@@ -106,11 +111,12 @@ export const InputContainer = styled.label` // 입력 칸 스타일
         margin-right: 0;
     }
     p {
-        position: absolute;
-        right: 20px;
+        position: relative;
+        right: 0px;
         bottom: 0px;
         font-size: 12px;
         margin: 0;
+        text-align: right;
     }
 `;
 
@@ -118,7 +124,7 @@ export const InputContainerHeader = styled.div` // 입력 칸 헤더 스타일
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    width: 90%;
+    width: 95%;
     margin-bottom: 0px;
 `;
 
