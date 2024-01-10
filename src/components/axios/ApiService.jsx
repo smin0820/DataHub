@@ -1,7 +1,6 @@
 import { axiosInstance } from "@components/axios/AxiosInstance";
 
 const ApiService = {
-
     // login
     loginUser: async (loginId, password) => {
         try {
@@ -360,6 +359,47 @@ const ApiService = {
             console.log(systemName)
             console.error('시스템명 중복확인 요청 실패:', error);
             throw error;
+        }
+    },
+
+    // 시스템 데이터 삭제 함수
+    deleteSystemData: async (systemId) => {
+        try {
+            // 게시물 삭제
+            const articleResponse = await axiosInstance.delete(`/article/del-all`, {
+                params: {
+                    systemId: systemId
+                }
+            });
+
+            // Q&A 및 댓글 삭제
+            const qaReplyResponse = await axiosInstance.delete(`/qa-reply/del-all`, {
+                params: {
+                    systemId: systemId
+                }
+            });
+
+            return {
+                article: articleResponse.data,
+                qaReply: qaReplyResponse.data
+            };
+        } catch (error) {
+            console.error('시스템 데이터 삭제 실패:', error);
+            throw error;
+        }
+    },
+
+    // 시스템 삭제시 > 해당 시스템 계정 삭제
+    deleteUser: async (systemId) => {
+        try {
+            const response = await axiosInstance.delete(`/user/del`, {
+                params: {
+                    systemId: systemId
+                }
+            });
+            return response.data;
+        } catch (error) {
+            console.error('시스템 삭제 실패:', error);
         }
     },
 
