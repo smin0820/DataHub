@@ -1,5 +1,7 @@
+import useModal from '@hooks/useModal';
 import React from 'react';
 import styled from 'styled-components';
+import SystemDeleteModal from './SystemDeleteModal';
 
 
 const Container = styled.div`
@@ -66,26 +68,40 @@ const Tbodytr = styled.tr`
 
 export default function ManageContentContainer(props) {
     const {title, data, onRefresh} = props;
-    return (
-        <Container>
-            <table>
-                <caption>{title}</caption>
-                <thead>
-                    <tr>
-                        <th>시스템명</th>
-                        <th></th>
-                    </tr>
-                </thead>
+    const { isOpen: isDeleteOpen, openModal: openDeleteModal, closeModal: closeDeleteModal } = useModal();
 
-                <tbody>
-                    {data.map((n, i) => (
-                        <Tbodytr key={i}>
-                            <td>{n.systemName}</td>
-                            <td><button>삭제</button></td>
-                        </Tbodytr>
-                    ))}
-                </tbody>
-            </table>
-        </Container>
+    const handleDeleteSystem = () => {
+        openDeleteModal();
+    };
+    return (
+      <Container>
+        <table>
+          <caption>{title}</caption>
+          <thead>
+            <tr>
+              <th>시스템명</th>
+              <th></th>
+            </tr>
+          </thead>
+
+          <tbody>
+            {data.map((n, i) => (
+              <Tbodytr key={i}>
+                <td>{n.systemName}</td>
+                <td>
+                  <button onClick={handleDeleteSystem}>삭제</button>
+                </td>
+                {isDeleteOpen && (
+                  <SystemDeleteModal
+                    systemId={n.systemId}
+                    onRefresh={onRefresh}
+                    closeModal={closeDeleteModal}
+                  ></SystemDeleteModal>
+                )}
+              </Tbodytr>
+            ))}
+          </tbody>
+        </table>
+      </Container>
     );
 }
