@@ -22,4 +22,17 @@ axiosInstance.interceptors.request.use(config => {
     return Promise.reject(error);
 });
 
-export default axiosInstance;
+// export default axiosInstance;
+const setupAxiosInterceptors = (onLogout) => {
+    const onResponseError = (error) => {
+        if (error.response && error.response.status === 500) {
+            onLogout(); // 500 에러 시 로그아웃 실행
+            alert("비정상적인 접근입니다. 다시 로그인해주세요.");
+        }
+        return Promise.reject(error);
+    };
+
+    axiosInstance.interceptors.response.use(response => response, onResponseError);
+};
+
+export { axiosInstance, setupAxiosInterceptors };

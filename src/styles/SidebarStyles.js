@@ -53,7 +53,6 @@ export const ToggleButton = styled.button` // 사이드바 토글 버튼 스타�
     padding: 10px;
     cursor: pointer;
     font-size: 30px;
-    transition: 0.3s;
     font-weight: normal;
     &:focus {
         outline: none;  // 포커스시 테두리 없앰

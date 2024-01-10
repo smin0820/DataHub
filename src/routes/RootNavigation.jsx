@@ -12,11 +12,13 @@ import QnaDetail from "@components/qna-detail/QnaDetail";
 import useIsLoggedIn from "@hooks/useIsLoggedIn";
 import ProtectedRoute from "./ProtectedRoute";
 import NotFoundPage from "@components/common/NotFoundPage";
+import { useEnhancedLogout } from "@components/login/Logout/AutoLogout";
 
 const RootNavigation = () => {
   const { getToken } = useToken();
   const isLoggedIn = useIsLoggedIn();
-
+  useEnhancedLogout();
+  
   const getRedirectPath = () => {
     if (isLoggedIn.role === "ADMIN") {
       return "/admin";
