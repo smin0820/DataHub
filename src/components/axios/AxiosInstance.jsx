@@ -2,9 +2,11 @@
 // Axios 인스턴스를 생성하는 파일입니다.
 
 import axios from 'axios';
+import ApiService from "@components/axios/ApiService";
 
 // axios 인스턴스를 생성합니다.
 const axiosInstance = axios.create({
+    //baseURL: "/api",
     //baseURL: "http://localhost:8080",
     baseURL: "http://43.203.63.39:8080",
 });
@@ -22,22 +24,69 @@ axiosInstance.interceptors.request.use(config => {
     return Promise.reject(error);
 });
 
+
+let isRefreshingToken = false;
+let failedQueue = [];
+
+const processQueue = (error, token = null) => {
+    failedQueue.forEach(prom => {
+        if (error) {
+            prom.reject(error);
+        } else {
+            prom.resolve(token);
+        }
+    });
+
+    failedQueue = [];
+};
+
 // 500 에러 혹은 기타 에러발생시 로그아웃 실행
 let isAlertShown = false; // 에러 발생시 alert가 여러번 뜨는 것을 방지합니다.
 
 const setupAxiosInterceptors = (onLogout) => {
-    const onResponseError = (error) => {
-        if (error.response && error.response.status === 500) {
-            if (!isAlertShown) { // 경고창이 아직 뜨지 않았다면
-                isAlertShown = true; // 경고창을 띄우고
-                onLogout(); // 500 에러 시 로그아웃 실행
-                alert("비정상적인 접근입니다. 다시 로그인해주세요.");
-                isAlertShown = false; // 경고창이 뜨고 나면 다시 경고창을 띄울 수 있도록 false로 바꿔줍니다.
+    axiosInstance.interceptors.response.use(response => response, async (error) => {
+        const originalRequest = error.config;
+
+        if (error.response && ( error.response.status === 401 || error.response.status === 500 ) && !originalRequest._retry) {
+            if (isRefreshingToken) {
+                return new Promise(function(resolve, reject) {
+                    failedQueue.push({resolve, reject});
+                }).then(token => {
+                    originalRequest.headers['Authorization'] = 'Bearer ' + token;
+                    return axiosInstance(originalRequest);
+                }).catch(err => {
+                    return Promise.reject(err);
+                });
             }
+
+            originalRequest._retry = true;
+            isRefreshingToken = true;
+
+            const refreshToken = localStorage.getItem('refreshToken');
+            // 원래 요청에 "Bearer " 접두사를 붙여 refreshToken 추가
+            originalRequest.headers['Refresh-Token'] = `Bearer ${refreshToken}`;
+            try {
+                const response = await axiosInstance(originalRequest);
+                // 'new-access-token' 헤더를 체크
+                const newAccessToken = response.headers['new-access-token'];
+                // 새 토큰 저장 및 사용
+                if (newAccessToken) {
+                    localStorage.setItem('jwtToken', newAccessToken);
+                    axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${newAccessToken}`;
+                    processQueue(null, newAccessToken);
+                }
+                isRefreshingToken = false;
+                    
+                return Promise.resolve(response);
+            } catch (retryError) {
+                processQueue(retryError, null);
+                isRefreshingToken = false;
+                return Promise.reject(retryError);
+            }
+        } else {
+            return Promise.reject(error);
         }
-        return Promise.reject(error);
-    };
-    axiosInstance.interceptors.response.use(response => response, onResponseError);
+    });
 };
 
 export { axiosInstance, setupAxiosInterceptors };
