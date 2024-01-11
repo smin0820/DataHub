@@ -24,10 +24,7 @@ export default function LoginContainer() {
     try{
       const response = await ApiService.loginUser(username, password);
       if(response) {
-        setToken(response.accessToken);
-        localStorage.setItem("jwtToken", response.accessToken);
-        setUserInfo({ ...response.user, token: response.accessToken });
-        
+        setUserInfo({ ...response.user });
         const userRole = response.user.role;
         if (userRole === "ADMIN") {
           navigate("/admin");
