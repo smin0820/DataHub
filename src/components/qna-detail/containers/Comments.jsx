@@ -1,5 +1,10 @@
-import React, { useState } from 'react';
-import styled from 'styled-components';
+import ApiService from "@components/axios/ApiService";
+import { useQnaDetail } from "@hooks/useQnaDetail";
+import { userState } from "@recoil/atoms/userStateAtom";
+import React, { useEffect, useState } from "react";
+import { useLocation, useParams } from "react-router-dom";
+import { useRecoilValue } from "recoil";
+import styled from "styled-components";
 
 const Container = styled.div`
   display: flex;
@@ -37,7 +42,7 @@ const Container = styled.div`
           &:hover {
             color: #4dbde5;
             font-weight: bold;
-            opacity: 100%
+            opacity: 100%;
           }
         }
       }
@@ -55,7 +60,6 @@ const Inputdiv = styled.div`
     font-size: medium;
     text-align: left;
     padding-left: 0.5rem;
-    
   }
   button {
     position: absolute;
@@ -69,69 +73,112 @@ const Inputdiv = styled.div`
     border-radius: 10px;
     color: white;
     font-size: medium;
-    background-color: #007FFF;
-    border: 1px solid #007FFF;
+    background-color: #007fff;
+    border: 1px solid #007fff;
     cursor: pointer;
   }
 `;
-export default function Comments() {
+
+export default function CommentsTest() {
+  const userInfo = useRecoilValue(userState);
+  const [newComment, setNewComment] = useState("");
+  const params = useParams().id;
+
+  const location = useLocation();
+  const commentInfo = { ...location.state };
+  const {
+    replys: fetchedReplys,
+    loading,
+    error,
+    refetchQnaDetail
+  } = useQnaDetail(commentInfo.selectedqaId);
   const [commentList, setCommentList] = useState([]);
-  const [newComment, setNewComment] = useState('');
+
+  // 목록 새로고침 함수
+  const refreshList = () => {
+    refetchQnaDetail();
+  };
+
   // 수정중인 댓글의 인덱스
   const [editIndex, setEditIndex] = useState(null);
+
+  useEffect(() => {
+    if (loading) {
+      setCommentList(["Loding..."]);
+    } else if (error) {
+      setCommentList(["Error"]);
+    } else {
+      setCommentList(fetchedReplys);
+      console.log(fetchedReplys);
+    }
+  }, [loading, error, fetchedReplys]);
 
   const handleCommentChange = (e) => {
     setNewComment(e.target.value);
   };
 
-  const handleCommentSubmit = () => {
-    if (newComment.trim() !== '') {
-      if(editIndex !== null) {
-        // 여기에 백엔드 API 호출 + 댓글 저장 기능 추가
-        // 수정 모드인 경우
-        const updatedComments = [...commentList];
-        updatedComments[editIndex] = newComment;
-        setCommentList(updatedComments);
-        setEditIndex(null);
-      } else {
-        // 추가 모드인 경우
-        setCommentList([...commentList, newComment]);
+  const handleCommentSubmit = async () => {
+    try {
+      if(newComment.trim() !== '') {
+        if(editIndex !== null) {
+          const updatedComments = [...commentList];
+          updatedComments[editIndex] = newComment;
+          setCommentList(updatedComments);
+          await ApiService.editReply(userInfo.loginId, fetchedReplys[editIndex].replyId, newComment);
+          refreshList();
+          console.log('댓글 수정 성공');
+          setEditIndex(null);
+        } else {
+          setCommentList([...commentList, newComment]);
+          await ApiService.registerComment(userInfo.loginId, params, newComment);
+          refreshList();
+          console.log('댓글 작성 성공');
+        }
       }
-      setNewComment('');
+    } catch (error) {
+      console.log("댓글 작성 or 수정 실패", error);
     }
+    setNewComment('');
   };
 
-  const handleCommentDelete = (index) => {
-    const updatedComments = [...commentList];
-    updatedComments.splice(index, 1);
-    setCommentList(updatedComments);
-    // 삭제 시 수정 중인 상태로 초기화
-    setEditIndex(null);
-  }
+  const handleCommentDelete = async (index) => {
+    if(!userInfo || !userInfo.loginId) {
+      console.error('사용자 정보가 없습니다.');
+      return;
+    }
+    try {
+      const response = await ApiService.deleteReply(userInfo.loginId, fetchedReplys[index].replyId);
+      if (response) {
+        console.log("댓글 삭제 성공:", response);
+      }
+    } catch(error) {
+      console.error('댓글 삭제 실패:', error);
+    }
+    refreshList();
+  };
 
-  const handleCommentEdit = (index) => {
-    setNewComment(commentList[index]);
+  const handleCommentEdit = async (index) => {
+    setNewComment(fetchedReplys[index].replyContent);
     setEditIndex(index);
-  }
-
+  };
 
   const handleKeyDown = (e) => {
-    if(e.key === 'Enter') {
+    if (e.key === "Enter") {
       handleCommentSubmit();
     }
-  }
+  };
 
   return (
     <Container>
       <div>
         <ul>
-          {commentList.map((comment, index) => (
+          {commentList.map((e, index) => (
             <li key={index}>
               <div>
-                <span>adm**</span>
-                <span>2024.01.02 11:24</span>
+                <span>{e.username}</span>
+                <span>{e.replyDate}</span>
               </div>
-              {comment}
+              {e.replyContent}
               <div>
                 <span onClick={() => handleCommentEdit(index)}>수정</span>
                 <span>/</span>

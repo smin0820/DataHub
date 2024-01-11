@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import ApiService from '@components/axios/ApiService';
 
 // Q&A 상세 정보를 가져오는 훅
@@ -13,7 +13,7 @@ export const useQnaDetail = (qaId) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    useEffect(() => {
+    const fetchQnaDetail = useCallback(() => {
         setLoading(true);
         ApiService.fetchQnaDetail(qaId)
             .then(articleData => {
@@ -27,7 +27,11 @@ export const useQnaDetail = (qaId) => {
                 setError(err);
             })
             .finally(() => setLoading(false));
-    }, [qaId]);
+    }, [qaId])
 
-    return { content, loading, error, qa, replys };
+    useEffect(() => {
+        fetchQnaDetail();
+    }, [fetchQnaDetail]);
+
+    return { content, loading, error, qa, replys, refetchQnaDetail: fetchQnaDetail };
 };
