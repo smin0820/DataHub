@@ -4,15 +4,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import ApiService from '@components/axios/ApiService';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { userState } from '@recoil/atoms/userStateAtom';
 import ModalComponent from '@components/common/ModalComponent';
 import SystemDeleteModalPresenter from '@components/manage/modals/SystemDeleteModalPresenter';
+import { systemListState } from '@recoil/atoms/systemListStateAtom';
 
 const SystemDeleteModalContainer = ({ systemId, closeModal, onRefresh }) => {
     const userInfo = useRecoilValue(userState);
+    const setSystemList = useSetRecoilState(systemListState);
+    
     const handleSuccess = () => {
         closeModal();
+        setSystemList(systemId);
         onRefresh();
     }
 
