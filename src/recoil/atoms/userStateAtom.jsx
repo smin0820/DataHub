@@ -1,3 +1,6 @@
+// userStateAtom.jsx
+// 로그인 후 사용자 정보를 관리하기 위한 recoil atom입니다.
+
 import { atom } from 'recoil';
 import localStorageEffect from '@recoil/effects/localStorageEffect';
 
