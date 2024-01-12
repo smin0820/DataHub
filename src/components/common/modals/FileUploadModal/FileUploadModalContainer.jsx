@@ -6,10 +6,13 @@ import PropTypes from 'prop-types';
 import ApiService from '@components/axios/ApiService';  
 import FileUploadModalPresenter from './FileUploadModalPresenter';
 import ModalComponent from '@components/common/ModalComponent';
+import { useSetRecoilState } from 'recoil';
+import { systemUploadState } from '@recoil/atoms/systemUploadStateAtom';
 
 const FileUploadModalContainer = ({ closeModal, detailCategories }) => {
   const [selectedCategoryId, setSelectedCategoryId] = useState(null);
   const [file, setFile] = useState(null);
+  const setSystemUpload = useSetRecoilState(systemUploadState);
 
   const handleFileChange = (event) => {
     setFile(event.target.files[0]);
@@ -24,7 +27,8 @@ const FileUploadModalContainer = ({ closeModal, detailCategories }) => {
       ApiService.uploadFile(selectedCategoryId, file)
         .then(() => {
           closeModal();
-          window.location.reload();
+          alert('파일이 업로드 되었습니다.');
+          setSystemUpload(selectedCategoryId+file);
         })
         .catch(error => {
           console.error('업로드 실패:', error);

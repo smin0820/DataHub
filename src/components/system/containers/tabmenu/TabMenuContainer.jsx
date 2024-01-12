@@ -3,12 +3,15 @@ import PropTypes from 'prop-types';
 import SystemContentContainer from '@components/common/containers/SystemContentContainer';
 import ApiService from '@components/axios/ApiService';
 import PaginationComponent from '@components/common/PaginationComponent';
+import { useRecoilValue } from 'recoil';
+import { systemUploadState } from '@recoil/atoms/systemUploadStateAtom';
 
 
 function DetailCategoryBoard({ category, index }) {
     const [articles, setArticles] = React.useState([]);
     const [currentPage, setCurrentPage] = React.useState(1);
     const [totalPages, setTotalPages] = React.useState(0); 
+    const systemUpload = useRecoilValue(systemUploadState);
 
     React.useEffect(() => {
         ApiService.fetchArticles(category.detailCategoryId, currentPage)
@@ -17,7 +20,7 @@ function DetailCategoryBoard({ category, index }) {
                 setTotalPages(articleData.allPage);
             })
             .catch(error => console.error('Articles 요청 오류:', error));
-    }, [category.detailCategoryId, currentPage]);
+    }, [category.detailCategoryId, currentPage, systemUpload]);
 
     const handlePageChange = (newPage) => {
         setCurrentPage(newPage);
