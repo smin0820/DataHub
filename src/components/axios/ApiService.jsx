@@ -1,9 +1,18 @@
 // ApiService.jsx
 // 서버 API와 통신하는 함수들을 모아둔 파일입니다.
 
+// 로그인 및 계정 관련 API 
+// 메인 페이지(/system, /admin) 관련 API 
+// 공지사항 관련 API 
+// Q&A 관련 API가 있습니다.
+
 import { axiosInstance } from "@components/axios/AxiosInstance";
 
 const ApiService = {
+
+    ////////////////////////////////////////////////////////////////////////////////////////////
+    // 로그인 및 계정 관련 API
+    ////////////////////////////////////////////////////////////////////////////////////////////
     // login
     loginUser: async (loginId, password) => {
         try {
@@ -63,6 +72,94 @@ const ApiService = {
         }
     },
 
+     // 시스템명 중복확인(user)
+    userCheckSystemName: async (loginId, systemName) => {
+        try {
+            const response = await axiosInstance.post('/users/check-systemname', {
+                loginId,
+                systemName
+            });
+            return response.data;
+        } catch (error) {
+            console.error('시스템명 중복확인 요청 실패:', error);
+            throw error;
+        }
+    },
+
+    // 아이디 중복확인(admin)
+    adminCheckLoginId: async (loginId) => {
+        try {
+            const response = await axiosInstance.get('/join/check-loginid', {
+                params: { loginId }
+            });
+            return response.data;
+        } catch (error) {
+            console.error('아이디 중복확인 요청 실패:', error);
+            throw error;
+        }
+    },
+
+    // 시스템명 중복확인(admin)
+    adminCheckSystemName: async (systemName) => {
+        try {
+            const response = await axiosInstance.get('/join/check-systemname', {
+                params: { systemName }
+            });
+            return response.data;
+        } catch (error) {
+            console.error('시스템명 중복확인 요청 실패:', error);
+            throw error;
+        }
+    },
+
+    // 시스템 데이터 삭제 함수 (반드시 이 순서대로 삭제해야 함)
+    deleteSystemData: async (systemId) => {
+        try {
+            // 게시물 삭제
+            const articleResponse = await axiosInstance.delete(`/article/del-all`, {
+                params: {
+                    systemId: systemId
+                }
+            });
+
+            // Q&A 및 댓글 삭제
+            const qaReplyResponse = await axiosInstance.delete(`/qa-reply/del-all`, {
+                params: {
+                    systemId: systemId
+                }
+            });
+
+            return {
+                article: articleResponse.data,
+                qaReply: qaReplyResponse.data
+            };
+        } catch (error) {
+            console.error('시스템 데이터 삭제 실패:', error);
+            throw error;
+        }
+    },
+
+    // 시스템 삭제시 > 해당 시스템 계정 삭제
+    // !! 반드시 delSystemData 함수 이후에 실행되어야 함
+    deleteUser: async (systemId) => {
+        try {
+            const response = await axiosInstance.delete(`/user/del`, {
+                params: {
+                    systemId: systemId
+                }
+            });
+            return response.data;
+        } catch (error) {
+            console.error('시스템 삭제 실패:', error);
+        }
+    },
+
+    ////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////
+
+    ////////////////////////////////////////////////////////////////////////////////////////////
+    // 메인 페이지(/system, /admin) 관련 API
+    ////////////////////////////////////////////////////////////////////////////////////////////
     // admin view
     fetchWaitArticles: async (page) => {
         try {
@@ -76,7 +173,7 @@ const ApiService = {
         }
     },
 
-    // admin system nav
+    // admin system nav(전체 시스템 목록)
     fetchSystemNames: async () => {
         try {
             const response = await axiosInstance.get('/system');
@@ -102,7 +199,7 @@ const ApiService = {
         }
     },
 
-    // system name
+    // system name(시스템명 가져오기 + 기본 카테고리 가져오기)
     fetchBaseCategory: async (systemId) => {
         try {
             const response = await axiosInstance.get('/base-category', {
@@ -117,7 +214,7 @@ const ApiService = {
         }
     },
 
-    // system article 1 - category
+    // system article 1 - category(세부 카테고리 가져오기)
     fetchDetailCategories: async (baseCategoryId) => {
         try {
             const response = await axiosInstance.get('/detail-category', {
@@ -130,7 +227,7 @@ const ApiService = {
         }
     },
 
-    // system article 2 - article
+    // system article 2 - article(게시물 가져오기)
     fetchArticles: async (detailCategoryId, page) => {
         try {
             const response = await axiosInstance.get('/articles', {
@@ -156,6 +253,26 @@ const ApiService = {
         });
     },
 
+    // system file delete(아직 검토되지 않은 경우에만 삭제가능)
+    deleteFile: async (articleId) => {
+        try {
+            const response = await axiosInstance.delete(`/article/del-wait`, {
+                params: { articleId }
+            });
+            console.log('File 삭제 성공:', response)
+            return response.data;
+        } catch (error) {
+            console.error('File 삭제 실패:', error);
+            throw error;
+        }
+    },
+
+    ////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////
+
+    ////////////////////////////////////////////////////////////////////////////////////////////
+    // 공지사항 관련 API
+    ////////////////////////////////////////////////////////////////////////////////////////////
     // get notice list
     fetchNotices: async (page) => {
         try {
@@ -229,6 +346,12 @@ const ApiService = {
         }
     },
 
+    ////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////
+
+    ////////////////////////////////////////////////////////////////////////////////////////////
+    // Q&A 관련 API
+    ////////////////////////////////////////////////////////////////////////////////////////////
     // get Q&A list
     fetchQnas: async (page) => {
         try {
@@ -363,88 +486,10 @@ const ApiService = {
         console.error('Qna 삭제 실패:', error);
         throw error;
     }
-    },
-
-    // 시스템명 중복확인(user)
-    userCheckSystemName: async (loginId, systemName) => {
-        try {
-            const response = await axiosInstance.post('/users/check-systemname', {
-                loginId,
-                systemName
-            });
-            return response.data;
-        } catch (error) {
-            console.error('시스템명 중복확인 요청 실패:', error);
-            throw error;
-        }
-    },
-
-    // 시스템 데이터 삭제 함수
-    deleteSystemData: async (systemId) => {
-        try {
-            // 게시물 삭제
-            const articleResponse = await axiosInstance.delete(`/article/del-all`, {
-                params: {
-                    systemId: systemId
-                }
-            });
-
-            // Q&A 및 댓글 삭제
-            const qaReplyResponse = await axiosInstance.delete(`/qa-reply/del-all`, {
-                params: {
-                    systemId: systemId
-                }
-            });
-
-            return {
-                article: articleResponse.data,
-                qaReply: qaReplyResponse.data
-            };
-        } catch (error) {
-            console.error('시스템 데이터 삭제 실패:', error);
-            throw error;
-        }
-    },
-
-    // 시스템 삭제시 > 해당 시스템 계정 삭제
-    deleteUser: async (systemId) => {
-        try {
-            const response = await axiosInstance.delete(`/user/del`, {
-                params: {
-                    systemId: systemId
-                }
-            });
-            return response.data;
-        } catch (error) {
-            console.error('시스템 삭제 실패:', error);
-        }
-    },
-
-    // 아이디 중복확인(admin)
-    adminCheckLoginId: async (loginId) => {
-        try {
-            const response = await axiosInstance.get('/join/check-loginid', {
-                params: { loginId }
-            });
-            return response.data;
-        } catch (error) {
-            console.error('아이디 중복확인 요청 실패:', error);
-            throw error;
-        }
-    },
-
-    // 시스템명 중복확인(admin)
-    adminCheckSystemName: async (systemName) => {
-        try {
-            const response = await axiosInstance.get('/join/check-systemname', {
-                params: { systemName }
-            });
-            return response.data;
-        } catch (error) {
-            console.error('시스템명 중복확인 요청 실패:', error);
-            throw error;
-        }
     }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////////////
 };
 
 export default ApiService;
