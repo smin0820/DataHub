@@ -42,9 +42,18 @@ export const Navdiv = styled.div`
 export const SNavLink = styled(NavLink)`
     text-decoration: none;
     color: black;
+    opacity: 0.5;
+    &:hover {
+        color: #4dbde5;
+        font-weight: bold;
+        opacity: 1;
+    }
     &.active {
         color: #4dbde5;
         font-weight: bold;
+        padding-bottom: 2px;
+        border-bottom: 2px solid #4dbde5;
+        opacity: 1;
     }
 `;
 
