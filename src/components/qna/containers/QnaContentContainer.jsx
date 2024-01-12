@@ -10,68 +10,60 @@ import { useNavigate } from "react-router-dom";
 import QnaDropdown from "./QnaDropdown";
 import { useRecoilValue } from "recoil";
 import { userState } from "@recoil/atoms/userStateAtom";
+import { Boarddiv, Tbodytr } from "@styles/BoardStyles";
 
-const Boarddiv = styled.div`
-    display: flex;
-    justify-content: center;
-    margin-bottom: 30px;
-    table {
-        width: 100%;
-        max-width: 1000px;
-        border-collapse: collapse;
-        border-spacing: 0;
+// const Boarddiv = styled.div`
+//     display: flex;
+//     justify-content: center;
+//     margin-bottom: 30px;
+//     table {
+//         width: 100%;
+//         max-width: 1000px;
+//         border-collapse: collapse;
+//         border-spacing: 0;
 
-        caption {
-            text-align: left;
-            margin-bottom: 30px;
-            font-weight: bolder;
-        }
-    }
-    thead {
-        background-color: #f3f6f9;
-    }
-    th {
-        width: auto;
-        text-align: left;
-        padding: 7px 5px;
-        font-weight: normal;
-    }
-    th:first-child {
-        width: 60%;
-    }
-    th:nth-child(2){
-        width: 20%;
-    }
-    td {
-        width:auto;
-        padding: 7px 5px;
-        cursor: pointer;
-            span {
-            padding: 0;
-            margin: 0;
-            cursor: pointer;
-            border-radius: 10px;
-            padding: 5px 8px;
-            background-color:#F1F1F1;
-            font-size: medium;
-        }
-    }
+//         caption {
+//             text-align: left;
+//             margin-bottom: 30px;
+//             font-weight: bolder;
+//         }
+//     }
+//     thead {
+//         background-color: #f3f6f9;
+//     }
+//     th {
+//         width: auto;
+//         text-align: left;
+//         padding: 7px 5px;
+//         font-weight: normal;
+//     }
+//     th:first-child {
+//         width: 60%;
+//     }
+//     th:nth-child(2){
+//         width: 20%;
+//     }
+//     td {
+//         width:auto;
+//         padding: 7px 5px;
+//         cursor: pointer;
+//             span {
+//             padding: 0;
+//             margin: 0;
+//             cursor: pointer;
+//             border-radius: 10px;
+//             padding: 5px 8px;
+//             background-color:#F1F1F1;
+//             font-size: medium;
+//         }
+//     }
 
-    td:last-child {
-        display: flex;
-        justify-content: flex-end;
-        align-items: center;
-    }
-`;
-
-
-const Tbodytr = styled.tr`
-    border-bottom: 2px solid #e5eaf2;
-    align-items: center;
-    &:hover {
-        background-color: #f3f6f9;
-    }
-`;
+//     td:last-child {
+//         display: flex;
+//         justify-content: flex-end;
+//         align-items: center;
+//     }
+// `;
 
 export default function QnaContentContainer(props) {
     const { title, data = [], onRefresh } = props;
@@ -81,7 +73,7 @@ export default function QnaContentContainer(props) {
     const { currentOpenDropdown, toggleDropdown, dropdownRefs  } = useDropdown();
     const { isOpen: isViewOpen, selectedId, openModal: openViewModal, closeModal: closeViewModal } = useIdModal();
     return (
-        <Boarddiv>
+        <Boarddiv className="qna">
             <table>
                 <caption>{title}</caption>
                 <thead>
