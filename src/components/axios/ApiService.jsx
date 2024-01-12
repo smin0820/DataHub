@@ -80,7 +80,6 @@ const ApiService = {
     fetchSystemNames: async () => {
         try {
             const response = await axiosInstance.get('/system');
-            console.log('서버 응답:', response);
             return response;
         } catch(error) {
             console.error('Error fetching system names:', error);
@@ -249,7 +248,6 @@ const ApiService = {
             const response = await axiosInstance.get(`/reply`, {
                 params: { qaId }
             });
-            console.log('서버 응답:', response.data);
             return response.data;
         } catch (error) {
             console.error('Q&A Detail 요청 실패:', error);
@@ -269,9 +267,8 @@ const ApiService = {
                     'Content-Type': 'multipart/form-data'
                 }
             });
-            console.log('서버 응답:', response.data);
         } catch(error) {
-            console.log('댓글 추가 실패:', error);
+            console.error('댓글 추가 실패:', error);
             throw error;
         }
     },
@@ -285,7 +282,6 @@ const ApiService = {
                     replyId: replyId
                 },
             });
-            console.log('서버 응답:', response.data);
             return response.data;
         } catch (error) {
             console.error('댓글 삭제 실패:', error);
@@ -306,10 +302,9 @@ const ApiService = {
                     'Content-Type': 'multipart/form-data'
                 }
             });
-            console.log('댓글 수정 성공', response);
             return response.data;
         } catch (error) {
-            console.log('댓글 수정 실패', error);
+            console.error('댓글 수정 실패', error);
             throw error;
         }
     },
@@ -379,7 +374,6 @@ const ApiService = {
             });
             return response.data;
         } catch (error) {
-            console.log(systemName)
             console.error('시스템명 중복확인 요청 실패:', error);
             throw error;
         }
@@ -434,7 +428,6 @@ const ApiService = {
             });
             return response.data;
         } catch (error) {
-            console.log(loginId)
             console.error('아이디 중복확인 요청 실패:', error);
             throw error;
         }
@@ -448,7 +441,6 @@ const ApiService = {
             });
             return response.data;
         } catch (error) {
-            console.log(systemName)
             console.error('시스템명 중복확인 요청 실패:', error);
             throw error;
         }
