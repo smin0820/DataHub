@@ -19,24 +19,14 @@ export const Header = styled.div`
         align-items: center;
         position: relative;
         span {
-        padding: 0;
-        margin: 0;
-        cursor: pointer;
-        border: 1px solid #F1F1F1;
-        border-radius: 10px;
-        padding: 5px 8px;
-        background-color:#F1F1F1;
-        font-size: medium;
-        }
-
-        button {
-        padding: 5px 10px;
-        color: white;
-        background-color: #007FFF;
-        border: 1px solid #007FFF;
-        border-radius: 10px;
-        font-size: medium;
-        cursor: pointer;
+            padding: 0;
+            margin: 0;
+            cursor: pointer;
+            border: 1px solid #F1F1F1;
+            border-radius: 10px;
+            padding: 5px 8px;
+            background-color:#F1F1F1;
+            font-size: medium;
         }
     }
 `;
@@ -54,6 +44,7 @@ export const SNavLink = styled(NavLink)`
     color: black;
     &.active {
         color: #4dbde5;
+        font-weight: bold;
     }
 `;
 
