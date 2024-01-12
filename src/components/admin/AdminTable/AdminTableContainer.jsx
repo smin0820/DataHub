@@ -4,11 +4,14 @@
 import React, { useEffect, useState } from "react";
 import ApiService from '@components/axios/ApiService';
 import AdminTablePresenter from '@components/admin/AdminTable/AdminTablePresenter';
+import { useRecoilValue } from "recoil";
+import { systemUploadState } from "@recoil/atoms/systemUploadStateAtom";
 
 export default function AdminTableContainer() {
     const [articles, setArticles] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
     const [totalPages, setTotalPages] = useState(0);
+    const systemUpload = useRecoilValue(systemUploadState);
 
     useEffect(() => {
         ApiService.fetchWaitArticles(currentPage)
@@ -17,7 +20,7 @@ export default function AdminTableContainer() {
                 setTotalPages(articleData.allPage);
             })
             .catch(error => console.error('Articles 요청 오류:', error));
-    }, [currentPage]);
+    }, [currentPage, systemUpload]);
 
     const handlePageChange = (newPage) => {
         setCurrentPage(newPage);
