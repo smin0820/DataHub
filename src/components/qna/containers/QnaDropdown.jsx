@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import useModal from '@hooks/useModal';
 
 import QnaDeleteModalContainer from '@components/qna/modals/QnaDeleteModal/QnaDeleteModalContainer';
-import QnaEditModal from '../modals/QnaEditModal';
+import QnaEditModalContainer from '@components/qna/modals/QnaEditModal/QnaEditModalContainer';
 
 const Dropmenu = styled.div`
     display: flex;
@@ -66,7 +66,7 @@ export default function QnaDropdown({ qaId, onRefresh }) {
                     <li onClick={handleDeleteClick}>삭제</li>
                 </ul>
             </Dropmenu>
-            {isEditOpen && <QnaEditModal qaId={qaId} onRefresh={onRefresh} closeModal={closeEditModal} />}
+            {isEditOpen && <QnaEditModalContainer qaId={qaId} onRefresh={onRefresh} closeModal={closeEditModal} />}
             {isDeleteOpen && <QnaDeleteModalContainer qaId={qaId} onRefresh={onRefresh} closeModal={closeDeleteModal} />} 
         </>
     );
