@@ -13,6 +13,7 @@ const FileUploadModalContainer = ({ closeModal, detailCategories }) => {
   const [selectedCategoryId, setSelectedCategoryId] = useState(null);
   const [file, setFile] = useState(null);
   const setSystemUpload = useSetRecoilState(systemUploadState);
+  const currentTime = new Date().getTime();
 
   const handleFileChange = (event) => {
     setFile(event.target.files[0]);
@@ -28,7 +29,7 @@ const FileUploadModalContainer = ({ closeModal, detailCategories }) => {
         .then(() => {
           closeModal();
           alert('파일이 업로드 되었습니다.');
-          setSystemUpload(selectedCategoryId+file);
+          setSystemUpload(currentTime);
         })
         .catch(error => {
           console.error('업로드 실패:', error);

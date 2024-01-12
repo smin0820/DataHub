@@ -14,6 +14,7 @@ const CheckUploadModalContainer = ({ closeModal, articleId }) => {
   const [declineDetail, setDeclineDetail] = useState('');
   const [file, setFile] = useState("");
   const setSystemUpload = useSetRecoilState(systemUploadState);
+  const currentTime = new Date().getTime();
 
   const handleRadioChange = (event) => {
     setApproval(event.target.value);
@@ -41,7 +42,7 @@ const CheckUploadModalContainer = ({ closeModal, articleId }) => {
       await ApiService.reviewArticle(formData);
       closeModal();
       alert("검토결과가 업로드 되었습니다.");
-      setSystemUpload(articleId+approval)
+      setSystemUpload(currentTime)
     } catch (error) {
       console.error('Error submitting review:', error);
     }
