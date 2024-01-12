@@ -8,6 +8,7 @@ import { selectedSystemIdState, sidebarVisibilityState } from '@recoil/atoms/sys
 import { userState } from '@recoil/atoms/userStateAtom';
 import ApiService from '@components/axios/ApiService';
 import SidebarPresenter from '@components/common/Sidebar/SidebarPresenter';
+import { systemListState } from '@recoil/atoms/systemListStateAtom';
 
 export default function SidebarContainer() {
   const [systemNames, setSystemNames] = useState([]);
@@ -16,11 +17,23 @@ export default function SidebarContainer() {
   const [userInfo] = useRecoilState(userState);
   const userRole = userInfo?.role;
   const location = useLocation();
+  const [systemList, setSystemList] = useRecoilState(systemListState);
   // 토글버튼 이동
   const [buttonTop, setButtonTop] = useState();
   const [isDragging, setIsDragging] = useState(false);
   const [windowHeight, setWindowHeight] = useState(window.innerHeight);
   const [dragOffset, setDragOffset] = useState(0);
+
+  useEffect(() => {
+    ApiService.fetchSystemNames().then(response => {
+      const names = response.data.systems.map(system => ({
+        id: system.systemId,
+        name: system.systemName
+      }));
+      setSystemNames([{ id: 'admin', name: '대기중 게시물' }, ...names]);
+    });
+  }
+  , [systemList]);
 
   useEffect(() => {
     if (userRole === "ADMIN") {

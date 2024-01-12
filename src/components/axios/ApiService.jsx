@@ -11,9 +11,28 @@ const ApiService = {
                 loginId,
                 password
             });
+            // 로그인 성공시 응답 데이터에서 토큰 추출
+            const jwtToken = response.data.accessToken;
+            const refreshToken = response.data.refreshToken;
+            localStorage.setItem('jwtToken', jwtToken);
+            localStorage.setItem('refreshToken', refreshToken);
+            axiosInstance.defaults.headers.common['Authorization'] = `Bearer ${jwtToken}`;
             return response.data;
         } catch (error) {
             console.error('로그인 실패:', error);
+            throw error;
+        }
+    },
+
+    // logout
+    logoutUser: async (loginId) => {
+        try {
+            const response = await axiosInstance.post('/logout/user', {
+                loginId
+            });
+            return response;
+        } catch (error) {
+            console.error('로그아웃 실패:', error);
             throw error;
         }
     },
@@ -61,6 +80,7 @@ const ApiService = {
     fetchSystemNames: async () => {
         try {
             const response = await axiosInstance.get('/system');
+            console.log('서버 응답:', response);
             return response;
         } catch(error) {
             console.error('Error fetching system names:', error);

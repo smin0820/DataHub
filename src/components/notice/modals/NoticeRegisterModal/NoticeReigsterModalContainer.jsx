@@ -4,15 +4,20 @@
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import ApiService from '@components/axios/ApiService';
-import { useRecoilValue } from 'recoil';
+import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { userState } from '@recoil/atoms/userStateAtom';
 import NoticeRegisterModalPresenter from '@components/notice/modals/NoticeRegisterModal/NoticeRegisterModalPresenter';
 import ModalComponent from '@components/common/ModalComponent';
+import { noticesState } from '@recoil/atoms/noticesAtom';
+
+
 
 const NoticeRegisterModalContainer = ({ closeModal }) => {
     const [Title, setTitle] = useState("");
     const [Body, setBody] = useState("");
     const userInfo = useRecoilValue(userState);
+    const setNotices = useSetRecoilState(noticesState);
+
 
     const handleTitleChange = (event) => {
         setTitle(event.target.value);
@@ -24,7 +29,8 @@ const NoticeRegisterModalContainer = ({ closeModal }) => {
 
     const handleSuccess = () => {
         closeModal();
-        window.location.reload();
+        console.log("공지사항 등록 성공");
+        setNotices(0);
     };
 
     const handleSubmit = async () => {

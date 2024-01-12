@@ -111,22 +111,22 @@ const CloseButton = styled.button`
 
 const RegistSysModalContainer = ({ closeModal, inputValues }) => {
   const navigate = useNavigate();
-  const handleRegistSys = () => {
-    ApiService.registerSystem(inputValues)
-      .then(response => {
-        if (response) {
-          console.log('Register Success:', response);
-          alert("시스템이 등록되었습니다.")
-          closeModal();
-          navigate('/manage');
-        } else {
-          alert("아이디가 중복되어 등록할 수 없습니다.")
-          closeModal();
-        }
-      })
-      .catch(error => {
-        console.error('Register Error:', error);
-      });
+  const handleRegistSys = async (event) => {
+    event.preventDefault();
+    try{
+      const response = await ApiService.registerSystem(inputValues);
+      if(response) {
+        console.log('Register Success:', response);
+        alert("시스템이 등록되었습니다.")
+        closeModal();
+        navigate('/manage');
+      } else {
+        alert("아이디가 중복되어 등록할 수 없습니다.")
+        closeModal();
+      }
+    } catch (error) {
+      console.error('Register Error:', error);
+    }
   };
 
   return (

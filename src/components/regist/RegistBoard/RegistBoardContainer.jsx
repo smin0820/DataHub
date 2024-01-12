@@ -90,7 +90,7 @@ const RegistBoardContainer = () => {
         console.log("시스템명 중복확인:", inputValues.systemName)
         try {
             const response = await ApiService.adminCheckSystemName( inputValues.loginId );
-            console.log("시   스템명 중복확인 성공:", response);
+            console.log("시스템명 중복확인 성공:", response);
             setSystemNameCheck(response);
             if(response) {
                 alert("사용 가능한 시스템명입니다.");

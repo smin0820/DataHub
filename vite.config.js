@@ -17,10 +17,10 @@ export default defineConfig({
   },
   // server: {
   //   proxy: {
-  //     "/": {
-  //       //target: "http://43.203.63.39:8080",
+  //     "/api": {
   //       target: "http://localhost:8080",
-  //       //changeOrigin: true,
+  //       changeOrigin: true,
+  //       rewrite: (path) => path.replace(/^\/api/, ""),
   //     },
   //   },
   // },
