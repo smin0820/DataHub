@@ -3,7 +3,7 @@
 
 import React from 'react';
 import useModal from '@hooks/useModal';
-import QnaReigsterModal from '@components/qna/modals/QnaRegisterModal/QnaReigsterModal';
+import QnaReigsterModalContainer from '@components/qna/modals/QnaRegisterModal/QnaReigsterModalContainer';
 import { Container, Buttondiv } from '@styles/CommonStyles';
 
 export default function NoticeNewArticle() {
@@ -16,7 +16,7 @@ export default function NoticeNewArticle() {
                     글쓰기
                 </button>
             </Buttondiv>
-            {isOpen && <QnaReigsterModal closeModal={closeModal} />}
+            {isOpen && <QnaReigsterModalContainer closeModal={closeModal} />}
         </Container>
     )
 };

@@ -8,7 +8,7 @@ import QnaRegisterModalPresenter from '@components/qna/modals/QnaRegisterModal/Q
 import { qnasState } from '@recoil/atoms/qnasAtom';
 
 
-const QnaReigsterModal = ({ closeModal }) => {
+const QnaReigsterModalContainer = ({ closeModal }) => {
     const [Title, setTitle] = useState("");
     const [Body, setBody] = useState("");
     const userInfo = useRecoilValue(userState);
@@ -63,8 +63,8 @@ const QnaReigsterModal = ({ closeModal }) => {
     );
 };
 
-QnaReigsterModal.propTypes = {
+QnaReigsterModalContainer.propTypes = {
     closeModal: PropTypes.func.isRequired,
 };
 
-export default QnaReigsterModal;
+export default QnaReigsterModalContainer;
