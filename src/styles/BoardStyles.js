@@ -170,7 +170,7 @@ export const Dropmenu = styled.div`
     }
     li {
         cursor: pointer;
-        padding: 4px 12px;
+        padding: 0.3rem 1.3rem;
         border-bottom: 1px solid #E5EAF2; /* 항목 사이에 구분선을 추가 */
         &:hover {
             background-color: #e0e0e0;  // 호버 시 배경색 변경
