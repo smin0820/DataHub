@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import useModal from '@hooks/useModal';
 
-import QnaDeleteModal from '../modals/QnaDeleteModal';
+import QnaDeleteModalContainer from '@components/qna/modals/QnaDeleteModal/QnaDeleteModalContainer';
 import QnaEditModal from '../modals/QnaEditModal';
 
 const Dropmenu = styled.div`
@@ -67,7 +67,7 @@ export default function QnaDropdown({ qaId, onRefresh }) {
                 </ul>
             </Dropmenu>
             {isEditOpen && <QnaEditModal qaId={qaId} onRefresh={onRefresh} closeModal={closeEditModal} />}
-            {isDeleteOpen && <QnaDeleteModal qaId={qaId} onRefresh={onRefresh} closeModal={closeDeleteModal} />} 
+            {isDeleteOpen && <QnaDeleteModalContainer qaId={qaId} onRefresh={onRefresh} closeModal={closeDeleteModal} />} 
         </>
     );
 }
