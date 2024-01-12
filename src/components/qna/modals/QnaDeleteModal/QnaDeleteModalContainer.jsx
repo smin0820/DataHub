@@ -8,7 +8,7 @@ import ModalComponent from '@components/common/ModalComponent';
 import QnaDeleteModalPresenter from '@components/qna/modals/QnaDeleteModal/QnaDeleteModalPresenter';
 
 
-const QnaDeleteModal = ({ qaId, closeModal, onRefresh }) => {
+const QnaDeleteModalContainer = ({ qaId, closeModal, onRefresh }) => {
     const userInfo = useRecoilValue(userState);
     const handleSuccess = () => {
         closeModal();
@@ -46,8 +46,8 @@ const QnaDeleteModal = ({ qaId, closeModal, onRefresh }) => {
     );
 };
 
-QnaDeleteModal.propTypes = {
+QnaDeleteModalContainer.propTypes = {
     closeModal: PropTypes.func.isRequired,
 };
 
-export default QnaDeleteModal;
+export default QnaDeleteModalContainer;
