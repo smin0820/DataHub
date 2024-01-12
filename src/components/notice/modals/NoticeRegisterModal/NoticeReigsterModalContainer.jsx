@@ -29,7 +29,6 @@ const NoticeRegisterModalContainer = ({ closeModal }) => {
 
     const handleSuccess = () => {
         closeModal();
-        console.log("공지사항 등록 성공");
         setNotices(0);
     };
 
@@ -47,7 +46,6 @@ const NoticeRegisterModalContainer = ({ closeModal }) => {
 
     try {
         const response = await ApiService.registerNotice(Title, Body, userInfo.loginId);
-        console.log("공지사항 등록 성공:", response);
         // 성공적으로 등록되었을 때의 추가 동작
         handleSuccess();
     } catch (error) {
