@@ -82,6 +82,10 @@ export const Boarddiv = styled.div`
             font-size: medium;
             cursor: pointer;
             text-align: center;
+            &:hover {
+                background-color: #007fff;
+                transition: all 0.1s ease-in-out;
+            }
         }
         
     }
