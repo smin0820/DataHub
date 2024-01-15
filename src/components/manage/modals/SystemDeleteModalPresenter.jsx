@@ -21,8 +21,8 @@ const SystemDeleteModalPresenter = ({ closeModal, handleSubmit, systemName }) =>
                 <ModalContent>시스템을 삭제하시려면 "{systemName}"을 입력해 주세요</ModalContent>
                 <ModalInput type="text" value={inputText} onChange={handleInputChange} />
                 <ButtonGroup>
-                    <button className="double" onClick={closeModal}>취소하기</button>
-                    <DeleteButton className="double" onClick={handleSubmit} disabled={isDeleteButtonDisabled}>삭제하기</DeleteButton>
+                    <button className="deleteModal" onClick={closeModal}>취소하기</button>
+                    <DeleteButton className="deleteModal" onClick={handleSubmit} disabled={isDeleteButtonDisabled}>삭제하기</DeleteButton>
                 </ButtonGroup>
             </ModalContainer>
         </ModalOverlay>

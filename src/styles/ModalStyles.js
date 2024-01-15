@@ -131,6 +131,26 @@ export const ButtonGroup = styled.div`
             color: black;
             cursor: pointer;
         }
+        &:last-child { // 확인 버튼
+            margin-right: 0px;
+            background-color: #003a75;
+            color: white;
+            cursor: pointer;
+        }
+    }
+    .deleteModal {
+        border: none;
+        border-radius: 4px;
+        margin-left: 10px;
+        margin-right: 10px;
+        width: 300px;
+        height: 35px;   
+        &:first-child { // 취소 버튼
+            margin-left: 0px;
+            background-color: #7B91A7;
+            color: black;
+            cursor: pointer;
+        }
     }
 `;
 
