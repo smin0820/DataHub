@@ -65,6 +65,13 @@ export const ModalContent = styled.p`
     margin-left: 30px;
 `;
 
+export const ModalInput = styled.input`
+    margin-bottom: 5px;
+    margin-left: 30px;
+    height: 1.3rem;
+    width: 32.65rem;
+`
+
 // 모달창 닫기 버튼
 export const CloseButton = styled.button`
     background-color: transparent;
@@ -114,7 +121,6 @@ export const ButtonGroup = styled.div`
     .double {
         border: none;
         border-radius: 4px;
-        cursor: pointer;
         margin-left: 10px;
         margin-right: 10px;
         width: 300px;
@@ -123,14 +129,17 @@ export const ButtonGroup = styled.div`
             margin-left: 0px;
             background-color: #7B91A7;
             color: black;
-        }
-        &:last-child { // 확인 버튼
-            margin-right: 0px;
-            background-color: #003a75;
-            color: white;
+            cursor: pointer;
         }
     }
 `;
+
+export const DeleteButton = styled.button`
+    margin-right: 0px;
+    background-color: ${(props) => (props.disabled ? '#CCCCCC' : '#003a75')};
+    color: ${(props) => (props.disabled ? '#003a75' : 'white')};    
+    cursor: ${(props) => (props.disabled ? 'not-allowed' : 'pointer')};
+`
 
 // 모달창 내용 중 텍스트 입력 컨테이너
 export const TextAreaContainer = styled.div`
