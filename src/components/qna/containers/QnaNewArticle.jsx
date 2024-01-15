@@ -5,37 +5,19 @@ import React from 'react';
 import styled from 'styled-components';
 import useModal from '@hooks/useModal';
 import QnaReigsterModal from '../modals/QnaReigsterModal';
+import { Container, Buttondiv } from '@styles/CommonStyles';
 
-const Container = styled.div`
-    display: flex;
-    justify-content: center;
-    div {
-        width: 100%;
-        max-width: 1000px;
-    
-        button {
-            padding: 5px 10px;
-            color: white;
-            background-color: #007FFF;
-            border: 1px solid #007FFF;
-            border-radius: 10px;
-            font-size: medium;
-            cursor: pointer;
-            float: right;
-        }
-    }
-`;
 
 export default function NoticeNewArticle() {
     const { isOpen, openModal, closeModal } = useModal();
 
     return (
         <Container>
-            <div>
+            <Buttondiv>
                 <button onClick={openModal}>
                     글쓰기
                 </button>
-            </div>
+            </Buttondiv>
             {isOpen && <QnaReigsterModal closeModal={closeModal} />}
         </Container>
     )

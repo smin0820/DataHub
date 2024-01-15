@@ -83,6 +83,24 @@ export const Boarddiv = styled.div`
             cursor: pointer;
             text-align: center;
         }
+        
+    }
+    &.qna {
+        th:first-child {
+            width: 60%;
+        }
+        th:nth-child(2){
+            width: 20%;
+        }
+        span {
+                padding: 0;
+                margin: 0;
+                cursor: pointer;
+                border-radius: 10px;
+                padding: 5px 8px;
+                background-color:#F1F1F1;
+                font-size: medium;
+        }
     }
     &.notice { // 공지사항(/notice)
         th:first-child {
@@ -152,7 +170,7 @@ export const Dropmenu = styled.div`
     }
     li {
         cursor: pointer;
-        padding: 4px 12px;
+        padding: 0.3rem 1.3rem;
         border-bottom: 1px solid #E5EAF2; /* 항목 사이에 구분선을 추가 */
         &:hover {
             background-color: #e0e0e0;  // 호버 시 배경색 변경

@@ -102,6 +102,7 @@ export default function CommentsTest() {
   // 수정중인 댓글의 인덱스
   const [editIndex, setEditIndex] = useState(null);
 
+  // 댓글 불러오기
   useEffect(() => {
     if (loading) {
       setCommentList(["Loding..."]);
@@ -120,6 +121,7 @@ export default function CommentsTest() {
   const handleCommentSubmit = async () => {
     try {
       if(newComment.trim() !== '') {
+        // 댓글 수정 
         if(editIndex !== null) {
           const updatedComments = [...commentList];
           updatedComments[editIndex] = newComment;
@@ -129,6 +131,7 @@ export default function CommentsTest() {
           console.log('댓글 수정 성공');
           setEditIndex(null);
         } else {
+          // 댓글 작성
           setCommentList([...commentList, newComment]);
           await ApiService.registerComment(userInfo.loginId, params, newComment);
           refreshList();
@@ -141,6 +144,7 @@ export default function CommentsTest() {
     setNewComment('');
   };
 
+  // 댓글 삭제
   const handleCommentDelete = async (index) => {
     if(!userInfo || !userInfo.loginId) {
       console.error('사용자 정보가 없습니다.');
