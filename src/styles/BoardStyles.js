@@ -142,6 +142,7 @@ export const StyledLink = styled.a`
 export const Tbodytr = styled.tr`
     border-bottom: 2px solid #e5eaf2;
     align-items: center;
+    cursor: pointer;
     &:hover {
         background-color: #f3f6f9;
     }
