@@ -33,6 +33,7 @@ export default function ManageContentContainer(props) {
                     systemId={selectedId}
                     onRefresh={onRefresh}
                     closeModal={closeDeleteModal}
+                    systemName={n.systemName}
                   ></SystemDeleteModalContainer>
                 )}
               </Tbodytr>
