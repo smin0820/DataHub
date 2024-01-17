@@ -4,9 +4,9 @@
 import React, { useEffect, useState } from "react";
 import ApiService from '@components/axios/ApiService';
 import AdminTablePresenter from '@components/admin/AdminTable/AdminTablePresenter';
-import { Article, ArticlesResponse } from "@@types/Articles";
 import { useRecoilValue } from "recoil";
 import { systemUploadState } from "@recoil/atoms/systemUploadStateAtom";
+import { Article, ArticlesResponse } from "@@types/Articles";
 
 export default function AdminTableContainer() {
     const [articles, setArticles] = useState<Article[]>([]);
