@@ -1,25 +1,28 @@
-// AdminTableContainer.jsx
+// AdminTableContainer.tsx
 // '대기중 게시물'페이지를 보여주는 테이블 컨테이너입니다.
 
 import React, { useEffect, useState } from "react";
 import ApiService from '@components/axios/ApiService';
 import AdminTablePresenter from '@components/admin/AdminTable/AdminTablePresenter';
+import { Article, ArticlesResponse } from "@@types/Articles";
+
 
 export default function AdminTableContainer() {
-    const [articles, setArticles] = useState([]);
-    const [currentPage, setCurrentPage] = useState(1);
-    const [totalPages, setTotalPages] = useState(0);
+    const [articles, setArticles] = useState<Article[]>([]);
+    const [currentPage, setCurrentPage] = useState<number>(1);
+    const [totalPages, setTotalPages] = useState<number>(0);
 
     useEffect(() => {
         ApiService.fetchWaitArticles(currentPage)
-            .then(articleData => {
+            .then((articleData: ArticlesResponse) => {
+                console.log(articleData)
                 setArticles(articleData.articles);
                 setTotalPages(articleData.allPage);
             })
             .catch(error => console.error('Articles 요청 오류:', error));
     }, [currentPage]);
 
-    const handlePageChange = (newPage) => {
+    const handlePageChange = (newPage: number) => {
         setCurrentPage(newPage);
     };
 

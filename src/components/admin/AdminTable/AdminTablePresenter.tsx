@@ -5,8 +5,21 @@
 import React from "react";
 import SystemContentContainer from "@components/common/containers/SystemContentContainer";
 import PaginationComponent from '@components/common/PaginationComponent';
+import { Article } from "@@types/Articles";
 
-const AdminTablePresenter = ({ articles, currentPage, totalPages, onPageChange }) => {
+interface AdminTablePresenterProps {
+    articles: Article[];
+    currentPage: number;
+    totalPages: number;
+    onPageChange: (page: number) => void;
+}
+
+const AdminTablePresenter: React.FC<AdminTablePresenterProps> = ({ 
+    articles, 
+    currentPage, 
+    totalPages, 
+    onPageChange 
+}) => {
     return (
         <div>
             <SystemContentContainer title={"[대기중 게시물]"} data={articles} />

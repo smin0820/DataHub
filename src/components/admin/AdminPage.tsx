@@ -8,16 +8,17 @@ import Sidebar from '@components/common/Sidebar';
 import AdminTablecontainer from '@components/admin/AdminTable/AdminTableContainer';
 import MainLogo from '@components/common/MainLogo';
 
-export default function AdminPage() {
-
+// export default function AdminPage() {
+const AdminPage: React.FC = () => {
     return (
         <>
-            <HeaderContainer></HeaderContainer>
-            <Sidebar></Sidebar>
-            <MainLogo></MainLogo>
-            <AdminSearchContainer></AdminSearchContainer>
-            <AdminTablecontainer></AdminTablecontainer>
+            <HeaderContainer />
+            <Sidebar />
+            <MainLogo />
+            <AdminSearchContainer />
+            <AdminTablecontainer />
         </>
     );
 }
 
+export default AdminPage;
