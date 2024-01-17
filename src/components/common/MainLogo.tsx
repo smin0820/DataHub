@@ -1,4 +1,4 @@
-// MainLogo.jsx
+// MainLogo.tsx
 // 메인 로고를 표시하는 컴포넌트입니다.
 
 import React from "react";
@@ -18,7 +18,7 @@ const LogoImage = styled.img`
     height: auto;
 `;
 
-const MainLogo = () => {
+const MainLogo: React.FC = () => {
     return (
         <LogoContainer>
             <LogoImage src={logo} alt="Logo" />

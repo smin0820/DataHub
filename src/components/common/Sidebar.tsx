@@ -6,7 +6,7 @@ import { useRecoilValue } from 'recoil';
 import { userState } from '@recoil/atoms/userStateAtom';
 import SidebarContainer from '@components/common/Sidebar/SidebarContainer';
 
-export default function Sidebar() {
+const Sidebar: React.FC = () => {
   const userInfo = useRecoilValue(userState);
 
   return (
@@ -15,3 +15,5 @@ export default function Sidebar() {
     </>
   );
 }
+
+export default Sidebar;

@@ -21,8 +21,10 @@ const SidebarContainer: React.FC = () => {
   const [systemList, setSystemList] = useRecoilState(systemListState);
   // 토글버튼 이동
   const [buttonTop, setButtonTop] = useState<number>(() => {
-    const savedButtonTop = localStorage.getItem('buttonTop');
-    const parsedButtonTop = savedButtonTop ? parseInt(savedButtonTop, 10) : window.innerHeight / 2;
+  const savedButtonTop = localStorage.getItem('buttonTop');
+  /* 토글 버튼 이동 관련 로직 */
+  // 초기 버튼 위치 설정 및 로컬 스토리지에서 위치 불러오기
+  const parsedButtonTop = savedButtonTop ? parseInt(savedButtonTop, 10) : window.innerHeight / 2;
     return !isNaN(parsedButtonTop) ? parsedButtonTop : window.innerHeight / 2;
   });
   const [isDragging, setIsDragging] = useState<boolean>(false);
@@ -45,16 +47,6 @@ const SidebarContainer: React.FC = () => {
   , [systemList]);
 
   useEffect(() => {
-    // if (userRole === "ADMIN") {
-    //   ApiService.fetchSystemNames().then(response => {
-    //     const names = response.data.systems.map(system => ({
-    //       id: system.systemId,
-    //       name: system.systemName
-    //     }));
-    //     setSystemNames([{ id: 'admin', name: '대기중 게시물' }, ...names]);
-    //   });
-    // }
-    // URL 경로 기반으로 선택된 시스템 ID 설정
     const currentPath = location.pathname;
     if (currentPath === "/admin") {
       setSelectedSystemId(-1);
@@ -64,22 +56,6 @@ const SidebarContainer: React.FC = () => {
       setSelectedSystemId(0);
     }
   }, [userRole, location.pathname]);
-
-  // /* 토글 버튼 이동 관련 로직 */
-  // // 초기 버튼 위치 설정 및 로컬 스토리지에서 위치 불러오기
-  // useEffect(() => {
-  //   const savedButtonTop = localStorage.getItem('buttonTop');
-  //   if (savedButtonTop) {
-  //     const parsedButtonTop = parseInt(savedButtonTop, 10);
-  //     if (!isNaN(parsedButtonTop)) {
-  //       setButtonTop(parsedButtonTop);
-  //     } else {
-  //       setButtonTop(window.innerHeight / 2); // 로컬 스토리지 값이 유효하지 않은 경우
-  //     }
-  //   } else {
-  //     setButtonTop(window.innerHeight / 2); // 로컬 스토리지에 값이 없을 경우
-  //   }
-  // }, []);
 
     // 창 크기 변경에 따라 버튼 위치 업데이트
   useEffect(() => {

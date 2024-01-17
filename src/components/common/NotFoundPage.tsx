@@ -24,7 +24,7 @@ const Pagediv = styled.div`
     font-size: 20px;
 `;
 
-const NotFoundPage = () => {
+const NotFoundPage: React.FC = () => {
     const navigate = useNavigate();
 
     const goToHome = () => {
