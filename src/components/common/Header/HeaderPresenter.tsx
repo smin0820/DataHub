@@ -1,11 +1,21 @@
-// HeaderPresenter.jsx
+// HeaderPresenter.tsx
 // 헤더(상단 메뉴바) 프레젠터
 
+import React from "react";
 import logo from "@assets/images/logo.png";
 import UserDropdown from "@components/common/Header/UserDropdown";
 import { Header, Navdiv, SNavLink } from "@styles/HeaderStyles";
 
-const HeaderPresenter = ({ view, isAdmin, userName, onLogoClick, onToggleView, onNavigate }) => {
+interface HeaderPresenterProps {
+    view: boolean;
+    isAdmin: boolean;
+    userName: string;
+    onLogoClick: () => void;
+    onToggleView: () => void;
+    onNavigate: (path: string) => void;
+}
+
+const HeaderPresenter: React.FC<HeaderPresenterProps> = ({ view, isAdmin, userName, onLogoClick, onToggleView, onNavigate }) => {
     return (
         <Header>
             <Navdiv>

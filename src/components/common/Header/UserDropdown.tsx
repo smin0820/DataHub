@@ -1,4 +1,4 @@
-// UserDropdown.jsx
+// UserDropdown.tsx
 // 헤더에서 사용자 이름을 클릭하면 나오는 드롭다운 메뉴 컴포넌트입니다.
 
 import React from 'react';
@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { useLogout } from '@components/login/Logout/useLogout';
 import { Dropmenu } from '@styles/HeaderStyles'
 
-export default function UserDropdown() {
+const UserDropdown: React.FC = () => {
     const navigate = useNavigate();
     const logout = useLogout();
 
@@ -19,3 +19,5 @@ export default function UserDropdown() {
         </Dropmenu>
     );
 }
+
+export default UserDropdown;

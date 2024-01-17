@@ -1,4 +1,4 @@
-// HeaderContainer.jsx
+// HeaderContainer.tsx
 // 헤더(상단 메뉴바) 컨테이너
 
 import React, { useState } from "react";
@@ -7,12 +7,12 @@ import { userState } from "@recoil/atoms/userStateAtom";
 import { useNavigate } from "react-router-dom";
 import HeaderPresenter from "@components/common/Header/HeaderPresenter";
 
-const HeaderContainer = () => {
-  const [view, setView] = useState(false);
+const HeaderContainer: React.FC = () => {
+  const [view, setView] = useState<boolean>(false);
   const navigate = useNavigate();  
   const userInfo = useRecoilValue(userState);
-  const isAdmin = userInfo && userInfo.role === "ADMIN";
-  const userName = userInfo ? userInfo.loginId : "User";
+  const isAdmin = userInfo?.role === "ADMIN";
+  const userName = userInfo?.loginId || "User";
   
   // 유저에 따라서 관리자 페이지로 이동할지, 일반 사용자 페이지로 이동할지 결정
   const handleLogoClick = () => {
