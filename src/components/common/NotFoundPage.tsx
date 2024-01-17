@@ -1,4 +1,4 @@
-// NotFoundPage.jsx
+// NotFoundPage.tsx
 // 404 Not Found 페이지 컴포넌트입니다.
 
 import React from "react";

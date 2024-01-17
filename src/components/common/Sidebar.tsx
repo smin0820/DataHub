@@ -1,4 +1,4 @@
-// Sidebar.jsx
+// Sidebar.tsx
 // 관리자일 경우에 사이드바 컨테이너를 불러옵니다.
 
 import React from 'react';
