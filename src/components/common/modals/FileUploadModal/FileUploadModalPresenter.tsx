@@ -1,4 +1,4 @@
-// FileUploadModalPresenter.jsx
+// FileUploadModalPresenter.tsx
 // 파일을 업로드하는 모달 프레젠터입니다.
 
 import React from 'react';
