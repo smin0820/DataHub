@@ -10,7 +10,7 @@ import ModalComponent from '@components/common/ModalComponent';
 import SystemDeleteModalPresenter from '@components/manage/modals/SystemDeleteModalPresenter';
 import { systemListState } from '@recoil/atoms/systemListStateAtom';
 
-const SystemDeleteModalContainer = ({ systemId, closeModal, onRefresh }) => {
+const SystemDeleteModalContainer = ({ systemId, closeModal, onRefresh, systemName }) => {
     const userInfo = useRecoilValue(userState);
     const setSystemList = useSetRecoilState(systemListState);
     
@@ -51,6 +51,7 @@ const SystemDeleteModalContainer = ({ systemId, closeModal, onRefresh }) => {
             <SystemDeleteModalPresenter
                 closeModal={closeModal}
                 handleSubmit={handleSubmit}
+                systemName={systemName}
             />
         </ModalComponent>
 

@@ -16,7 +16,7 @@ const HeaderPresenter = ({ view, isAdmin, userName, onLogoClick, onToggleView, o
                     <SNavLink to="/notice">공지사항</SNavLink>
                     <SNavLink to="/qna">Q&A</SNavLink>
                     {isAdmin && (
-                        <button onClick={() => onNavigate('/manage')}>시스템 관리</button>
+                        <SNavLink to="/manage">시스템 관리</SNavLink>
                     )}  
                     <span onClick={onToggleView}>
                         {userName}님 {view ? "∧" : "∨"}

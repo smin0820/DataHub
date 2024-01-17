@@ -3,8 +3,10 @@
 
 import React from 'react';
 import useModal from '@hooks/useModal';
+
 import QnaReigsterModalContainer from '@components/qna/modals/QnaRegisterModal/QnaReigsterModalContainer';
 import { Container, Buttondiv } from '@styles/CommonStyles';
+
 
 export default function NoticeNewArticle() {
     const { isOpen, openModal, closeModal } = useModal();
