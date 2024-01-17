@@ -1,9 +1,19 @@
 // FileUploadModalPresenter.jsx
 // 파일을 업로드하는 모달 프레젠터입니다.
 
+import React from 'react';
 import { ModalOverlay, ModalContainer, ModalTitle, ModalContent, ButtonGroup, CloseButton, RadioGroup, RadioButton, FileUpload } from "@styles/ModalStyles";
+import { DetailCategory } from '@@types/Categories';
 
-const FileUploadModalPresenter = ({ closeModal, detailCategories, handleFileChange, handleRadioChange, handleSubmit }) => {
+interface FileUploadModalPresenterProps {
+    closeModal: () => void;
+    detailCategories: DetailCategory[];
+    handleRadioChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    handleFileChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    handleSubmit: () => void;
+}
+
+const FileUploadModalPresenter: React.FC<FileUploadModalPresenterProps> = ({ closeModal, detailCategories, handleRadioChange, handleFileChange, handleSubmit }) => {
     return (
         <ModalOverlay onClick={closeModal}>
             <ModalContainer className="medium" onClick={(e) => e.stopPropagation()}>
@@ -24,9 +34,9 @@ const FileUploadModalPresenter = ({ closeModal, detailCategories, handleFileChan
                         </RadioButton>
                     ))}
                 </RadioGroup>
-                <ModalContent>업로드 파일을 선택해주세요.</ModalContent>
                 <FileUpload>
-                    <input type="file" onChange={handleFileChange} />
+                    <label htmlFor="fileInput">업로드 파일을 선택해주세요.</label>
+                    <input type="file" id="fileInput" onChange={handleFileChange} />
                 </FileUpload>
                 <ButtonGroup>
                     <button className="double" onClick={closeModal}>취소</button>
@@ -36,6 +46,5 @@ const FileUploadModalPresenter = ({ closeModal, detailCategories, handleFileChan
         </ModalOverlay>
     );
 };
-
 
 export default FileUploadModalPresenter;

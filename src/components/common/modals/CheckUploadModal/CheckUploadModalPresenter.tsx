@@ -1,10 +1,20 @@
-// CheckUploadModalPresenter.jsx
+// CheckUploadModalPresenter.tsx
 // 검토결과를 입력하는 모달 프레젠터입니다.
 
 import React from 'react';
 import { ModalOverlay, ModalContainer, ModalTitle, ModalContent, ButtonGroup, CloseButton, RadioGroup, RadioButton, TextArea, FileUpload, TextAreaContainer} from "@styles/ModalStyles";
 
-const CheckUploadModalPresenter = ({ closeModal, approval, declineDetail, handleRadioChange, handleDetailChange, handleFileChange, handleSubmit }) => {
+interface CheckUploadModalPresenterProps {
+    closeModal: () => void;
+    approval: string;
+    declineDetail: string;
+    handleRadioChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    handleDetailChange: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
+    handleFileChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    handleSubmit: () => void;
+}
+
+const CheckUploadModalPresenter: React.FC<CheckUploadModalPresenterProps> = ({ closeModal, approval, declineDetail, handleRadioChange, handleDetailChange, handleFileChange, handleSubmit }) => {
     return (
         <ModalOverlay onClick={closeModal}>
             <ModalContainer className="standard" onClick={(e) => e.stopPropagation()}>
@@ -43,9 +53,9 @@ const CheckUploadModalPresenter = ({ closeModal, approval, declineDetail, handle
                         onChange={handleDetailChange}
                     />
                 </TextAreaContainer>
-                <ModalContent>업로드 파일을 선택해주세요.</ModalContent>
                 <FileUpload>
-                    <input type="file" onChange={handleFileChange}/>
+                    <label htmlFor="fileInput">업로드 파일을 선택해주세요.</label>
+                    <input type="file" id="fileInput" onChange={handleFileChange}/>
                 </FileUpload>
                 <ButtonGroup>
                     <button className="double" onClick={closeModal}>취소</button>

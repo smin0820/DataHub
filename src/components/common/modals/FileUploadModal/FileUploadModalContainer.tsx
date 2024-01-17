@@ -1,26 +1,32 @@
-// FileUploadModalContainer.jsx
+// FileUploadModalContainer.tsx
 // 파일을 업로드하는 모달 컨테이너입니다.
 
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 import ApiService from '@components/axios/ApiService';  
 import FileUploadModalPresenter from './FileUploadModalPresenter';
 import ModalComponent from '@components/common/ModalComponent';
 import { useSetRecoilState } from 'recoil';
 import { systemUploadState } from '@recoil/atoms/systemUploadStateAtom';
 
-const FileUploadModalContainer = ({ closeModal, detailCategories }) => {
-  const [selectedCategoryId, setSelectedCategoryId] = useState(null);
-  const [file, setFile] = useState(null);
+interface FileUploadModalContainerProps {
+  closeModal: () => void;
+  detailCategories: any[];
+}
+
+const FileUploadModalContainer: React.FC<FileUploadModalContainerProps> = ({ closeModal, detailCategories }) => {
+  const [selectedCategoryId, setSelectedCategoryId] = useState<number>(0);
+  const [file, setFile] = useState<File | null>(null);
   const setSystemUpload = useSetRecoilState(systemUploadState);
   const currentTime = new Date().getTime();
 
-  const handleFileChange = (event) => {
-    setFile(event.target.files[0]);
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if(event.target.files) {
+      setFile(event.target.files[0]);
+    }
   };
 
-  const handleRadioChange = (event) => {
-    setSelectedCategoryId(event.target.value);
+  const handleRadioChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSelectedCategoryId(Number(event.target.value));
   };
 
   const handleSubmit = () => {
@@ -42,18 +48,12 @@ const FileUploadModalContainer = ({ closeModal, detailCategories }) => {
       <FileUploadModalPresenter
         closeModal={closeModal}
         detailCategories={detailCategories}
-        selectedCategoryId={selectedCategoryId}
         handleFileChange={handleFileChange}
         handleRadioChange={handleRadioChange}
         handleSubmit={handleSubmit}
       />
     </ModalComponent>
   );
-};
-
-FileUploadModalContainer.propTypes = {
-  closeModal: PropTypes.func.isRequired,
-  detailCategories: PropTypes.array.isRequired
 };
 
 export default FileUploadModalContainer;

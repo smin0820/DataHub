@@ -1,31 +1,37 @@
-// CheckUploadModalContainer.jsx
+// CheckUploadModalContainer.tsx
 // 검토결과를 입력하는 모달 컨테이너입니다.
 
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 import ApiService from '@components/axios/ApiService';
 import CheckUploadModalPresenter from '@components/common/modals/CheckUploadModal/CheckUploadModalPresenter';
 import ModalComponent from '@components/common/ModalComponent';
 import { useSetRecoilState } from 'recoil';
 import { systemUploadState } from '@recoil/atoms/systemUploadStateAtom';
 
-const CheckUploadModalContainer = ({ closeModal, articleId }) => {
-  const [approval, setApproval] = useState('');
-  const [declineDetail, setDeclineDetail] = useState('');
-  const [file, setFile] = useState("");
+interface CheckUploadModalContainerProps {
+  closeModal: () => void;
+  articleId: number;
+}
+
+const CheckUploadModalContainer: React.FC<CheckUploadModalContainerProps> = ({ closeModal, articleId }) => {
+  const [approval, setApproval] = useState<string>('');
+  const [declineDetail, setDeclineDetail] = useState<string>('');
+  const [file, setFile] = useState<File | null>(null);
   const setSystemUpload = useSetRecoilState(systemUploadState);
   const currentTime = new Date().getTime();
 
-  const handleRadioChange = (event) => {
+  const handleRadioChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setApproval(event.target.value);
   };
 
-  const handleDetailChange = (event) => {
+  const handleDetailChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setDeclineDetail(event.target.value);
   };
 
-  const handleFileChange = (event) => {
-    setFile(event.target.files[0]);
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if(event.target.files) {
+      setFile(event.target.files[0]);
+    }
   };
 
   const handleSubmit = async () => {
@@ -34,10 +40,12 @@ const CheckUploadModalContainer = ({ closeModal, articleId }) => {
       return;
     }
     const formData = new FormData();
-    formData.append('articleId', articleId);
+    formData.append('articleId', articleId.toString());
     formData.append('approval', approval);
     formData.append('declineDetail', declineDetail);
-    formData.append('file', file);
+    if (file) {
+      formData.append('file', file);
+    }
     try {
       await ApiService.reviewArticle(formData);
       closeModal();
@@ -60,13 +68,7 @@ const CheckUploadModalContainer = ({ closeModal, articleId }) => {
         handleSubmit={handleSubmit}
       />
     </ModalComponent>
-
   );
-};
-
-CheckUploadModalContainer.propTypes = {
-  closeModal: PropTypes.func.isRequired,
-  articleId: PropTypes.number.isRequired
 };
 
 export default CheckUploadModalContainer;

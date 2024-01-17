@@ -1,9 +1,15 @@
-// FileDeleteModalPresenter.jsx
-// 공지사항 삭제를 위한 모달 프레젠터 컴포넌트
+// FileDeleteModalPresenter.tsx
+// "대기"상태의 게시글 삭제를 위한 모달 프레젠터 컴포넌트
 
+import React from 'react';
 import { ModalOverlay, ModalContainer, ModalTitle, ModalContent, CloseButton, ButtonGroup } from '@styles/ModalStyles';
 
-const FileDeleteModalPresenter = ({ closeModal, handleSubmit }) => {
+interface FileDeleteModalPresenterProps {
+    closeModal: () => void;
+    handleSubmit: () => void;
+}
+
+const FileDeleteModalPresenter: React.FC<FileDeleteModalPresenterProps> = ({ closeModal, handleSubmit }) => {
     return (
                 <ModalOverlay onClick={closeModal}>
             <ModalContainer className='small' onClick={(e) => e.stopPropagation()}>
