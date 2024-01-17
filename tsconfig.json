@@ -8,6 +8,7 @@
         "@store/*": ["store/*"],
         "@styles/*": ["styles/*"],
         "@recoil/*": ["recoil/*"],
+        "@assets/*": ["assets/*"],
         "@@types/*": ["types/*"],
         },
         // TypeScript 관련 추가 옵션들
