@@ -1,11 +1,21 @@
-// SidebarPresenter.jsx
+// SidebarPresenter.tsx
 // 사이드바 프레젠터
 
 import React from 'react';
 import { SidebarUL, SNavLink, ToggleButton } from '@styles/SidebarStyles';
 import ReactDOM from 'react-dom';
+import { System } from '@@types/Categories';
 
-const SidebarPresenter = ({ 
+interface SidebarPresenterProps {
+    systemNames: System[];
+    selectedSystemId: number;
+    isVisible: boolean;
+    onSelectSystem: (systemId: number) => void;
+    buttonTop: number;
+    handleDragStart: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+    handleToggleClick: () => void;
+}
+const SidebarPresenter: React.FC<SidebarPresenterProps> = ({ 
         systemNames, selectedSystemId, isVisible, onSelectSystem, buttonTop, handleDragStart, handleToggleClick 
     }) => {
     const sidebarContent = (
@@ -21,12 +31,12 @@ const SidebarPresenter = ({
             </ToggleButton>
             <SidebarUL $isVisible={isVisible}>
                 {systemNames.map((system) => (
-                    <li key={system.id} onClick={() => onSelectSystem(system.id)}>
+                    <li key={system.systemId} onClick={() => onSelectSystem(system.systemId)}>
                         <SNavLink 
-                            to={system.id === 'admin' ? '/admin' : '/system'}
-                            className={selectedSystemId === system.id ? "chosen" : ""}
+                            to={system.systemId === -1 ? '/admin' : '/system'}
+                            className={selectedSystemId === system.systemId ? "chosen" : ""}
                         >
-                            {system.name}
+                            {system.systemName}
                         </SNavLink>
                     </li>
                 ))}
@@ -36,7 +46,7 @@ const SidebarPresenter = ({
 
     return ReactDOM.createPortal(
         sidebarContent,
-        document.getElementById('sidebar-root')
+        document.getElementById('sidebar-root') as HTMLElement
     );
 };
 

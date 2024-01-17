@@ -1,4 +1,4 @@
-// SidebarContainer.jsx
+// SidebarContainer.tsx
 // 사이드바 컨테이너
 
 import React, { useEffect, useState } from 'react';
@@ -9,46 +9,55 @@ import { userState } from '@recoil/atoms/userStateAtom';
 import ApiService from '@components/axios/ApiService';
 import SidebarPresenter from '@components/common/Sidebar/SidebarPresenter';
 import { systemListState } from '@recoil/atoms/systemListStateAtom';
+import { System, SystemsResponse } from '@@types/Categories';
 
-export default function SidebarContainer() {
-  const [systemNames, setSystemNames] = useState([]);
+const SidebarContainer: React.FC = () => {
+  const [systemNames, setSystemNames] = useState<System[]>([]);
   const [selectedSystemId, setSelectedSystemId] = useRecoilState(selectedSystemIdState);
-  const [isVisible, setIsVisible] = useRecoilState(sidebarVisibilityState);
+  const [isVisible, setIsVisible] = useRecoilState<boolean>(sidebarVisibilityState);
   const [userInfo] = useRecoilState(userState);
   const userRole = userInfo?.role;
   const location = useLocation();
   const [systemList, setSystemList] = useRecoilState(systemListState);
   // 토글버튼 이동
-  const [buttonTop, setButtonTop] = useState();
-  const [isDragging, setIsDragging] = useState(false);
-  const [windowHeight, setWindowHeight] = useState(window.innerHeight);
-  const [dragOffset, setDragOffset] = useState(0);
+  const [buttonTop, setButtonTop] = useState<number>(() => {
+    const savedButtonTop = localStorage.getItem('buttonTop');
+    const parsedButtonTop = savedButtonTop ? parseInt(savedButtonTop, 10) : window.innerHeight / 2;
+    return !isNaN(parsedButtonTop) ? parsedButtonTop : window.innerHeight / 2;
+  });
+  const [isDragging, setIsDragging] = useState<boolean>(false);
+  const [windowHeight, setWindowHeight] = useState<number>(window.innerHeight);
+  const [dragOffset, setDragOffset] = useState<number>(0);
 
   useEffect(() => {
     ApiService.fetchSystemNames().then(response => {
-      const names = response.data.systems.map(system => ({
-        id: system.systemId,
-        name: system.systemName
-      }));
-      setSystemNames([{ id: 'admin', name: '대기중 게시물' }, ...names]);
+      if (response) {
+        const names:System[] = response.data.systems.map((system: System) => ({
+          systemId: system.systemId,
+          systemName: system.systemName
+        }));
+        setSystemNames([{ systemId: -1, systemName: '대기중 게시물' }, ...names]);
+      } else {
+        console.error("시스템 이름을 불러오는데 실패했습니다.");
+      }
     });
   }
   , [systemList]);
 
   useEffect(() => {
-    if (userRole === "ADMIN") {
-      ApiService.fetchSystemNames().then(response => {
-        const names = response.data.systems.map(system => ({
-          id: system.systemId,
-          name: system.systemName
-        }));
-        setSystemNames([{ id: 'admin', name: '대기중 게시물' }, ...names]);
-      });
-    }
+    // if (userRole === "ADMIN") {
+    //   ApiService.fetchSystemNames().then(response => {
+    //     const names = response.data.systems.map(system => ({
+    //       id: system.systemId,
+    //       name: system.systemName
+    //     }));
+    //     setSystemNames([{ id: 'admin', name: '대기중 게시물' }, ...names]);
+    //   });
+    // }
     // URL 경로 기반으로 선택된 시스템 ID 설정
     const currentPath = location.pathname;
     if (currentPath === "/admin") {
-      setSelectedSystemId("admin");
+      setSelectedSystemId(-1);
     } else if (currentPath === "/system") {
       setSelectedSystemId(selectedSystemId);
     } else {
@@ -56,21 +65,21 @@ export default function SidebarContainer() {
     }
   }, [userRole, location.pathname]);
 
-  /* 토글 버튼 이동 관련 로직 */
-  // 초기 버튼 위치 설정 및 로컬 스토리지에서 위치 불러오기
-  useEffect(() => {
-    const savedButtonTop = localStorage.getItem('buttonTop');
-    if (savedButtonTop) {
-      const parsedButtonTop = parseInt(savedButtonTop, 10);
-      if (!isNaN(parsedButtonTop)) {
-        setButtonTop(parsedButtonTop);
-      } else {
-        setButtonTop(window.innerHeight / 2); // 로컬 스토리지 값이 유효하지 않은 경우
-      }
-    } else {
-      setButtonTop(window.innerHeight / 2); // 로컬 스토리지에 값이 없을 경우
-    }
-  }, []);
+  // /* 토글 버튼 이동 관련 로직 */
+  // // 초기 버튼 위치 설정 및 로컬 스토리지에서 위치 불러오기
+  // useEffect(() => {
+  //   const savedButtonTop = localStorage.getItem('buttonTop');
+  //   if (savedButtonTop) {
+  //     const parsedButtonTop = parseInt(savedButtonTop, 10);
+  //     if (!isNaN(parsedButtonTop)) {
+  //       setButtonTop(parsedButtonTop);
+  //     } else {
+  //       setButtonTop(window.innerHeight / 2); // 로컬 스토리지 값이 유효하지 않은 경우
+  //     }
+  //   } else {
+  //     setButtonTop(window.innerHeight / 2); // 로컬 스토리지에 값이 없을 경우
+  //   }
+  // }, []);
 
     // 창 크기 변경에 따라 버튼 위치 업데이트
   useEffect(() => {
@@ -87,15 +96,15 @@ export default function SidebarContainer() {
     return () => window.removeEventListener('resize', handleResize);
   }, [buttonTop, windowHeight]);
   
-  const handleDragStart = (e) => {
+  const handleDragStart = (e: React.MouseEvent<HTMLButtonElement>) => {
     setIsDragging(true);
-    const button = document.getElementById('sidebar-toggle-button');
+    const button = document.getElementById('sidebar-toggle-button') as HTMLButtonElement;
     const buttonRect = button.getBoundingClientRect();
     const offset = e.clientY - buttonRect.top - (buttonRect.height / 2); // 버튼 상단과 마우스 포인터 간의 차이
     setDragOffset(offset);
   };
 
-  const handleDrag = (e) => {
+  const handleDrag = (e: MouseEvent) => {
     e.preventDefault();
     const newTop = e.clientY - dragOffset; // 마우스 위치에서 offset을 빼서 새 위치 계산
     setButtonTop(newTop);
@@ -103,12 +112,11 @@ export default function SidebarContainer() {
 
   const handleDragEnd = () => {
     setIsDragging(false);
-    console.log('드래그 종료');
   };
 
   useEffect(() => {
   if (buttonTop !== undefined) {
-    localStorage.setItem('buttonTop', buttonTop);
+    localStorage.setItem('buttonTop', buttonTop.toString());
   }
 }, [buttonTop]);
 
@@ -147,3 +155,5 @@ useEffect(() => {
         />
     );
 }
+
+export default SidebarContainer;

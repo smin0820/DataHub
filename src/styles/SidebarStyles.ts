@@ -1,10 +1,14 @@
-// SidebarStyles.js
+// SidebarStyles.ts
 // 사이드바 관련 스타일
 
 import styled from "styled-components";
 import { NavLink } from 'react-router-dom';
 
-export const SidebarUL = styled.ul` // 사이드바 기본 스타일
+interface SidebarProps {
+    $isVisible: boolean;
+}
+
+export const SidebarUL = styled.ul<SidebarProps>` // 사이드바 기본 스타일
     transition: transform 0.3s ease, opacity 0.3s ease;
     transform: ${({ $isVisible }) => $isVisible ? 'translateX(0)' : 'translateX(-100%)'};
     opacity: ${({ $isVisible }) => $isVisible ? '1' : '0'};
@@ -40,7 +44,9 @@ export const SNavLink = styled(NavLink)` // 선택된 시스템 메뉴 스타일
     }
 `
 
-export const ToggleButton = styled.button` // 사이드바 토글 버튼 스타일
+
+
+export const ToggleButton = styled.button<SidebarProps>` // 사이드바 토글 버튼 스타일
     position: fixed;
     top: 50%;
     left: ${({ $isVisible }) => $isVisible ? '202px' : '0px'};  // isVisible에 따라 위치 조정
