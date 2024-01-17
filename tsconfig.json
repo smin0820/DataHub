@@ -1,0 +1,30 @@
+{
+    "compilerOptions": {
+        "baseUrl": "./src",
+        "paths": {
+        "@components/*": ["components/*"],
+        "@hooks/*": ["hooks/*"],
+        "@routes/*": ["routes/*"],
+        "@store/*": ["store/*"],
+        "@styles/*": ["styles/*"],
+        "@recoil/*": ["recoil/*"],
+        "@@types/*": ["types/*"],
+        },
+        // TypeScript 관련 추가 옵션들
+        "target": "es5", // 컴파일된 JavaScript가 실행될 환경
+        "module": "commonjs", // 사용할 모듈 시스템
+        "strict": true, // 모든 엄격한 타입 체킹 옵션 활성화
+        "esModuleInterop": true, // CommonJS 모듈을 ES6 모듈처럼 사용할 수 있게 해줌
+        "skipLibCheck": true, // 선언 파일의 타입 체킹 생략
+        "forceConsistentCasingInFileNames": true, // 파일명의 대소문자 일관성 강제
+        "jsx": "react", // JSX의 문법 사용 설정
+        "allowJs": true, // JavaScript 파일도 컴파일 대상에 포함
+        "checkJs": false
+    },
+    "include": [
+        "src/**/*" // src 폴더 안의 모든 TS 파일을 컴파일에 포함
+    ],
+    "exclude": [
+        "node_modules" // node_modules 폴더는 컴파일에서 제외
+    ]
+}
