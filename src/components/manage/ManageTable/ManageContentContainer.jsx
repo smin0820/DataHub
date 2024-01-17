@@ -26,6 +26,7 @@ export default function ManageContentContainer(props) {
               <Tbodytr key={i}>
                 <td>{n.systemName}</td>
                 <td>
+                  <button>수정</button>
                   <button onClick={() => openDeleteModal(n.systemId)}>삭제</button>
                 </td>
                 {isDeleteOpen && selectedId === n.systemId && (
