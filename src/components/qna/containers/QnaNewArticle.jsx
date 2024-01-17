@@ -2,9 +2,9 @@
 // 새로운 공지사항을 등록하기 위한 버튼을 렌더링하는 컨테이너 컴포넌트
 
 import React from 'react';
-import styled from 'styled-components';
 import useModal from '@hooks/useModal';
-import QnaReigsterModal from '../modals/QnaReigsterModal';
+
+import QnaReigsterModalContainer from '@components/qna/modals/QnaRegisterModal/QnaReigsterModalContainer';
 import { Container, Buttondiv } from '@styles/CommonStyles';
 
 
@@ -18,7 +18,7 @@ export default function NoticeNewArticle() {
                     글쓰기
                 </button>
             </Buttondiv>
-            {isOpen && <QnaReigsterModal closeModal={closeModal} />}
+            {isOpen && <QnaReigsterModalContainer closeModal={closeModal} />}
         </Container>
     )
 };

@@ -8,6 +8,7 @@ import TabMenuContainer from "@components/system/containers/tabmenu/TabMenuConta
 import { useRecoilValue } from "recoil";
 import { userState } from "@recoil/atoms/userStateAtom";
 import { selectedSystemIdState } from "@recoil/atoms/systemStateAtom";
+import { systemUploadState } from "@recoil/atoms/systemUploadStateAtom";
 
 const Container = styled.div`
   display: flex;
@@ -60,47 +61,11 @@ export default function SystemTabMenuContainer() {
     const [detailCategories, setDetailCategories] = useState([]);
     const userInfo = useRecoilValue(userState);
     const selectedSystemId = useRecoilValue(selectedSystemIdState);
-    // useEffect(() => {
-    //     const savedTab = localStorage.getItem('currentTab');
-    //       if (savedTab !== null) {
-    //           setTab(Number(savedTab));
-    //       }
-    //       console.log("userInfo", userInfo);
-    //       console.log("selectedSystemId", selectedSystemId);
-    //     // localStorage에서 userInfo 가져오기
-    //     let currentSystemId = userInfo?.systemIds?.[0]; // 기본 시스템 ID 설정
-    //     // ADMIN 사용자인 경우, 선택한 시스템 ID로 변경
-    //     if (userInfo?.role === "ADMIN") {
-    //         if (selectedSystemId) {
-    //             currentSystemId = selectedSystemId;
-    //         }
-    //     }
-    //     // currentSystemId를 사용하여 시스템 이름 및 기타 정보 가져오기
-    //     if (currentSystemId) {
-    //         setSystemId(currentSystemId);
-    //         ApiService.fetchBaseCategory(currentSystemId)
-    //             .then(data => {
-    //                 if (data?.systemName) {
-    //                     setSystemName(data.systemName);
-    //                 }
-    //                 if (data?.baseCategories) {
-    //                     setBaseCategoryIds(data.baseCategories.map(category => category.baseCategoryId));
-    //                     // detailCategories 정보 가져오기
-    //                     Promise.all(data.baseCategories.map(category => 
-    //                         ApiService.fetchDetailCategories(category.baseCategoryId)
-    //                     )).then(allDetailData => {
-    //                         setDetailCategories(allDetailData.map(data => data.detailCategories));
-    //                     });
-    //                 }
-    //             })
-    //             .catch(error => {
-    //                 console.error('Base category 요청 오류:', error);
-    //             });
-    //     }
-    // }, []);
-    useEffect(() => {
-  if (selectedSystemId) {
-    ApiService.fetchBaseCategory(selectedSystemId)
+    const systemUpload = useRecoilValue(systemUploadState);
+
+    // 새로고침
+    const refreshData = () => {
+      ApiService.fetchBaseCategory(selectedSystemId)
       .then(data => {
         if (data?.systemName) {
           setSystemName(data.systemName);
@@ -114,11 +79,53 @@ export default function SystemTabMenuContainer() {
           });
         }
       })
-      .catch(error => {
-        console.error('Base category 요청 오류:', error);
-      });
-  }
-}, [selectedSystemId]);
+      .catch(error => console.error('Base category 요청 오류:', error));
+      if (systemId !== null) {
+            ApiService.fetchBaseCategory(systemId)
+                .then(data => {
+                    if (data && data.baseCategories) {
+                        setBaseCategoryIds(data.baseCategories.map(category => category.baseCategoryId));
+                        // 모든 baseCategoryId에 대해 detailCategories 정보 가져오기
+                        Promise.all(data.baseCategories.map(category => 
+                            ApiService.fetchDetailCategories(category.baseCategoryId)
+                        )).then(allDetailData => {
+                            setDetailCategories(allDetailData.map(data => data.detailCategories));
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error('Base category 요청 오류:', error);
+                });
+        }
+    };
+
+    useEffect(() => {
+      refreshData();
+    }
+    , [systemUpload]);
+
+
+    useEffect(() => {
+      if (selectedSystemId) {
+        ApiService.fetchBaseCategory(selectedSystemId)
+          .then(data => {
+            if (data?.systemName) {
+              setSystemName(data.systemName);
+            }
+            if (data?.baseCategories) {
+              setBaseCategoryIds(data.baseCategories.map(category => category.baseCategoryId));
+              Promise.all(data.baseCategories.map(category => 
+                ApiService.fetchDetailCategories(category.baseCategoryId)
+              )).then(allDetailData => {
+                setDetailCategories(allDetailData.map(data => data.detailCategories));
+              });
+            }
+          })
+          .catch(error => {
+            console.error('Base category 요청 오류:', error);
+          });
+      }
+    }, [selectedSystemId]);
     
     useEffect(() => {
         if (systemId !== null) {
@@ -165,7 +172,6 @@ export default function SystemTabMenuContainer() {
             </li>
           ))}
         </ul>
-
         <AdminSearchContainer></AdminSearchContainer>
         
         <button onClick={openModal}>게시글 등록</button>

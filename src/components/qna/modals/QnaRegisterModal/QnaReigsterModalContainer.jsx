@@ -1,23 +1,18 @@
-// NoticeRegisterModalContainer.jsx
-// 공지사항 등록을 위한 모달 컨테이너 컴포넌트
-
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import ApiService from '@components/axios/ApiService';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { userState } from '@recoil/atoms/userStateAtom';
-import NoticeRegisterModalPresenter from '@components/notice/modals/NoticeRegisterModal/NoticeRegisterModalPresenter';
 import ModalComponent from '@components/common/ModalComponent';
-import { noticesState } from '@recoil/atoms/noticesAtom';
+import QnaRegisterModalPresenter from '@components/qna/modals/QnaRegisterModal/QnaRegisterModalPresenter';
+import { qnasState } from '@recoil/atoms/qnasAtom';
 
 
-
-const NoticeRegisterModalContainer = ({ closeModal }) => {
+const QnaReigsterModalContainer = ({ closeModal }) => {
     const [Title, setTitle] = useState("");
     const [Body, setBody] = useState("");
     const userInfo = useRecoilValue(userState);
-    const setNotices = useSetRecoilState(noticesState);
-
+    const setQnas = useSetRecoilState(qnasState);
 
     const handleTitleChange = (event) => {
         setTitle(event.target.value);
@@ -29,7 +24,7 @@ const NoticeRegisterModalContainer = ({ closeModal }) => {
 
     const handleSuccess = () => {
         closeModal();
-        setNotices(0);
+        setQnas(0);
     };
 
     const handleSubmit = async () => {
@@ -38,38 +33,38 @@ const NoticeRegisterModalContainer = ({ closeModal }) => {
         return;
     }
 
-
     if (!userInfo || !userInfo.loginId) {
         console.error("사용자 정보가 없습니다.");
         return;
     }
 
     try {
-        const response = await ApiService.registerNotice(Title, Body, userInfo.loginId);
+        const response = await ApiService.registerQna(userInfo.loginId, Title, Body);
         // 성공적으로 등록되었을 때의 추가 동작
         handleSuccess();
     } catch (error) {
-        console.error("공지사항 등록 실패:", error);
+        console.error("Qna 글쓰기 실패:", error);
         // 실패했을 때의 동작 처리
     }
 };
 
     return (
         <ModalComponent>
-            <NoticeRegisterModalPresenter
+            <QnaRegisterModalPresenter
                 closeModal={closeModal}
-                Title={Title}
-                handleTitleChange={handleTitleChange}
-                Body={Body}
-                handleBodyChange={handleBodyChange}
-                handleSubmit={handleSubmit}
+                Title = {Title}
+                handleTitleChange = {handleTitleChange}
+                Body = {Body}
+                handleBodyChange = {handleBodyChange}
+                handleSubmit = {handleSubmit}
             />
         </ModalComponent>
+        
     );
 };
 
-NoticeRegisterModalContainer.propTypes = {
+QnaReigsterModalContainer.propTypes = {
     closeModal: PropTypes.func.isRequired,
 };
 
-export default NoticeRegisterModalContainer;
+export default QnaReigsterModalContainer;

@@ -3,9 +3,10 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import useModal from '@hooks/useModal';
 
-import QnaDeleteModal from '../modals/QnaDeleteModal';
-import QnaEditModal from '../modals/QnaEditModal';
+import QnaDeleteModalContainer from '@components/qna/modals/QnaDeleteModal/QnaDeleteModalContainer';
+import QnaEditModalContainer from '@components/qna/modals/QnaEditModal/QnaEditModalContainer';
 import { Dropmenu } from '@styles/BoardStyles';
+
 
 
 export default function QnaDropdown({ qaId, onRefresh }) {
@@ -28,8 +29,8 @@ export default function QnaDropdown({ qaId, onRefresh }) {
                     <li onClick={handleDeleteClick}>삭제</li>
                 </ul>
             </Dropmenu>
-            {isEditOpen && <QnaEditModal qaId={qaId} onRefresh={onRefresh} closeModal={closeEditModal} />}
-            {isDeleteOpen && <QnaDeleteModal qaId={qaId} onRefresh={onRefresh} closeModal={closeDeleteModal} />} 
+            {isEditOpen && <QnaEditModalContainer qaId={qaId} onRefresh={onRefresh} closeModal={closeEditModal} />}
+            {isDeleteOpen && <QnaDeleteModalContainer qaId={qaId} onRefresh={onRefresh} closeModal={closeDeleteModal} />} 
         </>
     );
 }

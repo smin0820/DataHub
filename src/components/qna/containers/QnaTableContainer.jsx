@@ -7,13 +7,15 @@ import styled from "styled-components";
 import { usePagination } from '@hooks/usePagenation';
 import { useQnas } from '@hooks/useQnas';
 import QnaContentContainer from "./QnaContentContainer";
+import { qnasState } from "@recoil/atoms/qnasAtom";
+import { useRecoilState } from "recoil";
 import PaginationComponent from '@components/common/PaginationComponent';
 
 
 export default function QnaTableContainer() {
     const [currentPage, setCurrentPage] = useState(1);
     const { qnas, totalPages, loading, error, refetchQnas } = useQnas(currentPage);
-
+    const [recoilQnas, setRecoilQnas] = useRecoilState(qnasState);
 
     const handlePageChange = (newPage) => {
         setCurrentPage(newPage);
@@ -23,6 +25,11 @@ export default function QnaTableContainer() {
     const refreshList = () => {
         refetchQnas();
     };
+
+    useEffect(() => {
+        refetchQnas();
+        setRecoilQnas(qnas);
+    }, [recoilQnas]);
 
 
     if (loading) return <div>Loading...</div>;
