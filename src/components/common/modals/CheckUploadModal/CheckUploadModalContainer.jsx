@@ -6,11 +6,15 @@ import PropTypes from 'prop-types';
 import ApiService from '@components/axios/ApiService';
 import CheckUploadModalPresenter from '@components/common/modals/CheckUploadModal/CheckUploadModalPresenter';
 import ModalComponent from '@components/common/ModalComponent';
+import { useSetRecoilState } from 'recoil';
+import { systemUploadState } from '@recoil/atoms/systemUploadStateAtom';
 
 const CheckUploadModalContainer = ({ closeModal, articleId }) => {
   const [approval, setApproval] = useState('');
   const [declineDetail, setDeclineDetail] = useState('');
   const [file, setFile] = useState("");
+  const setSystemUpload = useSetRecoilState(systemUploadState);
+  const currentTime = new Date().getTime();
 
   const handleRadioChange = (event) => {
     setApproval(event.target.value);
@@ -34,12 +38,11 @@ const CheckUploadModalContainer = ({ closeModal, articleId }) => {
     formData.append('approval', approval);
     formData.append('declineDetail', declineDetail);
     formData.append('file', file);
-
     try {
       await ApiService.reviewArticle(formData);
       closeModal();
-      console.log(articleId,"번 게시글 검토 완료");
-      window.location.reload();
+      alert("검토결과가 업로드 되었습니다.");
+      setSystemUpload(currentTime)
     } catch (error) {
       console.error('Error submitting review:', error);
     }

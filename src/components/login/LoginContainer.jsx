@@ -8,7 +8,6 @@ import { useRecoilState } from "recoil";
 import { userState } from "@recoil/atoms/userStateAtom";
 import LoginPresenter from "@components/login/LoginPresenter";
 import { selectedSystemIdState } from "@recoil/atoms/systemStateAtom";
-import { tokenState } from "@recoil/atoms/tokenStateAtom";
 
 export default function LoginContainer() {
   const navigate = useNavigate();
@@ -17,7 +16,6 @@ export default function LoginContainer() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [ selectedSystemId, setSelectedSystemId] = useRecoilState(selectedSystemIdState);
-  const [, setToken] = useRecoilState(tokenState);
   
   const handleLogin = async (event) => {
     event.preventDefault();

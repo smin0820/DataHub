@@ -21,7 +21,6 @@ export default function NoticeTableContainer() {
 
     // 목록 새로고침 함수
     const refreshList = () => {
-        console.log("목록 새로고침");
         refetchNotices();
     };
 

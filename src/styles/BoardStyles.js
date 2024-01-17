@@ -53,13 +53,23 @@ export const Boarddiv = styled.div`
             width: 20%;
         }
         th:nth-child(5) { // 관련파일
-            width: 22%;
+            width: 20%;
         }
-        button { // 검토버튼
+        button.check { // 검토버튼
             padding: 2px 5px;
             color: white;
             background-color: #007fff;
             border: 1px solid #007fff;
+            border-radius: 10px;
+            font-size: medium;
+            cursor: pointer;
+            text-align: center;
+        }
+        button.delete {
+            padding: 2px 5px;
+            color: white;
+            background-color: #CCCCCC;
+            border: 1px solid #CCCCCC;
             border-radius: 10px;
             font-size: medium;
             cursor: pointer;

@@ -5,6 +5,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import CheckUploadModalContainer from "@components/common/modals/CheckUploadModal/CheckUploadModalContainer";
+import FileDeleteModalContainer from "@components/common/modals/FileDeleteModal/FileDeleteModalContainer";
 import useIdModal from "@hooks/useIdModal";
 import { useRecoilValue } from "recoil";
 import { userState } from "@recoil/atoms/userStateAtom";
@@ -12,7 +13,8 @@ import { Boarddiv, Tbodytr, StyledLink, StatusDiv } from "@styles/BoardStyles";
 
 export default function SystemContentContainer(props) {
   const { title, data = [] } = props;
-  const { isOpen, selectedId, openModal, closeModal } = useIdModal(); // useIdModal 훅 사용
+  const { isOpen : isCheckModalOpen, selectedId : seletedIdCheckModal, openModal : openCheckModal, closeModal : closeCheckModal } = useIdModal(); // useIdModal 훅 사용
+    const { isOpen : isDeleteModalOpen, selectedId : seletedIdDeleteModal, openModal : openDeleteModal, closeModal : closeDeleteModal } = useIdModal(); // useIdModal 훅 사용
   const userInfo = useRecoilValue(userState);
   const isAdmin = userInfo && userInfo.role === "ADMIN";
 
@@ -61,11 +63,17 @@ export default function SystemContentContainer(props) {
               </td>
               {/* <td>{n.articleId}</td> */}
               <td>
-                {isAdmin && (
-                <button onClick={() => openModal(n.articleId)}>검토</button>
+                {n.approval === '대기' && (
+                  <button className="delete" onClick={() => openDeleteModal(n.articleId)}>삭제</button>
                 )}
-                {isOpen && selectedId === n.articleId && (
-                  <CheckUploadModalContainer closeModal={closeModal} articleId={selectedId} />
+                {isDeleteModalOpen && seletedIdDeleteModal === n.articleId && (
+                  <FileDeleteModalContainer closeModal={closeDeleteModal} articleId={seletedIdDeleteModal} />
+                )}
+                {isAdmin && (
+                <button className="check" onClick={() => openCheckModal(n.articleId)}>검토</button>
+                )}
+                {isCheckModalOpen && seletedIdCheckModal === n.articleId && (
+                  <CheckUploadModalContainer closeModal={closeCheckModal} articleId={seletedIdCheckModal} />
                 )}
               </td>
             </Tbodytr>
