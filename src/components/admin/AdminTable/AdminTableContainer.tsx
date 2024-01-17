@@ -17,7 +17,6 @@ export default function AdminTableContainer() {
     useEffect(() => {
         ApiService.fetchWaitArticles(currentPage)
             .then((articleData: ArticlesResponse) => {
-                console.log(articleData)
                 setArticles(articleData.articles);
                 setTotalPages(articleData.allPage);
             })
