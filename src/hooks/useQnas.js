@@ -12,8 +12,8 @@ export const useQnas = (currentPage) => {
         setLoading(true);
         ApiService.fetchQnas(currentPage)
             .then(articleData => {
-                setQnas(articleData.qas);
-                setTotalPages(articleData.allPage);
+                setQnas(articleData.content);
+                setTotalPages(articleData.totalPages);
                 setError(null);
             })
             .catch(err => {

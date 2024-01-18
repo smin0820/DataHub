@@ -12,8 +12,8 @@ export const useNotices = (currentPage) => {
         setLoading(true);
         ApiService.fetchNotices(currentPage)
             .then(articleData => {
-                setNotices(articleData.notices);
-                setTotalPages(articleData.allPage);
+                setNotices(articleData.content);
+                setTotalPages(articleData.totalPages);
                 setError(null);
             })
             .catch(err => {

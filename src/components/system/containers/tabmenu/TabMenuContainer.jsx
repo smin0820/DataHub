@@ -16,8 +16,8 @@ function DetailCategoryBoard({ category, index }) {
     React.useEffect(() => {
         ApiService.fetchArticles(category.detailCategoryId, currentPage)
             .then(articleData => {
-                setArticles(articleData.articles);
-                setTotalPages(articleData.allPage);
+                setArticles(articleData.content);
+                setTotalPages(articleData.totalPages);
             })
             .catch(error => console.error('Articles 요청 오류:', error));
     }, [category.detailCategoryId, currentPage, systemUpload]);

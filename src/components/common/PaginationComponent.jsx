@@ -14,7 +14,7 @@ const PaginationContainer = styled.div`
         &.pageButton {
             background: none;
             border: none;
-            color: black;
+            color: grey;
             cursor: pointer;
             padding: 5px 10px;
             margin: 0 5px;
@@ -25,7 +25,7 @@ const PaginationContainer = styled.div`
             }
 
             &:disabled {
-            color: grey;
+            color: black;
             }
         }
     }
