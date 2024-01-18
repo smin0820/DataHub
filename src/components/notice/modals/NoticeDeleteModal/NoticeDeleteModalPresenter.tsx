@@ -1,9 +1,15 @@
-// NoticeDeleteModalPresenter.jsx
+// NoticeDeleteModalPresenter.tsx
 // 공지사항 삭제를 위한 모달 프레젠터 컴포넌트
 
+import React from 'react';
 import { ModalOverlay, ModalContainer, ModalTitle, ModalContent, CloseButton, ButtonGroup } from '@styles/ModalStyles';
 
-const NoticeDeleteModalPresenter = ({ closeModal, handleSubmit }) => {
+interface NoticeDeleteModalPresenterProps {
+    closeModal: () => void;
+    handleSubmit: () => void;
+}
+
+const NoticeDeleteModalPresenter: React.FC<NoticeDeleteModalPresenterProps> = ({ closeModal, handleSubmit }) => {
     return (
                 <ModalOverlay onClick={closeModal}>
             <ModalContainer className='small' onClick={(e) => e.stopPropagation()}>

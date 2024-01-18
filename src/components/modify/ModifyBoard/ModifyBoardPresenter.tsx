@@ -1,3 +1,6 @@
+// ModifyBoardPresenter.tsx
+// 시스템 정보 수정 페이지를 위한 프레젠터 컴포넌트
+
 import React from "react";
 import EditIcon from "@assets/images/EditIcon.png";
 import CircleIcon from "@assets/images/CircleIcon.png";

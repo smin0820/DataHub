@@ -1,4 +1,4 @@
-// NoticeDeleteModalContainer.jsx
+// NoticeDeleteModalContainer.tsx
 // 공지사항 삭제를 위한 모달 컨테이너 컴포넌트
 
 import React from 'react';
@@ -9,7 +9,13 @@ import { userState } from '@recoil/atoms/userStateAtom';
 import NoticeDeleteModalPresenter from '@components/notice/modals/NoticeDeleteModal/NoticeDeleteModalPresenter';
 import ModalComponent from '@components/common/ModalComponent';
 
-const NoticeDeleteModalContainer = ({ noticeId, closeModal, onRefresh }) => {
+interface NoticeDeleteModalContainerProps {
+    noticeId: number;
+    closeModal: () => void;
+    onRefresh: () => void;
+}
+
+const NoticeDeleteModalContainer: React.FC<NoticeDeleteModalContainerProps> = ({ noticeId, closeModal, onRefresh }) => {
     const userInfo = useRecoilValue(userState);
     
     const handleSuccess = () => {
@@ -25,8 +31,7 @@ const NoticeDeleteModalContainer = ({ noticeId, closeModal, onRefresh }) => {
         }
         
         try {
-            const response = await ApiService.deleteNotice(noticeId, userInfo.loginId);
-            console.log("공지사항 수정 성공:", response);
+            await ApiService.deleteNotice(noticeId, userInfo.loginId);
             handleSuccess();
         } catch (error) {
             console.error("공지사항 수정 실패:", error);

@@ -1,8 +1,7 @@
-// NoticeContentContainer.jsx
+// NoticeContentContainer.tsx
 // 공지사항 목록의 내용물을 표기하기 위한 컨테이너 컴포넌트
 
 import React from "react";
-import PropTypes from "prop-types";
 import NoticeDropdown from "@components/notice/containers/NoticeDropdown";
 import useDropdown from "@hooks/useDropdown";
 import NoticeViewModalContainer from "@components/notice/modals/NoticeViewModal/NoticeViewModalContainer";
@@ -11,7 +10,13 @@ import { useRecoilValue } from "recoil";
 import { userState } from "@recoil/atoms/userStateAtom";
 import { Boarddiv, Tbodytr } from "@styles/BoardStyles";
 
-export default function NoticeContentContainer(props) {
+interface NoticeContentContainerProps {
+    title: string;
+    data: any[];
+    onRefresh: () => void;
+}
+
+const NoticeContentContainer: React.FC<NoticeContentContainerProps> = (props) => {
     const { title, data = [], onRefresh } = props;
     const userInfo = useRecoilValue(userState);
     const isAdmin = userInfo && userInfo.role === "ADMIN";
@@ -59,13 +64,4 @@ export default function NoticeContentContainer(props) {
     );
 }
 
-
-NoticeContentContainer.propTypes = {
-    title: PropTypes.string,
-    data: PropTypes.arrayOf(PropTypes.object)
-};
-
-NoticeContentContainer.defaultProps = {
-    title: "",
-    data: []
-};
+export default NoticeContentContainer;

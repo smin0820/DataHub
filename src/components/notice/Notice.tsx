@@ -1,4 +1,4 @@
-// Notice.jsx
+// Notice.tsx
 // Notice 페이지 전체를 렌더링하는 컴포넌트입니다.
 
 import React from 'react';
@@ -8,7 +8,7 @@ import MainLogo from '@components/common/MainLogo';
 import NoticeTableContainer from '@components/notice/containers/NoticeTableContainer';
 import NoticeNewArticle from '@components/notice/containers/NoticeNewArticle';
 
-export default function Notice() {
+const Notice: React.FC = () => {
     return (
         <>
             <HeaderContainer></HeaderContainer>
@@ -20,3 +20,4 @@ export default function Notice() {
     );
 }
 
+export default Notice;

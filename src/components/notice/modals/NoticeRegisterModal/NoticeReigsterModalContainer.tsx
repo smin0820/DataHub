@@ -1,7 +1,7 @@
-// NoticeRegisterModalContainer.jsx
+// NoticeRegisterModalContainer.tsx
 // 공지사항 등록을 위한 모달 컨테이너 컴포넌트
 
-import React, { useState } from 'react';
+import React, { useState, ChangeEvent } from 'react';
 import PropTypes from 'prop-types';
 import ApiService from '@components/axios/ApiService';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
@@ -10,26 +10,29 @@ import NoticeRegisterModalPresenter from '@components/notice/modals/NoticeRegist
 import ModalComponent from '@components/common/ModalComponent';
 import { noticesState } from '@recoil/atoms/noticesAtom';
 
+interface NoticeRegisterModalContainerProps {
+    closeModal: () => void;
+}
 
 
-const NoticeRegisterModalContainer = ({ closeModal }) => {
+const NoticeRegisterModalContainer: React.FC<NoticeRegisterModalContainerProps> = ({ closeModal }) => {
     const [Title, setTitle] = useState("");
     const [Body, setBody] = useState("");
     const userInfo = useRecoilValue(userState);
     const setNotices = useSetRecoilState(noticesState);
 
 
-    const handleTitleChange = (event) => {
+    const handleTitleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
         setTitle(event.target.value);
     };
 
-    const handleBodyChange = (event) => {
+    const handleBodyChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
         setBody(event.target.value);
     };
 
     const handleSuccess = () => {
         closeModal();
-        setNotices(0);
+        setNotices([]);
     };
 
     const handleSubmit = async () => {
@@ -45,7 +48,7 @@ const NoticeRegisterModalContainer = ({ closeModal }) => {
     }
 
     try {
-        const response = await ApiService.registerNotice(Title, Body, userInfo.loginId);
+        await ApiService.registerNotice(Title, Body, userInfo.loginId);
         // 성공적으로 등록되었을 때의 추가 동작
         handleSuccess();
     } catch (error) {

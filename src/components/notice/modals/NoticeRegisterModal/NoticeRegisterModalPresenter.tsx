@@ -1,9 +1,24 @@
-// NoticeRegisterModalPresenter.jsx
+// NoticeRegisterModalPresenter.tsx
 // 공지사항 등록을 위한 모달 프레젠터 컴포넌트
 
+import React from "react";
 import { ModalOverlay, ModalContainer, ModalTitle, ModalContent, ButtonGroup, CloseButton, TextAreaContainer, TextArea } from "@styles/ModalStyles";
 
-const NoticeRegisterModalPresenter = ({ closeModal, Title, handleTitleChange, Body, handleBodyChange, handleSubmit }) => {
+interface NoticeRegisterModalPresenterProps {
+    closeModal: () => void;
+    Title: string;
+    handleTitleChange: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
+    Body: string;
+    handleBodyChange: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
+    handleSubmit: () => void;
+}
+
+const NoticeRegisterModalPresenter: React.FC<NoticeRegisterModalPresenterProps> = ({ 
+    closeModal,
+    Title, handleTitleChange,
+    Body, handleBodyChange,
+    handleSubmit
+}) => {
     return (
         <ModalOverlay onClick={closeModal}>
             <ModalContainer className="standard" onClick={(e) => e.stopPropagation()}>

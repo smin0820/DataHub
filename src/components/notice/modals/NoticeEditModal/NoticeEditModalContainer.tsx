@@ -1,7 +1,7 @@
-// NoticeEditModalContainer.jsx
+// NoticeEditModalContainer.tsx
 // 공지사항 수정을 위한 모달 컨테이너 컴포넌트
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, ChangeEvent } from 'react';
 import PropTypes from 'prop-types';
 import ApiService from '@components/axios/ApiService';
 import { useNoticeDetail } from '@hooks/useNoticeDetail';
@@ -10,7 +10,13 @@ import { userState } from '@recoil/atoms/userStateAtom';
 import NoticeEditModalPresenter from '@components/notice/modals/NoticeEditModal/NoticeEditModalPresenter';
 import ModalComponent from '@components/common/ModalComponent';
 
-const NoticeEditModalContainer = ({ closeModal, noticeId, onRefresh }) => {
+interface NoticeEditModalContainerProps {
+    closeModal: () => void;
+    noticeId: number;
+    onRefresh: () => void;
+}
+
+const NoticeEditModalContainer: React.FC<NoticeEditModalContainerProps> = ({ closeModal, noticeId, onRefresh }) => {
     const { title: fetchedTitle, body: fetchedBody, loading, error } = useNoticeDetail(noticeId);
     const [title, setTitle] = useState('');
     const [body, setBody] = useState('');
@@ -23,11 +29,11 @@ const NoticeEditModalContainer = ({ closeModal, noticeId, onRefresh }) => {
         }
     }, [loading, error, fetchedTitle, fetchedBody]);
 
-    const handleTitleChange = (event) => {
+    const handleTitleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
         setTitle(event.target.value);
     };
 
-    const handleBodyChange = (event) => {
+    const handleBodyChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
         setBody(event.target.value);
     };
 
@@ -49,8 +55,7 @@ const NoticeEditModalContainer = ({ closeModal, noticeId, onRefresh }) => {
         }
         
         try {
-            const response = await ApiService.editNotice(noticeId, title, body, userInfo.loginId);
-            console.log("공지사항 수정 성공:", response);
+            await ApiService.editNotice(noticeId, title, body, userInfo.loginId);
             handleSuccess();
         } catch (error) {
             console.error("공지사항 수정 실패:", error);
@@ -58,7 +63,7 @@ const NoticeEditModalContainer = ({ closeModal, noticeId, onRefresh }) => {
     };
 
     if (loading) return <div>Loading...</div>;
-    if (error) return <div>Error: {error.message}</div>;
+    if (error) return <div>Error: {error}</div>;
 
     return (
         <ModalComponent>

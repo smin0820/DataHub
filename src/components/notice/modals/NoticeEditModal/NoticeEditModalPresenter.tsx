@@ -1,9 +1,24 @@
-// NoticeEditModalPresenter.jsx
+// NoticeEditModalPresenter.tsx
 // 공지사항 수정을 위한 모달 프레젠터 컴포넌트
 
+import React from 'react';
 import { ModalOverlay, ModalContainer, ModalTitle, ModalContent, CloseButton, ButtonGroup, TextAreaContainer, TextArea } from '@styles/ModalStyles';
 
-const NoticeEditModalPresenter = ({ closeModal, title, handleTitleChange, body, handleBodyChange, handleSubmit}) => {
+interface NoticeEditModalPresenterProps {
+    closeModal: () => void;
+    title: string;
+    handleTitleChange: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
+    body: string;
+    handleBodyChange: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
+    handleSubmit: () => void;
+}
+
+const NoticeEditModalPresenter: React.FC<NoticeEditModalPresenterProps> = ({ 
+    closeModal,
+    title, handleTitleChange,
+    body, handleBodyChange,
+    handleSubmit
+}) => {
     return (
         <ModalOverlay onClick={closeModal}>
             <ModalContainer className="standard" onClick={(e) => e.stopPropagation()}>

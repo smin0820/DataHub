@@ -1,3 +1,6 @@
+// ModifySysModalPresenter.tsx
+// 시스템 정보 수정 페이지 확인 모달창을 위한 프레젠터 컴포넌트
+
 import React from 'react';
 import { ModalOverlay, ModalContainer, ModalTitle, ModalContent, CloseButton, ButtonGroup } from '@styles/ModalStyles';
 
