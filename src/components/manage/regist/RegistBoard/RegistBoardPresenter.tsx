@@ -2,11 +2,34 @@ import React from "react";
 import EditIcon from "@assets/images/EditIcon.png";
 import CircleIcon from "@assets/images/CircleIcon.png";
 import CheckCircleIcon from "@assets/images/CheckCircleIcon.png";
-import RegistSysModalContainer from '@components/regist/modals/RegistSysModalContainer';
+import RegistSysModalContainer from '@components/manage/regist/modals/RegistSysModalContainer';
 import { PageContainer, Title, Container, SystemInfoBar, Icon, Form, FormRow, FormContent, InputContainer, InputContainerHeader, ButtonIconGroup, RequiredSpan, ButtonGroup } from "@styles/AccountManageStyles";
+import { RegistUserInfo } from '@@types/UserInfo';
+interface RegistBoardPresenterProps {
+    inputValues: RegistUserInfo;
+    isModalOpen: boolean;
+    handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    handleSignUp: () => void;
+    setModalOpen: (value: boolean) => void;
+    navigate: (path: number) => void;
+    loginIdCheck: boolean;
+    systemNameCheck: boolean;
+    handleLoginIdCheck: (e: React.MouseEvent<HTMLButtonElement>) => void;
+    handleSystemNameCheck: (e: React.MouseEvent<HTMLButtonElement>) => void;
+}
 
-const RegistBoardPresenter = ({ inputValues, isModalOpen, handleInputChange, handleSignUp, setModalOpen, navigate, loginIdCheck, systemNameCheck, handleLoginIdCheck, handleSystemNameCheck  }) => {
-
+const RegistBoardPresenter: React.FC<RegistBoardPresenterProps> = ({ 
+    inputValues,
+    isModalOpen,
+    handleInputChange,
+    handleSignUp,
+    setModalOpen,
+    navigate,
+    loginIdCheck,
+    systemNameCheck,
+    handleLoginIdCheck,
+    handleSystemNameCheck
+}) => {
     return (
         <PageContainer>
             <Title>시스템 등록</Title>

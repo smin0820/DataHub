@@ -1,11 +1,15 @@
-import { useState } from 'react';
-import { useNavigate } from "react-router-dom";
-import RegistBoardPresenter from '@components/regist/RegistBoard/RegistBoardPresenter';
-import ApiService from '@components/axios/ApiService';
+// RegistBoardContainer.tsx
+// 새로운 시스템 등록 페이지를 위한 컨테이너 컴포넌트
 
-const RegistBoardContainer = () => {
-    const [isModalOpen, setModalOpen] = useState(false);
-    const [inputValues, setInputValues] = useState({
+import React, { useState, ChangeEvent, MouseEvent } from 'react';
+import { useNavigate } from "react-router-dom";
+import RegistBoardPresenter from '@components/manage/regist/RegistBoard/RegistBoardPresenter';
+import ApiService from '@components/axios/ApiService';
+import { RegistUserInfo } from '@@types/UserInfo';
+
+const RegistBoardContainer: React.FC = () => {
+    const [isModalOpen, setModalOpen] = useState<boolean>(false);
+    const [inputValues, setInputValues] = useState<RegistUserInfo>({
       systemName: '',
       departmentName: '',
       department:'',
@@ -14,11 +18,12 @@ const RegistBoardContainer = () => {
       contactNum:'',
       loginId:'',
     });
-    const [systemNameCheck, setSystemNameCheck] = useState(false);
-    const [loginIdCheck, setLoginIdCheck] = useState(false);
+
+    const [systemNameCheck, setSystemNameCheck] = useState<boolean>(false);
+    const [loginIdCheck, setLoginIdCheck] = useState<boolean>(false);
     const navigate = useNavigate();
 
-    const handleInputChange = (e) => {
+    const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
       //input 값이 변경될 때 호출되는 함수
       const { name, value } = e.target;
       setInputValues((prevValues) => ({
@@ -54,7 +59,7 @@ const RegistBoardContainer = () => {
       setModalOpen(true);
     };
 
-    const handleLoginIdCheck = async (event) => {
+    const handleLoginIdCheck = async (event: MouseEvent<HTMLButtonElement>) => {
       //아이디 중복 확인
       // true면 가능(중복없음)), false면 불가능
       event.stopPropagation();
@@ -78,11 +83,12 @@ const RegistBoardContainer = () => {
       }
     };
 
-    const handleSystemNameCheck = async (event) => {
+    const handleSystemNameCheck = async (event: MouseEvent<HTMLButtonElement>) => {
       //시스템명 중복 확인
       // true면 가능(중복없음)), false면 불가능
       event.stopPropagation();
-      if (event.target.tagName === 'BUTTON') {
+      const target = event.target as HTMLButtonElement;
+      if (target.tagName === 'BUTTON') {
         if (inputValues.systemName === "") {
           alert("시스템명을 입력해주세요.");
           return;

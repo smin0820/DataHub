@@ -1,7 +1,15 @@
+// RegistSysModalPresenter.tsx
+// 새로운 시스템 등록 페이지 확인 모달창을 위한 프레젠터 컴포넌트
+
+import React from 'react';
 import { ModalOverlay, ModalContainer, ModalTitle, ModalContent, ButtonGroup, CloseButton } from '@styles/ModalStyles';
 
+interface RegistSysModalPresenterProps {
+    closeModal: () => void;
+    handleRegistSys: () => void;
+}
 
-const RegistSysModalPresenter = ({ closeModal, handleRegistSys }) => {
+const RegistSysModalPresenter: React.FC<RegistSysModalPresenterProps> = ({ closeModal, handleRegistSys }) => {
     return (
         <ModalOverlay onClick={closeModal}>
             <ModalContainer className='small' onClick={(e) => e.stopPropagation()}>
@@ -18,4 +26,3 @@ const RegistSysModalPresenter = ({ closeModal, handleRegistSys }) => {
 };
 
 export default RegistSysModalPresenter;
-    

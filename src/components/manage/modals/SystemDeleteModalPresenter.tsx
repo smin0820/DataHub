@@ -1,13 +1,23 @@
-// SystemDeleteModalPresenter.jsx
+// SystemDeleteModalPresenter.tsx
 // '시스템 삭제' 버튼을 눌렀을 때 나오는 모달 컴포넌트 프레젠터입니다.
 
-import React, { useState } from 'react';
+import React, { useState, ChangeEvent } from 'react';
 import { ModalOverlay, ModalContainer, ModalTitle, ModalContent, ModalInput, CloseButton, ButtonGroup, DeleteButton } from '@styles/ModalStyles';
 
-const SystemDeleteModalPresenter = ({ closeModal, handleSubmit, systemName }) => {
-    const [inputText, setInputText] = useState('');
+interface SystemDeleteModalPresenterProps {
+    closeModal: () => void;
+    handleSubmit: () => void;
+    systemName: string;
+}
 
-    const handleInputChange = (e) => {
+const SystemDeleteModalPresenter: React.FC<SystemDeleteModalPresenterProps> = ({ 
+    closeModal,
+    handleSubmit,
+    systemName
+}) => {
+    const [inputText, setInputText] = useState<string>('');
+
+    const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
         setInputText(e.target.value);
     }
     

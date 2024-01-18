@@ -1,18 +1,25 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+// RegistSysModalContainer.tsx
+// 새로운 시스템 등록 페이지 확인 모달창을 위한 컨테이너 컴포넌트
+
+import React, { FormEvent } from 'react';
 import ApiService from '@components/axios/ApiService';
 import { useNavigate } from 'react-router-dom';
 import ModalComponent from '@components/common/ModalComponent';
-import RegistSysModalPresenter from '@components/regist/modals/RegistSysModalPresenter';
+import RegistSysModalPresenter from '@components/manage/regist/modals/RegistSysModalPresenter';
+import { RegistUserInfo } from '@@types/UserInfo';
 
-const RegistSysModalContainer = ({ closeModal, inputValues }) => {
+interface RegistSysModalContainerProps {
+  closeModal: () => void;
+  inputValues: RegistUserInfo;
+}
+
+const RegistSysModalContainer: React.FC<RegistSysModalContainerProps> = ({ closeModal, inputValues }) => {
   const navigate = useNavigate();
-  const handleRegistSys = async (event) => {
-    event.preventDefault();
+
+  const handleRegistSys = async () => {
     try{
       const response = await ApiService.registerSystem(inputValues);
       if(response) {
-        console.log('Register Success:', response);
         alert("시스템이 등록되었습니다.")
         closeModal();
         navigate('/manage');
@@ -35,10 +42,5 @@ const RegistSysModalContainer = ({ closeModal, inputValues }) => {
 
   );
 };
-
-RegistSysModalContainer.propTypes = {
-  closeModal: PropTypes.func.isRequired,
-};
-
 
 export default RegistSysModalContainer;
