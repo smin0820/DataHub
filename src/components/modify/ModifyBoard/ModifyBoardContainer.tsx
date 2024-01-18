@@ -1,16 +1,19 @@
-import { useEffect, useState } from 'react';
+// ModifyBoardContainer.tsx
+// 시스템 정보 수정 페이지를 위한 컨테이너 컴포넌트
+
+import React, { useEffect, useState, ChangeEvent, MouseEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ApiService from '@components/axios/ApiService';
 import { useRecoilValue } from 'recoil';
 import { userState } from '@recoil/atoms/userStateAtom';
 import ModifyBoardPresenter from '@components/modify/ModifyBoard/ModifyBoardPresenter';
+import { UserInfo, ModifyUserInfo } from '@@types/UserInfo';
 
-
-const ModifyBoardContainer = () => {
-
-    const userInfo = useRecoilValue(userState);
-    const [isModalOpen, setModalOpen] = useState(false);
+const ModifyBoardContainer: React.FC = () => {
+    const userInfo = useRecoilValue<UserInfo>(userState);
+    const [isModalOpen, setModalOpen] = useState<boolean>(false);
     const navigate = useNavigate();
+    // 기존정보와 수정된 정보를 담을 state
     const [systemName, setSystemName] = useState("");
     const [departmentName, setDepartmentName] = useState(userInfo.departmentName || "");
     const [department, setDepartment] = useState(userInfo.department || "");
@@ -21,6 +24,7 @@ const ModifyBoardContainer = () => {
     const [passwordCheck, setPasswordCheck] = useState("");
     const [loginId] = useState(userInfo.loginId || "");
     let currentSystemId = userInfo?.systemIds?.[0];
+    let currentSystemName = "";
     const [systemNameCheck, setSystemNameCheck] = useState(true);
     
     useEffect(() => {
@@ -30,6 +34,7 @@ const ModifyBoardContainer = () => {
           .then(data => {
             if (data && data.systemName) {
               setSystemName(data.systemName);
+              currentSystemName = data.systemName;
             }
           })
           .catch(error => {
@@ -71,17 +76,17 @@ const ModifyBoardContainer = () => {
       setModalOpen(true);
     };
     
-    const handleInputChange = (setter) => (e) => {
+    const handleInputChange = (setter: any) => (e: ChangeEvent<HTMLInputElement>) => {
       setter(e.target.value);
     };
 
     // 시스템명 변경확인
-    const handleSystemNameChange = (e) => {
+    const handleSystemNameChange = (e: ChangeEvent<HTMLInputElement>) => {
         const newSystemName = e.target.value;
         setSystemName(newSystemName);
 
         // Set systemNameCheck to false if the new input is different from the current system name
-        if (newSystemName !== userInfo.systemName) {
+        if (newSystemName !== currentSystemName) {
             setSystemNameCheck(false);
         } else {
             setSystemNameCheck(true);
@@ -112,9 +117,21 @@ const ModifyBoardContainer = () => {
 
   return (
       <ModifyBoardPresenter
-        {...{ userInfo, systemName, departmentName, department, companyName, developerName, contactNum, loginId, password, passwordCheck,
-    setSystemName, setDepartmentName, setDepartment, setCompanyName, setDeveloperName, setContactNum, setPassword, setPasswordCheck, 
-    setModalOpen, isModalOpen, handleInputChange, handleUpdateClick, navigate, systemNameCheck, handleSystemNameChange, checkSystemName }}
+        {...{ userInfo, currentSystemName,
+          systemName, systemNameCheck, handleSystemNameChange, checkSystemName, 
+          departmentName, setDepartmentName, 
+          department, setDepartment,
+          companyName, setCompanyName,
+          developerName, setDeveloperName,
+          contactNum, setContactNum,
+          loginId, 
+          password, setPassword,
+          passwordCheck, setPasswordCheck,
+          isModalOpen, setModalOpen, 
+          handleInputChange,
+          handleUpdateClick,
+          navigate,
+        }}
       />
     );
 };

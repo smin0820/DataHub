@@ -1,7 +1,7 @@
 // RegistSysModalContainer.tsx
 // 새로운 시스템 등록 페이지 확인 모달창을 위한 컨테이너 컴포넌트
 
-import React, { FormEvent } from 'react';
+import React from 'react';
 import ApiService from '@components/axios/ApiService';
 import { useNavigate } from 'react-router-dom';
 import ModalComponent from '@components/common/ModalComponent';

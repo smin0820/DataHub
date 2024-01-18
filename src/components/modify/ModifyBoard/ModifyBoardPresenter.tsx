@@ -4,10 +4,53 @@ import CircleIcon from "@assets/images/CircleIcon.png";
 import CheckCircleIcon from "@assets/images/CheckCircleIcon.png";
 import ModifySysModalContainer from '@components/modify/modals/ModifySysModalContainer';
 import { PageContainer, Title, Container, SystemInfoBar, Icon, Form, FormRow, InputContainer, InputContainerHeader, ButtonIconGroup, RequiredSpan, ButtonGroup, FormContent } from "@styles/AccountManageStyles";
+import { UserInfo } from "@@types/UserInfo";
 
-const ModifyBoardPresenter = ({ userInfo, systemName, departmentName, department, companyName, developerName, contactNum, loginId, password, passwordCheck,
-    setSystemName, setDepartmentName, setDepartment, setCompanyName, setDeveloperName, setContactNum, setPassword, setPasswordCheck, 
-    setModalOpen, isModalOpen, handleInputChange, handleUpdateClick, navigate, systemNameCheck, handleSystemNameChange, checkSystemName  }) => {
+interface ModifyBoardPresenterProps {
+    userInfo: UserInfo;
+    currentSystemName: string;
+    systemName: string;
+    departmentName: string;
+    department: string;
+    companyName: string;
+    developerName: string;
+    contactNum: string;
+    loginId: string;
+    password: string;
+    passwordCheck: string;
+    setDepartmentName: (value: string) => void;
+    setDepartment: (value: string) => void;
+    setCompanyName: (value: string) => void;
+    setDeveloperName: (value: string) => void;
+    setContactNum: (value: string) => void;
+    setPassword: (value: string) => void;
+    setPasswordCheck: (value: string) => void;
+    setModalOpen: (value: boolean) => void;
+    isModalOpen: boolean;
+    handleInputChange: (func: (value: string) => void) => (event: React.ChangeEvent<HTMLInputElement>) => void;
+    handleUpdateClick: () => void;
+    navigate: (value: number) => void;
+    systemNameCheck: boolean;
+    handleSystemNameChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+    checkSystemName: () => void;
+}
+
+const ModifyBoardPresenter: React.FC<ModifyBoardPresenterProps> = ({ 
+    userInfo, currentSystemName,
+    systemName, systemNameCheck, handleSystemNameChange, checkSystemName,
+    departmentName, setDepartmentName,
+    department, setDepartment,
+    companyName, setCompanyName,
+    developerName, setDeveloperName,
+    contactNum, setContactNum,
+    loginId, 
+    password, setPassword,
+    passwordCheck, setPasswordCheck,
+    isModalOpen, setModalOpen,
+    handleInputChange,
+    handleUpdateClick,
+    navigate,
+    }) => {
 
     return (
         <PageContainer>
@@ -27,7 +70,7 @@ const ModifyBoardPresenter = ({ userInfo, systemName, departmentName, department
                             <InputContainer>
                                 <input 
                                     type="text" 
-                                    placeholder={userInfo.systemName || "시스템명"}
+                                    placeholder={currentSystemName || "시스템명"}
                                     value={systemName}
                                     onChange={handleSystemNameChange}
                                     disabled={userInfo.role === "ADMIN"}

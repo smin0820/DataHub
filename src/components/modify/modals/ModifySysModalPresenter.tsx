@@ -1,6 +1,14 @@
+import React from 'react';
 import { ModalOverlay, ModalContainer, ModalTitle, ModalContent, CloseButton, ButtonGroup } from '@styles/ModalStyles';
 
-const ModifySysModalPresenter = ({ closeModal, handleUpdate}) => {
+interface ModifySysModalPresenterProps {
+    closeModal: () => void;
+    handleUpdate: () => void;
+}
+const ModifySysModalPresenter: React.FC<ModifySysModalPresenterProps> = ({ 
+    closeModal,
+    handleUpdate
+}) => {
     return (
         <ModalOverlay onClick={closeModal}>
         <ModalContainer className="small" onClick={(e) => e.stopPropagation()}>
