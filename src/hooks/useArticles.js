@@ -11,8 +11,8 @@ export const useArticles = (currentPage) => {
         setLoading(true);
         ApiService.fetchWaitArticles(currentPage)
             .then(articleData => {
-                setArticles(articleData.articles);
-                setTotalPages(articleData.allPage);
+                setArticles(articleData.content);
+                setTotalPages(articleData.totalPages);
                 setError(null);
             })
             .catch(err => {
