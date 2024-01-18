@@ -154,6 +154,23 @@ const ApiService = {
         }
     },
 
+    // admin이 시스템 정보 수정 클릭 시 > 해당 시스템 정보 가져오는 API
+    systemModify: async (systemId) => {
+        const formData = new FormData();
+        formData.append('systemId', systemId);
+        try {
+            const response = await axiosInstance.post('/user/bysystem', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            });
+            return response.data;
+        } catch (error) {
+            console.error('로그인 실패:', error);
+            throw error;
+        }
+    },
+
     ////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -486,10 +503,7 @@ const ApiService = {
         console.error('Qna 삭제 실패:', error);
         throw error;
     }
-    }
-
-    ////////////////////////////////////////////////////////////////////////////////////////////
-    ////////////////////////////////////////////////////////////////////////////////////////////
+    }    
 };
 
 export default ApiService;
