@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+// QnaRegisterModalContainer.tsx
+// Q&A 글쓰기 모달 컨테이너 컴포넌트
+
+import React, { useState, ChangeEvent } from 'react';
 import ApiService from '@components/axios/ApiService';
 import { useRecoilValue, useSetRecoilState } from 'recoil';
 import { userState } from '@recoil/atoms/userStateAtom';
@@ -7,24 +9,27 @@ import ModalComponent from '@components/common/ModalComponent';
 import QnaRegisterModalPresenter from '@components/qna/modals/QnaRegisterModal/QnaRegisterModalPresenter';
 import { qnasState } from '@recoil/atoms/qnasAtom';
 
+interface QnaReigsterModalContainerProps {
+    closeModal: () => void;
+}
 
-const QnaReigsterModalContainer = ({ closeModal }) => {
-    const [Title, setTitle] = useState("");
-    const [Body, setBody] = useState("");
+const QnaReigsterModalContainer: React.FC<QnaReigsterModalContainerProps> = ({ closeModal }) => {
+    const [Title, setTitle] = useState<string>("");
+    const [Body, setBody] = useState<string>("");
     const userInfo = useRecoilValue(userState);
     const setQnas = useSetRecoilState(qnasState);
 
-    const handleTitleChange = (event) => {
+    const handleTitleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
         setTitle(event.target.value);
     };
 
-    const handleBodyChange = (event) => {
+    const handleBodyChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
         setBody(event.target.value);
     };
 
     const handleSuccess = () => {
         closeModal();
-        setQnas(0);
+        setQnas([]);
     };
 
     const handleSubmit = async () => {
@@ -39,7 +44,7 @@ const QnaReigsterModalContainer = ({ closeModal }) => {
     }
 
     try {
-        const response = await ApiService.registerQna(userInfo.loginId, Title, Body);
+        await ApiService.registerQna(userInfo.loginId, Title, Body);
         // 성공적으로 등록되었을 때의 추가 동작
         handleSuccess();
     } catch (error) {
@@ -61,10 +66,6 @@ const QnaReigsterModalContainer = ({ closeModal }) => {
         </ModalComponent>
         
     );
-};
-
-QnaReigsterModalContainer.propTypes = {
-    closeModal: PropTypes.func.isRequired,
 };
 
 export default QnaReigsterModalContainer;

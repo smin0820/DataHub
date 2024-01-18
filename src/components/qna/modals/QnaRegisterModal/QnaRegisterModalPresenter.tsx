@@ -1,8 +1,26 @@
+// QnaRegisterModalPresenter.tsx
+// Q&A 등록 모달 프레젠터 컴포넌트
+
+import React from 'react';
 import { ModalOverlay, ModalContainer, ModalTitle, CloseButton, ModalContent, ButtonGroup, TextAreaContainer, TextArea } from '@styles/ModalStyles';
 
-const QnaRegisterModalPresenter = ({ closeModal, Title, handleTitleChange, Body, handleBodyChange, handleSubmit }) => {
+interface QnaRegisterModalPresenterProps {
+    closeModal: () => void;
+    Title: string;
+    handleTitleChange: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
+    Body: string;
+    handleBodyChange: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
+    handleSubmit: () => void;
+}
+
+const QnaRegisterModalPresenter: React.FC<QnaRegisterModalPresenterProps> = ({
+    closeModal,
+    Title, handleTitleChange,
+    Body, handleBodyChange,
+    handleSubmit
+}) => {
     return (
-                    <ModalOverlay onClick={closeModal}>
+            <ModalOverlay onClick={closeModal}>
                 <ModalContainer className="standard" onClick={(e) => e.stopPropagation()}>
                     <CloseButton onClick={closeModal}>&times;</CloseButton>
                     <ModalTitle>새로운 Qna 작성</ModalTitle>

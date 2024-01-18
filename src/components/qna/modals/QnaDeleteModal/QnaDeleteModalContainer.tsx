@@ -1,14 +1,20 @@
+// QnaDeleteModalContainer.tsx
+// Q&A 삭제 모달 컨테이너 컴포넌트
+
 import React from 'react';
-import styled from 'styled-components';
-import PropTypes from 'prop-types';
 import ApiService from '@components/axios/ApiService';
 import { useRecoilValue } from 'recoil';
 import { userState } from '@recoil/atoms/userStateAtom';
 import ModalComponent from '@components/common/ModalComponent';
 import QnaDeleteModalPresenter from '@components/qna/modals/QnaDeleteModal/QnaDeleteModalPresenter';
 
+interface QnaDeleteModalContainerProps {
+    qaId: number;
+    closeModal: () => void;
+    onRefresh: () => void;
+}
 
-const QnaDeleteModalContainer = ({ qaId, closeModal, onRefresh }) => {
+const QnaDeleteModalContainer: React.FC<QnaDeleteModalContainerProps> = ({ qaId, closeModal, onRefresh }) => {
     const userInfo = useRecoilValue(userState);
     const handleSuccess = () => {
         closeModal();
@@ -23,7 +29,6 @@ const QnaDeleteModalContainer = ({ qaId, closeModal, onRefresh }) => {
         try {
             const response = await ApiService.deleteQna(qaId, userInfo.loginId);
             if (response) {
-                console.log("Q&A 삭제 성공:", response);
                 handleSuccess();
             } else {
                 alert("본인만 삭제할 수 있습니다!");
@@ -44,10 +49,6 @@ const QnaDeleteModalContainer = ({ qaId, closeModal, onRefresh }) => {
         </ModalComponent>
 
     );
-};
-
-QnaDeleteModalContainer.propTypes = {
-    closeModal: PropTypes.func.isRequired,
 };
 
 export default QnaDeleteModalContainer;

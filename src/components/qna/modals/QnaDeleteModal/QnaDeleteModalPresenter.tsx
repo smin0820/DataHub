@@ -1,6 +1,15 @@
+// QnaDeleteModalPresenter.tsx
+// Q&A 삭제 모달 프레젠터 컴포넌트
+
+import React from 'react';
 import { ModalOverlay, ModalContainer, ModalTitle, ModalContent, ButtonGroup, CloseButton } from '@styles/ModalStyles';
 
-const QnaDeleteModalPresenter = ({ closeModal, handleSubmit } ) => {
+interface QnaDeleteModalPresenterProps {
+    closeModal: () => void;
+    handleSubmit: () => void;
+}
+
+const QnaDeleteModalPresenter: React.FC<QnaDeleteModalPresenterProps> = ({ closeModal, handleSubmit } ) => {
     return (
         <ModalOverlay onClick={closeModal}>
             <ModalContainer className="small" onClick={(e) => e.stopPropagation()}>

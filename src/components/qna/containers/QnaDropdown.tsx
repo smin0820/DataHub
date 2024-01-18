@@ -1,15 +1,18 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
-import useModal from '@hooks/useModal';
+// QnaDropdown.tsx
+// Qna게시글 수정, 삭제 드롭다운 컴포넌트
 
+import React from 'react';
+import useModal from '@hooks/useModal';
 import QnaDeleteModalContainer from '@components/qna/modals/QnaDeleteModal/QnaDeleteModalContainer';
 import QnaEditModalContainer from '@components/qna/modals/QnaEditModal/QnaEditModalContainer';
 import { Dropmenu } from '@styles/BoardStyles';
 
+interface QnaDropdownProps {
+    qaId: number;
+    onRefresh: () => void;
+}
 
-
-export default function QnaDropdown({ qaId, onRefresh }) {
+const QnaDropdown: React.FC<QnaDropdownProps> = ({ qaId, onRefresh }) => {
     const { isOpen: isEditOpen, openModal: openEditModal, closeModal: closeEditModal } = useModal();
     const { isOpen: isDeleteOpen, openModal: openDeleteModal, closeModal: closeDeleteModal } = useModal();
 
@@ -34,3 +37,5 @@ export default function QnaDropdown({ qaId, onRefresh }) {
         </>
     );
 }
+
+export default QnaDropdown;

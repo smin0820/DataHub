@@ -1,9 +1,8 @@
-// NoticeNewArticle.jsx
-// 새로운 공지사항을 등록하기 위한 버튼을 렌더링하는 컨테이너 컴포넌트
+// QnaNewArticle.jsx
+// 새로운 Qna게시글을 등록하기 위한 버튼을 렌더링하는 컨테이너 컴포넌트
 
 import React from 'react';
 import useModal from '@hooks/useModal';
-
 import QnaReigsterModalContainer from '@components/qna/modals/QnaRegisterModal/QnaReigsterModalContainer';
 import { Container, Buttondiv } from '@styles/CommonStyles';
 

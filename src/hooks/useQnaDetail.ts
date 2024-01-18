@@ -1,17 +1,17 @@
 import { useState, useEffect, useCallback } from 'react';
 import ApiService from '@components/axios/ApiService';
+import { Qna, Reply, ReplyList } from '@@types/Articles';
 
 // Q&A 상세 정보를 가져오는 훅
-export const useQnaDetail = (qaId) => {
+export const useQnaDetail = (qaId: number) => {
     // qa: { qaId, qaTitle, qaDate, username }
-    const [qa, setQa] = useState(null);
+    const [qa, setQa] = useState<Qna>();
     // content
-    const [content, setContent] = useState(null);
+    const [content, setContent] = useState<string>("");
     // replys: { replyId, replyDate, replyContent, username }
-    const [replys, setReplys] = useState(null);
-    
-    const [loading, setLoading] = useState(true);
-    const [error, setError] = useState(null);
+    const [replys, setReplys] = useState<ReplyList>({ replys: [] } as ReplyList);
+    const [loading, setLoading] = useState<boolean>(true);
+    const [error, setError] = useState<string>("");
 
     const fetchQnaDetail = useCallback(() => {
         setLoading(true);
@@ -20,7 +20,7 @@ export const useQnaDetail = (qaId) => {
                 setContent(articleData.content);
                 setQa(articleData.qa);
                 setReplys(articleData.replys);
-                setError(null);
+                setError("");
             })
             .catch(err => {
                 console.error('Q&A Detail 요청 오류:', err);

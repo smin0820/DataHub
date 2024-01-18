@@ -1,5 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import PropTypes from 'prop-types';
+// QnaEditModalContainer.tsx
+// Q&A 수정 모달 컨테이너 컴포넌트
+
+import React, { useState, useEffect, ChangeEvent } from 'react';
 import ApiService from '@components/axios/ApiService';
 import { useQnaDetail } from '@hooks/useQnaDetail';
 import { useRecoilValue } from 'recoil';
@@ -7,7 +9,13 @@ import { userState } from '@recoil/atoms/userStateAtom';
 import ModalComponent from '@components/common/ModalComponent';
 import QnaEditModalPresenter from './QnaEditModalPresenter';
 
-const QnaEditModalContainer = ({ closeModal, qaId, onRefresh }) => {
+interface QnaEditModalContainerProps {
+    closeModal: () => void;
+    qaId: number;
+    onRefresh: () => void;
+}
+
+const QnaEditModalContainer: React.FC<QnaEditModalContainerProps> = ({ closeModal, qaId, onRefresh }) => {
     const { qa: fetchedQa, content: fetchedContent, loading, error } = useQnaDetail(qaId);
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
@@ -15,17 +23,21 @@ const QnaEditModalContainer = ({ closeModal, qaId, onRefresh }) => {
 
     useEffect(() => {
         if (!loading && !error) {
-            setTitle(fetchedQa.qaTitle);
-            setContent(fetchedContent);
+            if(fetchedQa){
+                setTitle(fetchedQa.qaTitle);
+                setContent(fetchedContent);    
+            } else {
+                console.error("Q&A 정보가 없습니다.");
+            }
         }
     }, [loading, error, fetchedQa, fetchedContent]);
 
     
-    const handleTitleChange = (event) => {
+    const handleTitleChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
         setTitle(event.target.value);
     };
 
-    const handleBodyChange = (event) => {
+    const handleBodyChange = (event: ChangeEvent<HTMLTextAreaElement>) => {
         setContent(event.target.value);
     };
 
@@ -61,7 +73,7 @@ const QnaEditModalContainer = ({ closeModal, qaId, onRefresh }) => {
     };
 
     if (loading) return <div>Loading...</div>;
-    if (error) return <div>Error: {error.message}</div>;
+    if (error) return <div>Error: {error}</div>;
 
     return (
         <ModalComponent>
@@ -76,10 +88,6 @@ const QnaEditModalContainer = ({ closeModal, qaId, onRefresh }) => {
         </ModalComponent>
 
     );
-};
-
-QnaEditModalContainer.propTypes = {
-    closeModal: PropTypes.func.isRequired,
 };
 
 export default QnaEditModalContainer;

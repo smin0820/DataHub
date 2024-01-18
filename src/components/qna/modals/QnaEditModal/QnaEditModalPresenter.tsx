@@ -1,6 +1,24 @@
+// QnaEditModalPresenter.tsx
+// Q&A 수정 모달 프레젠터 컴포넌트
+
+import React from 'react';
 import { ModalOverlay, ModalContainer, ModalTitle, ModalContent, ButtonGroup, CloseButton, TextAreaContainer, TextArea } from '@styles/ModalStyles';
 
-const QnaEditModalPresenter = ({ closeModal, handleTitleChange, handleBodyChange, handleSubmit, title, content }) => {
+interface QnaEditModalPresenterProps {
+    closeModal: () => void;
+    handleTitleChange: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
+    handleBodyChange: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
+    handleSubmit: () => void;
+    title: string;
+    content: string;
+}
+
+const QnaEditModalPresenter: React.FC<QnaEditModalPresenterProps> = ({
+    closeModal,
+    title, handleTitleChange,
+    content, handleBodyChange,
+    handleSubmit
+}) => {
     return (
         <ModalOverlay onClick={closeModal}>
             <ModalContainer className="standard" onClick={(e) => e.stopPropagation()}>
