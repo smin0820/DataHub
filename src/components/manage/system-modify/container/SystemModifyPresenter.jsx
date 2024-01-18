@@ -3,7 +3,7 @@ import EditIcon from "@assets/images/EditIcon.png";
 import CircleIcon from "@assets/images/CircleIcon.png";
 import CheckCircleIcon from "@assets/images/CheckCircleIcon.png";
 import { PageContainer, Title, Container, SystemInfoBar, Icon, Form, FormRow, InputContainer, InputContainerHeader, ButtonIconGroup, RequiredSpan, ButtonGroup, FormContent } from "@styles/AccountManageStyles";
-import ModifySysModalContainer from "@components/modify/modals/ModifySysModalContainer";
+import SystemModifyModalContainer from "../modals/SystemModifyModalContainer";
 
 const SystemModifyPresenter = ({ userInfo, systemName, departmentName, department, companyName, developerName, contactNum, loginId, password, passwordCheck,
     setSystemName, setDepartmentName, setDepartment, setCompanyName, setDeveloperName, setContactNum, setPassword, setPasswordCheck, 
@@ -164,7 +164,7 @@ const SystemModifyPresenter = ({ userInfo, systemName, departmentName, departmen
                 <ButtonGroup>
                 <button type="button" className="group-button" onClick={() => {navigate(-1)}}>취소</button>
                 <button type="button" className="group-button" onClick={handleUpdateClick}>수정하기</button>
-                {isModalOpen && <ModifySysModalContainer 
+                {isModalOpen && <SystemModifyModalContainer
                 closeModal={() => setModalOpen(false)} 
                 userData={{
                     systemName,
