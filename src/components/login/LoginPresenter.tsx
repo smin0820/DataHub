@@ -1,6 +1,7 @@
-// LoginPresenter.jsx
+// LoginPresenter.tsx
 // 로그인 페이지를 렌더링하는 컴포넌트입니다.
 
+import React, { ChangeEventHandler, FormEventHandler } from "react";
 import styled from "styled-components";
 import logo from "@assets/images/logo.png";
 
@@ -50,7 +51,23 @@ const LoginBox = styled.div`
     }
 `;
 
-export default function LoginPresenter({ username, password, error, onUsernameChange, onPasswordChange, onFormSubmit }) {
+interface LoginPresenterProps {
+    username: string;
+    password: string;
+    error: string;
+    onUsernameChange: ChangeEventHandler<HTMLInputElement>;
+    onPasswordChange: ChangeEventHandler<HTMLInputElement>;
+    onFormSubmit: FormEventHandler<HTMLFormElement>;
+}
+
+const LoginPresenter: React.FC<LoginPresenterProps> = ({ 
+    username,
+    password,
+    error,
+    onUsernameChange,
+    onPasswordChange,
+    onFormSubmit
+}) => {
     return (
         <Container>
         <LoginBox>
@@ -79,3 +96,5 @@ export default function LoginPresenter({ username, password, error, onUsernameCh
         </Container>
     );
 }
+
+export default LoginPresenter;

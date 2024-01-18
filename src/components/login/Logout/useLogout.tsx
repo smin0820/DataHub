@@ -1,15 +1,16 @@
-// useLogout.jsx
+// useLogout.tsx
 // 로그아웃을 처리하는 커스텀 훅입니다.
 
 import { useNavigate } from 'react-router-dom';
 import { useResetRecoilState, useRecoilValue } from 'recoil';
 import { userState } from '@recoil/atoms/userStateAtom'; 
 import ApiService from '@components/axios/ApiService';
+import { UserInfo } from '@@types/UserInfo';
 
-export const useLogout = () => {
+export const useLogout = (): () => Promise<void> => {
     const navigate = useNavigate();
     const resetUserState = useResetRecoilState(userState);
-    const userInfo = useRecoilValue(userState);
+    const userInfo = useRecoilValue<UserInfo>(userState);
 
     return async () => {
         try {
@@ -27,10 +28,10 @@ export const useLogout = () => {
 
             // 로그인 페이지로 이동
             navigate('/login');
-        } catch (error) {
+        } catch (error: any) {
             console.error('로그아웃 처리 중 오류 발생:', error);
 
-                        // Recoil 상태를 초기화
+            // Recoil 상태를 초기화
             resetUserState();
 
             // 로컬 스토리지 클리어

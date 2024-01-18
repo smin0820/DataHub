@@ -1,23 +1,24 @@
-// LoginContainer.jsx
+// LoginContainer.tsx
 // 로그인(/login) 컨테이너 컴포넌트입니다.
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, ChangeEvent, FormEvent } from "react";
 import { useNavigate } from "react-router-dom";
 import ApiService from "@components/axios/ApiService";
 import { useRecoilState } from "recoil";
 import { userState } from "@recoil/atoms/userStateAtom";
 import LoginPresenter from "@components/login/LoginPresenter";
 import { selectedSystemIdState } from "@recoil/atoms/systemStateAtom";
+import { UserInfo } from "@@types/UserInfo";
 
 export default function LoginContainer() {
   const navigate = useNavigate();
-  const [userInfo, setUserInfo] = useRecoilState(userState);
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const [ selectedSystemId, setSelectedSystemId] = useRecoilState(selectedSystemIdState);
+  const [userInfo, setUserInfo] = useRecoilState<UserInfo>(userState);
+  const [username, setUsername] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
+  const [error, setError] = useState<string>("");
+  const [ selectedSystemId, setSelectedSystemId] = useRecoilState<number>(selectedSystemIdState);
   
-  const handleLogin = async (event) => {
+  const handleLogin = async (event: FormEvent) => {
     event.preventDefault();
     try{
       const response = await ApiService.loginUser(username, password);
@@ -38,7 +39,7 @@ export default function LoginContainer() {
       setTimeout(() => {
         setError("");
       }, 2000);
-    } catch (error) {
+    } catch (error: any) {
       console.error('로그인 실패: ',error);
     }
   };
@@ -60,8 +61,8 @@ export default function LoginContainer() {
       username={username}
       password={password}
       error={error}
-      onUsernameChange={(e) => setUsername(e.target.value)}
-      onPasswordChange={(e) => setPassword(e.target.value)}
+      onUsernameChange={(e: ChangeEvent<HTMLInputElement>) => setUsername(e.target.value)}
+      onPasswordChange={(e: ChangeEvent<HTMLInputElement>) => setPassword(e.target.value)}
       onFormSubmit={handleLogin}
     />
   );
