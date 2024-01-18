@@ -6,11 +6,12 @@ import useIdModal from '@hooks/useIdModal';
 import React from 'react';
 import SystemDeleteModalContainer from '@components/manage/modals/SystemDeleteModalContainer';
 import { Boarddiv, Tbodytr } from '@styles/BoardStyles';
+import { useNavigate } from 'react-router-dom';
 
 export default function ManageContentContainer(props) {
     const {title, data, onRefresh} = props;
     const { isOpen: isDeleteOpen, selectedId, openModal: openDeleteModal, closeModal: closeDeleteModal } = useIdModal();
-
+    const naviage = useNavigate();
     return (
       <Boarddiv className="manage">
         <table>
@@ -26,7 +27,21 @@ export default function ManageContentContainer(props) {
               <Tbodytr key={i}>
                 <td>{n.systemName}</td>
                 <td>
-                  <button onClick={() => openDeleteModal(n.systemId)}>삭제</button>
+                  <button
+                    onClick={() =>
+                      naviage("/system-modify", {
+                        state: {
+                          selectedsystemId: n.systemId,
+                          selectedsystemName: n.systemName,
+                        },
+                      })
+                    }
+                  >
+                    수정
+                  </button>
+                  <button onClick={() => openDeleteModal(n.systemId)}>
+                    삭제
+                  </button>
                 </td>
                 {isDeleteOpen && selectedId === n.systemId && (
                   <SystemDeleteModalContainer

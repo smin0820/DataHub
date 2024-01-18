@@ -10,7 +10,7 @@ import { Dropmenu } from '@styles/BoardStyles';
 export default function NoticeDropdown({ noticeId, onRefresh }) {
     const { isOpen: isEditOpen, openModal: openEditModal, closeModal: closeEditModal } = useModal();
     const { isOpen: isDeleteOpen, openModal: openDeleteModal, closeModal: closeDeleteModal } = useModal();
-
+    
     const handleEditClick = () => {
         openEditModal();
     };
