@@ -5,7 +5,7 @@ import React from "react";
 import useDropdown from "@hooks/useDropdown";
 import { useNavigate } from "react-router-dom";
 import QnaDropdown from "./QnaDropdown.jsx";
-import { Boarddiv, Tbodytr } from "@styles/BoardStyles";
+import * as S from "@components/qna/containers/styles";
 
 interface QnaContentContainerProps {
     title: string;
@@ -19,7 +19,7 @@ const QnaContentContainer: React.FC<QnaContentContainerProps> = (props) => {
     const { currentOpenDropdown, toggleDropdown, dropdownRefs  } = useDropdown();
     
     return (
-        <Boarddiv className="qna">
+        <S.Boarddiv>
             <table>
                 <caption>{title}</caption>
                 <thead>
@@ -32,7 +32,7 @@ const QnaContentContainer: React.FC<QnaContentContainerProps> = (props) => {
                 </thead>
                 <tbody>
                 {data.map((n, i) => (
-                    <Tbodytr key={i}  onClick={() => {
+                    <S.Tbodytr key={i}  onClick={() => {
                         navigate(`/qna/${n.qaId}`, {
                             state: {
                                 selectedqaId: n.qaId,
@@ -56,11 +56,11 @@ const QnaContentContainer: React.FC<QnaContentContainerProps> = (props) => {
                             </>
                         )}
                     </td>
-                    </Tbodytr>   
+                    </S.Tbodytr>   
                 ))}
                 </tbody>
             </table>
-        </Boarddiv>
+        </S.Boarddiv>
     );
 }
 
