@@ -5,7 +5,7 @@ import { useToken } from "@hooks/useToken";
 import AdminPage from "@components/admin/AdminPage";
 import System from "@components/system/System";
 import ModifyPage from "@components/modify/ModifyPage";
-import Regist from "@components/regist/Regist";
+import Regist from "@components/manage/regist/Regist";
 import Notice from "@components/notice/Notice";
 import Qna from "@components/qna/Qna";
 import QnaDetail from "@components/qna/qna-detail/QnaDetail";

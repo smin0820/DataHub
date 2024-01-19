@@ -201,3 +201,106 @@ export const Dropmenu = styled.div`
         color: #4DBDE5;
     }
 `
+/////////////////////////////////////////////////////////////////////
+// Qna 게시글 상세 페이지 스타일
+/////////////////////////////////////////////////////////////////////
+// Qna 게시글 상세 페이지 스타일(Qna Title | 본문)
+export const QnaTitleContainer = styled.div`
+    display: flex;
+    justify-content: center;
+
+    div {
+        width: 100%;
+        max-width: 1000px;
+        h1 {
+            margin-top: 3rem;
+            margin-bottom: 2rem;
+        }
+        p {
+            margin: 0;
+        }
+        p:last-child {
+            padding-bottom: 2rem;      
+            border-bottom: 2px solid #e5eaf2;
+        }
+    }
+
+    div:last-child {
+        padding-top: 2rem;
+    }
+`;
+
+// Qna 게시글 상세 페이지 스타일(댓글)
+export const QnaReplyContainer = styled.div`
+    display: flex;
+    justify-content: center;
+
+    div {
+        width: 100%;
+        max-width: 1000px;
+
+        ul {
+        padding: 0;
+        margin: 0;
+        }
+
+        li {
+        list-style: none;
+        margin-top: 2rem;
+        padding-bottom: 2rem;
+        border-bottom: 2px solid #e5eaf2;
+
+        span {
+            font-size: small;
+        }
+        div:nth-child(1) {
+            span:nth-child(1) {
+            margin-right: 1rem;
+            }
+        }
+        div:nth-child(2) {
+            span {
+            font-size: xx-small;
+            margin-right: 0.5rem;
+            cursor: pointer;
+            opacity: 45%;
+            &:hover {
+                color: #4dbde5;
+                font-weight: bold;
+                opacity: 100%;
+            }
+            }
+        }
+        }
+    }
+`;
+
+// Qna 게시글 상세 페이지 스타일(댓글 입력창)
+export const QnaReplyInput = styled.div`
+    position: relative;
+    margin-top: 1rem;
+    input {
+        width: 61.8rem;
+        height: 10rem;
+        padding: 0;
+        font-size: medium;
+        text-align: left;
+        padding-left: 0.5rem;
+    }
+    button {
+        position: absolute;
+        width: 4rem;
+        height: 2rem;
+        top: 7rem;
+        bottom: 0;
+        right: 0.5rem;
+        padding: 5px 10px;
+        margin: auto 0;
+        border-radius: 10px;
+        color: white;
+        font-size: medium;
+        background-color: #007fff;
+        border: 1px solid #007fff;
+        cursor: pointer;
+    }
+`;

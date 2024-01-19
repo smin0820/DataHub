@@ -6,7 +6,7 @@ import localStorageEffect from '@recoil/effects/localStorageEffect';
 
 export const selectedSystemIdState = atom({
     key: 'selectedSystemIdState',
-    default: null,
+    default: -999,
     effects_UNSTABLE: [localStorageEffect('selectedSystemIdState')],
     });
 

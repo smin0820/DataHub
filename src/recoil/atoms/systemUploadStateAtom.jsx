@@ -5,5 +5,5 @@ import { atom } from 'recoil';
 
 export const systemUploadState = atom({
     key: 'systemUploadState',
-    default: false,
+    default: 0,
 });

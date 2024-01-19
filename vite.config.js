@@ -1,6 +1,7 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 
+
 // https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
@@ -13,6 +14,7 @@ export default defineConfig({
       { find: "@styles", replacement: "/src/styles" },
       { find: "@recoil", replacement: "/src/recoil" },
       { find: "@assets", replacement: "/src/assets" },
+      { find: "@@types", replacement: "/src/types" },
     ],
   },
   // server: {
