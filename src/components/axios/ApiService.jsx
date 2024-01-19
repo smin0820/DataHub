@@ -273,7 +273,7 @@ const ApiService = {
     // system file delete(아직 검토되지 않은 경우에만 삭제가능)
     deleteFile: async (articleId) => {
         try {
-            const response = await axiosInstance.delete(`/article/del-wait`, {
+            const response = await axiosInstance.delete(`/article/del`, {
                 params: { articleId }
             });
             console.log('File 삭제 성공:', response)
