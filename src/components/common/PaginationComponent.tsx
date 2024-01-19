@@ -31,8 +31,18 @@ const PaginationContainer = styled.div`
     }
 `;
 
-const PaginationComponent = ({ currentPage, totalPages, onPageChange }) => {
-    const pageNumbers = usePagination(currentPage, totalPages);
+type PaginationComponentProps = {
+    currentPage: number;
+    totalPages: number;
+    onPageChange: (page: number) => void;
+};
+
+const PaginationComponent = ({ 
+    currentPage,
+    totalPages,
+    onPageChange
+} : PaginationComponentProps) => {
+    const pageNumbers = usePagination({ currentPage, totalPages });
 
     return (
         <PaginationContainer>
@@ -43,7 +53,7 @@ const PaginationComponent = ({ currentPage, totalPages, onPageChange }) => {
                     <button
                         className="pageButton"
                         key={page}
-                        onClick={() => onPageChange(page)}
+                        onClick={() => onPageChange(Number(page))}
                         disabled={currentPage === page}
                     >
                         {page}

@@ -1,6 +1,5 @@
-// qnasAtom.jsx
+// qnasAtom.tsx
 // QnA 업로드 후 Qna 목록을 다시 불러오기 위한 recoil atom입니다.
-
 
 import { atom } from 'recoil';
 

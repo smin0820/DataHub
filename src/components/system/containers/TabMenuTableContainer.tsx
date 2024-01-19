@@ -1,13 +1,23 @@
-import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
+// TabMenuTableContainer.tsx
+// 시스템 페이지(/system)의 탭 메뉴 각각에 해당하는 게시물을 전달해주는 컴포넌트입니다. 
+
+import React from 'react';
 import SystemContentContainer from '@components/common/containers/SystemContentContainer';
 import ApiService from '@components/axios/ApiService';
 import PaginationComponent from '@components/common/PaginationComponent';
 import { useRecoilValue } from 'recoil';
 import { systemUploadState } from '@recoil/atoms/systemUploadStateAtom';
+import { DetailCategory } from '@@types/Categories';
 
+type DetailCategoryBoardProps = {
+    category: DetailCategory;
+    index: number;
+}
 
-function DetailCategoryBoard({ category, index }) {
+const DetailCategoryBoard = ({ 
+    category, 
+    index 
+}: DetailCategoryBoardProps) => {
     const [articles, setArticles] = React.useState([]);
     const [currentPage, setCurrentPage] = React.useState(1);
     const [totalPages, setTotalPages] = React.useState(0); 
@@ -22,7 +32,7 @@ function DetailCategoryBoard({ category, index }) {
             .catch(error => console.error('Articles 요청 오류:', error));
     }, [category.detailCategoryId, currentPage, systemUpload]);
 
-    const handlePageChange = (newPage) => {
+    const handlePageChange = (newPage: number) => {
         setCurrentPage(newPage);
     };
 
@@ -40,16 +50,11 @@ function DetailCategoryBoard({ category, index }) {
     );
 }
 
+type TabMenuContainerProps = {
+    detailCategories: DetailCategory[];
+}
 
-DetailCategoryBoard.propTypes = {
-    category: PropTypes.shape({
-        detailCategoryId: PropTypes.number.isRequired,
-        detailCategoryName: PropTypes.string.isRequired
-    }).isRequired,
-    index: PropTypes.number.isRequired
-};
-
-export default function TabMenuContainer({ detailCategories }) {
+export default function TabMenuTableContainer({ detailCategories }: TabMenuContainerProps) {
     if (!detailCategories) {
         // detailCategories가 undefined 또는 null인 경우 처리
         return <div>Loading...</div>;
@@ -68,15 +73,3 @@ export default function TabMenuContainer({ detailCategories }) {
         </>
     );
 }
-
-TabMenuContainer.propTypes = {
-    detailCategories: PropTypes.arrayOf(PropTypes.shape({
-        detailCategoryId: PropTypes.number,
-        detailCategoryName: PropTypes.string
-    }))
-};
-PaginationComponent.propTypes = {
-    currentPage: PropTypes.number.isRequired,
-    totalPages: PropTypes.number.isRequired,
-    onPageChange: PropTypes.func.isRequired
-};

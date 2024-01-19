@@ -1,7 +1,6 @@
+import React from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
-import MainNavigation from "./MainNavigation";
 import LoginNavigation from "./LoginNavigation";
-import { useToken } from "@hooks/useToken";
 import AdminPage from "@components/admin/AdminPage";
 import System from "@components/system/System";
 import ModifyPage from "@components/modify/ModifyPage";
@@ -17,16 +16,20 @@ import { useEnhancedLogout } from "@components/login/Logout/AutoLogout";
 import SystemModifyPage from "@components/manage/system-modify/SystemModifyPage";
 
 const RootNavigation = () => {
-  const { getToken } = useToken();
-  const isLoggedIn = useIsLoggedIn();
+  const [isLoggedIn, userInfo] = useIsLoggedIn();
   useEnhancedLogout();
   
   const getRedirectPath = () => {
-    if (isLoggedIn.role === "ADMIN") {
-      return "/admin";
-    } else if (isLoggedIn.role === "USER") {
-      return "/system";
-    } else {
+    if(userInfo) {
+        if (userInfo.role === "ADMIN") {
+        return "/admin";
+      } else if (userInfo.role === "USER") {
+        return "/system";
+      } else {
+        return "/login";
+      }
+    }
+    else {
       return "/login";
     }
   };
