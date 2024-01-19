@@ -8,7 +8,7 @@ import NoticeViewModalContainer from "@components/notice/modals/NoticeViewModal/
 import useIdModal from "@hooks/useIdModal";
 import { useRecoilValue } from "recoil";
 import { userState } from "@recoil/atoms/userStateAtom";
-import { Boarddiv, Tbodytr } from "@styles/BoardStyles";
+import * as S from "@components/notice/containers/styles";
 
 interface NoticeContentContainerProps {
     title: string;
@@ -24,7 +24,7 @@ const NoticeContentContainer: React.FC<NoticeContentContainerProps> = (props) =>
     const { isOpen: isViewOpen, selectedId, openModal: openViewModal, closeModal: closeViewModal } = useIdModal();
 
     return (
-        <Boarddiv className="notice">
+        <S.Boarddiv className="notice">
             <table>
                 <caption>{title}</caption>
                 <thead>
@@ -37,7 +37,7 @@ const NoticeContentContainer: React.FC<NoticeContentContainerProps> = (props) =>
                 </thead>
                 <tbody>
                 {data.map((n, i) => (
-                    <Tbodytr key={i} onClick={() => openViewModal(n.noticeId)}>
+                    <S.Tbodytr key={i} onClick={() => openViewModal(n.noticeId)}>
                     <td>
                         {n.noticeTitle}
                     </td>
@@ -55,12 +55,12 @@ const NoticeContentContainer: React.FC<NoticeContentContainerProps> = (props) =>
                             </>
                         )}
                     </td>
-                    </Tbodytr>   
+                    </S.Tbodytr>   
                 ))}
                 </tbody>
             </table>
-            {isViewOpen && <NoticeViewModalContainer noticeId = {selectedId} closeModal={closeViewModal} />}
-        </Boarddiv>
+            {isViewOpen && selectedId && <NoticeViewModalContainer noticeId = {selectedId} closeModal={closeViewModal} />}
+        </S.Boarddiv>
     );
 }
 
