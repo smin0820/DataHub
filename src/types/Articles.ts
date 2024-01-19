@@ -17,6 +17,24 @@ export type Article = {
     declineFileName: string;
 }
 
+// 대기중 게시물(Admin)에 대한 타입을 정의합니다.
+export type AdminTable = {
+    systemName: string;
+    detailCategoryName: string;
+    articleId: number;
+    approval: string;
+    uploadDate: string;
+    taskFileUrl: string;
+    taskFileName: string;
+}
+
+// // 대기중 게시물 목록에 대한 타입을 정의합니다.
+// export interface AdminTableResponse {
+//     totalPages: number;
+//     pageNumber: number;
+//     articles: AdminTable[];
+// }
+
 // 게시물 목록에 대한 타입을 정의합니다.
 export interface ArticlesResponse {
     allPage: number;
