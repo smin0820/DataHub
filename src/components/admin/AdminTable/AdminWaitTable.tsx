@@ -8,7 +8,6 @@ import FileDeleteModalContainer from "@components/common/modals/FileDeleteModal/
 import useIdModal from "@hooks/useIdModal";
 import { useRecoilValue } from "recoil";
 import { userState } from "@recoil/atoms/userStateAtom";
-import { Boarddiv, Tbodytr, StyledLink, StatusDiv } from "@styles/BoardStyles";
 import * as S from './styles';
 
 import { AdminTable } from "@@types/Articles";
@@ -56,7 +55,7 @@ const AdminWaitTable: React.FC<AdminWaitTableProps> = (props) => {
   };
   
   return (
-    <Boarddiv className="article">
+    <S.Boarddiv className="article">
         <table>
             <caption>{title}</caption>
             <thead>
@@ -71,7 +70,7 @@ const AdminWaitTable: React.FC<AdminWaitTableProps> = (props) => {
             </thead>
             <tbody>
                 {data.map((n, i) => (
-                    <Tbodytr key={i}>
+                    <S.Tbodytr key={i}>
                       {/* 시스템명 */}
                       <td>{n.systemName}</td>
 
@@ -80,13 +79,13 @@ const AdminWaitTable: React.FC<AdminWaitTableProps> = (props) => {
 
                       {/* 증빙자료명 */}
                       <td>
-                        <StyledLink
+                        <S.StyledLink
                           href={n.taskFileUrl}
                           target="_blank"
                           rel="noopener noreferrer"
                         >
                           {cutFileName(n.taskFileName)}
-                        </StyledLink>
+                        </S.StyledLink>
                       </td>
 
                       {/* 업로드 일시 */}
@@ -94,9 +93,9 @@ const AdminWaitTable: React.FC<AdminWaitTableProps> = (props) => {
                       
                       {/* 검토결과 */}
                       <td>
-                        <StatusDiv color={getStatusColor(n.approval)}>
+                        <S.StatusDiv color={getStatusColor(n.approval)}>
                           {getStatusText(n.approval)}
-                        </StatusDiv>
+                        </S.StatusDiv>
                       </td>
                       {/* 검토결과별 삭제, 검토 버튼 활성화 */}
                       <td>
@@ -117,7 +116,6 @@ const AdminWaitTable: React.FC<AdminWaitTableProps> = (props) => {
                           )}
                         {isAdmin && (
                           <button
-                            className="check"
                             onClick={() => openCheckModal(n.articleId)}
                           >
                             검토
@@ -131,11 +129,11 @@ const AdminWaitTable: React.FC<AdminWaitTableProps> = (props) => {
                             />
                           )}
                       </td>
-                    </Tbodytr>
+                    </S.Tbodytr>
                 ))}
             </tbody>
         </table>
-    </Boarddiv>
+    </S.Boarddiv>
   );
 }
 
