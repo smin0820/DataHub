@@ -47,10 +47,15 @@ const SystemContentContainer: React.FC<SystemContentContainerProps> = (props) =>
 
   // 파일 이름이 너무 길면 ...으로 표시해주는 함수
   const cutFileName = (name : string , maxLength : number = 20) => {
-    if(name.length > maxLength) {
-      return `${name.substring(0, maxLength)}...`;
+    if(name) {
+      if(name.length > maxLength) {
+        return `${name.substring(0, maxLength)}...`;
+      }
+      return name;
     }
-    return name;
+    else {
+      return "";
+    }
   };
 
   return (

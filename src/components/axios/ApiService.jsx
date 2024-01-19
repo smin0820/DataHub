@@ -396,7 +396,7 @@ const ApiService = {
     },
 
     //댓글 추가
-    registerComment: async (loginId, qaId, replyContent) => {
+    registerReply: async (loginId, qaId, replyContent) => {
         const formData = new FormData();
         formData.append('loginId',loginId);
         formData.append('qaId',qaId);
