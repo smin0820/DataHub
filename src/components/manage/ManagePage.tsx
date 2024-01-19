@@ -4,7 +4,7 @@
 import React from 'react';
 import HeaderContainer from '@components/common/Header/HeaderContainer';
 import MainLogo from '@components/common/MainLogo';
-import Sidebar from '@components/common/Sidebar';
+import Sidebar from '@components/common/Sidebar/Sidebar';
 import RegistButton from '@components/manage/ManageTable/RegistButton';
 import ManageTableContainer from '@components/manage/ManageTable/ManageTableContainer';
 

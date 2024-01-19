@@ -3,7 +3,7 @@
 
 import React from 'react';
 import HeaderContainer from '@components/common/Header/HeaderContainer'
-import Sidebar from '@components/common/Sidebar';
+import Sidebar from '@components/common/Sidebar/Sidebar';
 import MainLogo from '@components/common/MainLogo';
 import QnaTableContainer from './containers/QnaTableContainer';
 import NoticeNewArticle from './containers/QnaNewArticle';
