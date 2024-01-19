@@ -15,7 +15,7 @@ interface NoticeDropdownProps {
 const NoticeDropdown: React.FC<NoticeDropdownProps> = ({ noticeId, onRefresh }) => {
     const { isOpen: isEditOpen, openModal: openEditModal, closeModal: closeEditModal } = useModal();
     const { isOpen: isDeleteOpen, openModal: openDeleteModal, closeModal: closeDeleteModal } = useModal();
-
+    
     const handleEditClick = () => {
         openEditModal();
     };

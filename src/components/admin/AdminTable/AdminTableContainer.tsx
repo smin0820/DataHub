@@ -16,9 +16,9 @@ export default function AdminTableContainer() {
 
     useEffect(() => {
         ApiService.fetchWaitArticles(currentPage)
-            .then((articleData: ArticlesResponse) => {
-                setArticles(articleData.articles);
-                setTotalPages(articleData.allPage);
+            .then(articleData => {
+                setArticles(articleData.content);
+                setTotalPages(articleData.totalPages);
             })
             .catch(error => console.error('Articles 요청 오류:', error));
     }, [currentPage, systemUpload]);

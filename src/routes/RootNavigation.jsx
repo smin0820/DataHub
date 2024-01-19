@@ -14,6 +14,7 @@ import ProtectedRoute from "./ProtectedRoute";
 import NotFoundPage from "@components/common/NotFoundPage";
 import ManagePage from "@components/manage/ManagePage";
 import { useEnhancedLogout } from "@components/login/Logout/AutoLogout";
+import SystemModifyPage from "@components/manage/system-modify/SystemModifyPage";
 
 const RootNavigation = () => {
   const { getToken } = useToken();
@@ -60,6 +61,9 @@ const RootNavigation = () => {
       }/>
       <Route path="/qna/:id" element={
         <ProtectedRoute element={<QnaDetail />}/>
+      }/>
+      <Route path="/system-modify" element={
+        <ProtectedRoute element={<SystemModifyPage />}/>
       }/>
       <Route path="*" element={<NotFoundPage />} />
     </Routes>
