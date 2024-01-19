@@ -1,7 +1,6 @@
 import React from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
 import LoginNavigation from "./LoginNavigation";
-import { useToken } from "@hooks/useToken";
 import AdminPage from "@components/admin/AdminPage";
 import System from "@components/system/System";
 import ModifyPage from "@components/modify/ModifyPage";
@@ -17,7 +16,6 @@ import { useEnhancedLogout } from "@components/login/Logout/AutoLogout";
 import SystemModifyPage from "@components/manage/system-modify/SystemModifyPage";
 
 const RootNavigation = () => {
-  const { getToken } = useToken();
   const [isLoggedIn, userInfo] = useIsLoggedIn();
   useEnhancedLogout();
   
