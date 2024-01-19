@@ -5,9 +5,9 @@
 import React from 'react';
 import useIdModal from '@hooks/useIdModal';
 import SystemDeleteModalContainer from '@components/manage/modals/SystemDeleteModalContainer';
-import { Boarddiv, Tbodytr } from '@styles/BoardStyles';
 import { SystemInfo } from '@@types/Systems';
 import { useNavigate } from 'react-router-dom';
+import * as S from "@components/manage/ManageTable/styles";
 
 interface ManageContentContainerProps {
   title: string;
@@ -20,7 +20,7 @@ const ManageContentContainer: React.FC<ManageContentContainerProps> = (props) =>
     const { isOpen: isDeleteOpen, selectedId, openModal: openDeleteModal, closeModal: closeDeleteModal } = useIdModal();
     const naviage = useNavigate();
     return (
-      <Boarddiv className="manage">
+      <S.Boarddiv className="manage">
         <table>
           <caption>{title}</caption>
           <thead>
@@ -31,7 +31,7 @@ const ManageContentContainer: React.FC<ManageContentContainerProps> = (props) =>
           </thead>
           <tbody>
             {data.map((n, i) => (
-              <Tbodytr key={i}>
+              <S.Tbodytr key={i}>
                 <td>{n.systemName}</td>
                 <td>
                   <button
@@ -58,11 +58,11 @@ const ManageContentContainer: React.FC<ManageContentContainerProps> = (props) =>
                     systemName={n.systemName}
                   ></SystemDeleteModalContainer>
                 )}
-              </Tbodytr>
+              </S.Tbodytr>
             ))}
           </tbody>
         </table>
-      </Boarddiv>
+      </S.Boarddiv>
     );
 }
 
