@@ -363,10 +363,26 @@ const ApiService = {
         }
     },
 
-    // 공지사항 검색 기능
-    searchNotice: async (page, keyword) => {
+    // 공지사항 제목 검색 기능
+    searchNoticeTitle: async (page, keyword) => {
         try {
             const response = await axiosInstance.get('/notice/search-by-title', {
+                params: { 
+                    page: page, 
+                    keyword: keyword,
+                }
+            });
+            return response.data;
+        } catch (error) {
+            console.error('Notices 요청 실패:', error);
+            throw error;
+        }
+    },
+
+    // 공지사항 본문 검색 기능
+    searchNoticeContent: async (page, keyword) => {
+        try {
+            const response = await axiosInstance.get('/notice/search-by-content', {
                 params: { 
                     page: page, 
                     keyword: keyword,

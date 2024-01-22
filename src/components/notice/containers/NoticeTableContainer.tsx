@@ -20,27 +20,43 @@ const NoticeTableContainer: React.FC = () => {
     const [searchKeyword, setSearchKeyword] = useState('');
     const [searchResult, setSearchResult] = useState([]);
     const [searchTotalPage, setSearchTotalPage] = useState(0);
-
+    const [searchOption, setSearchOption] = useState("title"); // 기본값: 제목
     
+
     const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setSearchKeyword(e.target.value);
     }
 
+    const handleOptionChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+        setSearchOption(e.target.value);
+    }
+
     useEffect(() => {
         if (searchKeyword) {
-            ApiService.searchNotice(currentPage, searchKeyword)
-                .then((noticeData) => {
-                    setSearchResult(noticeData.content); // 검색 결과를 저장
-                    setSearchTotalPage(noticeData.totalPages);
-                })
-                .catch((error) => {
-                    console.error('검색 실패:', error);
-                })
-            } else {
-                // 검색어가 비어있을 때의 처리를 추가할 수 있습니다.
-                setSearchResult([]);
-            }
-    }, [searchKeyword, currentPage]) // 검색어가 변경될 때마다 useEffect 실행
+          if (searchOption === "title") {
+            ApiService.searchNoticeTitle(currentPage, searchKeyword)
+              .then((noticeData) => {
+                setSearchResult(noticeData.content);
+                setSearchTotalPage(noticeData.totalPages);
+              })
+              .catch((error) => {
+                console.error('검색 실패:', error);
+              });
+          } else if (searchOption === "content") {
+            ApiService.searchNoticeContent(currentPage, searchKeyword)
+              .then((noticeData) => {
+                setSearchResult(noticeData.content);
+                setSearchTotalPage(noticeData.totalPages);
+              })
+              .catch((error) => {
+                console.error('검색 실패:', error);
+              });
+          }
+        } else {
+          setSearchResult([]);
+        }
+      }, [searchKeyword, currentPage, searchOption])
+
 
     const handlePageChange = (newPage: number) => {
         setCurrentPage(newPage);
@@ -62,15 +78,13 @@ const NoticeTableContainer: React.FC = () => {
     
     return (
             <div>
-                <SearchContainer searchKeyword={searchKeyword} handleSearchChange={handleSearchChange} />
-                <div>
+                <SearchContainer searchKeyword={searchKeyword} handleSearchChange={handleSearchChange} searchOption={searchOption} handleOptionChange={handleOptionChange}/>
                     <NoticeContentContainer title={"[공지사항]"} data={searchKeyword.length > 0 ? searchResult : notices} onRefresh={refreshList} />
                     <PaginationComponent 
                         currentPage={currentPage} 
                         totalPages={searchKeyword.length > 0 ? searchTotalPage : totalPages} 
                         onPageChange={handlePageChange} 
                     />
-                </div>
             </div>   
 
     );
