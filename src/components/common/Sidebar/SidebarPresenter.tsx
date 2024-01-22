@@ -2,11 +2,11 @@
 // 사이드바 프레젠터
 
 import React from 'react';
-import { SidebarUL, SNavLink, ToggleButton } from '@styles/SidebarStyles';
+import { SidebarUL, SNavLink, ToggleButton } from '@components/common/Sidebar/SidebarStyles';
 import ReactDOM from 'react-dom';
 import { System } from '@@types/Categories';
 
-interface SidebarPresenterProps {
+type SidebarPresenterProps = {
     systemNames: System[];
     selectedSystemId: number;
     isVisible: boolean;
@@ -15,9 +15,15 @@ interface SidebarPresenterProps {
     handleDragStart: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
     handleToggleClick: () => void;
 }
-const SidebarPresenter: React.FC<SidebarPresenterProps> = ({ 
-        systemNames, selectedSystemId, isVisible, onSelectSystem, buttonTop, handleDragStart, handleToggleClick 
-    }) => {
+const SidebarPresenter = ({ 
+        systemNames,
+        selectedSystemId,
+        isVisible,
+        onSelectSystem,
+        buttonTop,
+        handleDragStart,
+        handleToggleClick 
+    }: SidebarPresenterProps ) => {
     const sidebarContent = (
         <>
             <ToggleButton 

@@ -3,7 +3,7 @@
 
 import React from 'react';
 import HeaderContainer from '@components/common/Header/HeaderContainer'
-import Sidebar from '@components/common/Sidebar';
+import Sidebar from '@components/common/Sidebar/Sidebar';
 import MainLogo from '@components/common/MainLogo';
 import NoticeTableContainer from '@components/notice/containers/NoticeTableContainer';
 import NoticeNewArticle from '@components/notice/containers/NoticeNewArticle';
@@ -13,7 +13,7 @@ const Notice: React.FC = () => {
         <>
             <HeaderContainer></HeaderContainer>
             <Sidebar></Sidebar>
-            <MainLogo></MainLogo>
+            <MainLogo />
             <NoticeNewArticle></NoticeNewArticle>
             <NoticeTableContainer></NoticeTableContainer>
         </>

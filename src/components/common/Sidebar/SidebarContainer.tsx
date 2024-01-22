@@ -9,9 +9,9 @@ import { userState } from '@recoil/atoms/userStateAtom';
 import ApiService from '@components/axios/ApiService';
 import SidebarPresenter from '@components/common/Sidebar/SidebarPresenter';
 import { systemListState } from '@recoil/atoms/systemListStateAtom';
-import { System, SystemsResponse } from '@@types/Categories';
+import { System } from '@@types/Categories';
 
-const SidebarContainer: React.FC = () => {
+const SidebarContainer = () => {
   const [systemNames, setSystemNames] = useState<System[]>([]);
   const [selectedSystemId, setSelectedSystemId] = useRecoilState(selectedSystemIdState);
   const [isVisible, setIsVisible] = useRecoilState<boolean>(sidebarVisibilityState);

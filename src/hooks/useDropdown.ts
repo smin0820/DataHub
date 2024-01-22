@@ -6,7 +6,10 @@ function useDropdown() {
   const [currentOpenDropdown, setCurrentOpenDropdown] = useState<number | null>(
     null
   );
-  const dropdownRefs = useRef<Map<number, HTMLDivElement>>(new Map());
+  const dropdownRefs = useRef<Map<number, HTMLTableCellElement | null>>(
+    new Map()
+  );
+
   const isModalOpen = useRecoilValue(modalStateAtom);
 
   const toggleDropdown = (id: number) => {
