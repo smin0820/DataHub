@@ -24,7 +24,7 @@ const NoticeContentContainer: React.FC<NoticeContentContainerProps> = (props) =>
     const { isOpen: isViewOpen, selectedId, openModal: openViewModal, closeModal: closeViewModal } = useIdModal();
 
     return (
-        <S.Boarddiv className="notice">
+        <S.Boarddiv>
             <table>
                 <caption>{title}</caption>
                 <thead>

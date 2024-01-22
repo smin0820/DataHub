@@ -55,7 +55,7 @@ const AdminWaitTable: React.FC<AdminWaitTableProps> = (props) => {
   };
   
   return (
-    <S.Boarddiv className="article">
+    <S.Boarddiv>
         <table>
             <caption>{title}</caption>
             <thead>
