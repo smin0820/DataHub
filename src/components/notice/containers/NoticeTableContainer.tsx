@@ -8,7 +8,7 @@ import { useNotices } from '@hooks/useNotices';
 import PaginationComponent from '@components/common/PaginationComponent';
 import { useRecoilState } from 'recoil';
 import { noticesState } from '@recoil/atoms/noticesAtom';
-import SearchContainer from "./SearchContainer";
+import NoticeSearchContainer from "./NoticeSearchContainer";
 import ApiService from '@components/axios/ApiService';
 
 
@@ -78,7 +78,7 @@ const NoticeTableContainer: React.FC = () => {
     
     return (
             <div>
-                <SearchContainer searchKeyword={searchKeyword} handleSearchChange={handleSearchChange} searchOption={searchOption} handleOptionChange={handleOptionChange}/>
+                    <NoticeSearchContainer searchKeyword={searchKeyword} handleSearchChange={handleSearchChange} searchOption={searchOption} handleOptionChange={handleOptionChange}/>
                     <NoticeContentContainer title={"[공지사항]"} data={searchKeyword.length > 0 ? searchResult : notices} onRefresh={refreshList} />
                     <PaginationComponent 
                         currentPage={currentPage} 

@@ -1,7 +1,5 @@
-import ApiService from '@components/axios/ApiService';
-import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
-import * as S from '@components/notice/containers/styles';
+import React from 'react';
+import * as S from '@components/qna/containers/styles';
 
 interface SearchContainerProps {
   searchKeyword: string;
@@ -17,8 +15,9 @@ const SearchContainer: React.FC<SearchContainerProps> = ({ searchKeyword, handle
             <select value={searchOption} onChange={handleOptionChange}>
               <option value="title">제목</option>
               <option value="content">본문</option>
+              <option value="loginId">글쓴이</option>
             </select>
-          <input type="search" placeholder="공지사항 제목을 입력해주세요" value={searchKeyword} onChange={handleSearchChange} />
+          <input type="search" placeholder="검색어를 입력해주세요" value={searchKeyword} onChange={handleSearchChange} />
         </div>
       </S.SearchFilter>
     );
