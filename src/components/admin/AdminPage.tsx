@@ -3,7 +3,8 @@
 
 import React from 'react';
 import HeaderContainer from '@components/common/Header/HeaderContainer'
-import Sidebar from '@components/common/Sidebar';
+import AdminSearchContainer from '@components/admin/AdminSearch/AdminSearchContainer';
+import Sidebar from '@components/common/Sidebar/Sidebar';
 import AdminTablecontainer from '@components/admin/AdminTable/AdminTableContainer';
 import MainLogo from '@components/common/MainLogo';
 

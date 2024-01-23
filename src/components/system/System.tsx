@@ -4,7 +4,7 @@
 import React from 'react';
 import HeaderContainer from '@components/common/Header/HeaderContainer'
 import SystemTabMenuContainer from '@components/system/containers/SystemTabMenuContainer';
-import Sidebar from '@components/common/Sidebar';
+import Sidebar from '@components/common/Sidebar/Sidebar';
 
 const System = () => {
     return (
