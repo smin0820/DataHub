@@ -3,7 +3,6 @@
 
 import React from "react";
 import { TabMenuContainer } from "@components/system/styles/SystemStyles"
-import AdminSearchContainer from "@components/admin/AdminSearch/AdminSearchContainer";
 import FileUploadModalContainer from "@components/common/modals/FileUploadModal/FileUploadModalContainer";
 import { DetailCategory } from "@@types/Categories";
 import TabMenuTableContainer from "./containers/TabMenuTableContainer";
@@ -44,7 +43,6 @@ const SystemTabMenu = ({
                     </li>
                 ))}
                 </ul>
-                <AdminSearchContainer></AdminSearchContainer>
                 
                 <button onClick={openModal}>게시글 등록</button>
 

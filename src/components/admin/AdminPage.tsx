@@ -14,7 +14,6 @@ const AdminPage: React.FC = () => {
             <HeaderContainer />
             <Sidebar />
             <MainLogo />
-            <AdminSearchContainer />
             <AdminTablecontainer />
         </>
     );

@@ -363,6 +363,23 @@ const ApiService = {
         }
     },
 
+    // 공지사항 제목 검색 기능
+    searchNoticeList: async (page, keyword, searchBy) => {
+        try {
+            const response = await axiosInstance.get('/notice/search', {
+                params: { 
+                    page: page, 
+                    keyword: keyword,
+                    searchBy: searchBy
+                }
+            });
+            return response.data;
+        } catch (error) {
+            console.error('공지사항 제목, 본문 검색 실패:', error);
+            throw error;
+        }
+    },
+
     ////////////////////////////////////////////////////////////////////////////////////////////
     ////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -503,7 +520,24 @@ const ApiService = {
         console.error('Qna 삭제 실패:', error);
         throw error;
     }
-    }    
+    },
+    
+    // Q&A 제목, 본문, 작성자 검색 기능
+    searchQnaList: async (page, keyword, searchBy) => {
+        try {
+            const response = await axiosInstance.get('/qa/search', {
+                params: { 
+                    page: page, 
+                    keyword: keyword,
+                    searchBy: searchBy
+                }
+            });
+            return response.data;
+        } catch (error) {
+            console.error('Q&A 제목 or 본문 or 작성자 검색 실패:', error);
+            throw error;
+        }
+    }
 };
 
 export default ApiService;
