@@ -34,7 +34,7 @@ const NoticeTableContainer: React.FC = () => {
     useEffect(() => {
         if (searchKeyword) {
           if (searchOption === "title") {
-            ApiService.searchNoticeTitle(currentPage, searchKeyword)
+            ApiService.searchNoticeList(currentPage, searchKeyword, searchOption)
               .then((noticeData) => {
                 setSearchResult(noticeData.content);
                 setSearchTotalPage(noticeData.totalPages);
@@ -43,7 +43,7 @@ const NoticeTableContainer: React.FC = () => {
                 console.error('검색 실패:', error);
               });
           } else if (searchOption === "content") {
-            ApiService.searchNoticeContent(currentPage, searchKeyword)
+            ApiService.searchNoticeList(currentPage, searchKeyword, searchOption)
               .then((noticeData) => {
                 setSearchResult(noticeData.content);
                 setSearchTotalPage(noticeData.totalPages);
