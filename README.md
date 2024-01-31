@@ -1,8 +1,26 @@
-# React + Vite
+# 공공기관 DB의 관리 현황 기록, 보고 및 데이터 표준화 서비스 DataHub
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 기획 배경
 
-Currently, two official plugins are available:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### 추진 배경
+
+### 필요성
+
+### 목적
+
+
+- 경상북도 공공데이터 정책실과 회의를 통해 공공데이터를 왜 활용하지 하는에 대한 회의 진행
+- 같은 종류의 데이터라도 형태가 일정하지 않아 활용의 어려움 발견
+
+
+## 프로젝트 소개
+> 공공데이터의 활용을 위해 공공기관 DB의 관리현황을 기록, 보고할 수 있는 데이터 표준화 협업 도구의 개발로 시스템 담당자의 업무 효율성 향상
+
+## 기술 스택
+React, JavaScript, Styled-Component, Recoil, Axios
+
+## 🗓프로젝트 기간
+1차: 2023.09 ~ 2023.12 (3개월)
+
+2차: 2023.12 ~ 2024.01 (1개월) // 현장실습
